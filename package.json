@@ -7,13 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/markdown-mirrors.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "lint:copy": "node scripts/lint-copy.mjs",
     "check": "astro check",
     "deploy": "astro build && wrangler deploy",
-    "deploy:preview": "astro build && wrangler versions upload"
+    "deploy:preview": "astro build && wrangler versions upload",
+    "check:schema": "node scripts/check-schema.mjs",
+    "verify": "npm run build && npm run check:schema && npm run lint:copy"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.7",
@@ -26,6 +28,8 @@
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
+    "cheerio": "^1.2.0",
+    "turndown": "^7.2.4",
     "typescript": "^7.0.2",
     "wrangler": "^4.125.0"
   }
