@@ -35,6 +35,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site).href;
+const previewNoindex = import.meta.env.PREVIEW_NOINDEX === '1';
 const isHome = path === '/';
 const nodes = isHome ? [organizationNode(true), brokerNode(), websiteNode(), ...schema] : schema;
 const jsonld = JSON.stringify(graph(nodes));
@@ -52,7 +53,7 @@ if (import.meta.env.DEV && (description.length < 120 || description.length > 160
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {(noindex || previewNoindex) && <meta name="robots" content="noindex, nofollow" />}
     {markdownTwin && <link rel="alternate" type="text/markdown" href={mdPath} title={`${title} (Markdown)`} />}
     <link rel="alternate" type="application/rss+xml" title="RL Property Management blog" href="/rss.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
