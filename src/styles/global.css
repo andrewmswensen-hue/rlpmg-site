@@ -241,6 +241,8 @@
     letter-spacing: -0.03em;
   }
   .rl-steps h3 { font-size: 1.125rem; margin: 0 0 0.25rem; font-weight: 800; }
+  .rl-steps > li > strong:first-child { display: block; font-size: 1.1rem; font-weight: 800; color: #123143; margin-bottom: 0.3rem; }
+  .rl-steps > li p { margin: 0; }
 
   /* ---- Pull quote -------------------------------------------------------- */
   .rl-pullquote {
