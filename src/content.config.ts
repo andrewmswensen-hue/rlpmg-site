@@ -70,6 +70,7 @@ const cities = defineCollection({
       .default([]),
     sourceOfIncomeProtection: z.object({ applies: z.boolean(), note: z.string().optional() }),
     localRegulation: z.array(z.string()).default([]),
+    metrics: z.array(z.object({ value: z.string(), label: z.string(), caption: z.string().optional() })).default([]),
     marketGuideSlug: z.string().optional(),
     geo: z.object({ latitude: z.number(), longitude: z.number() }).optional(),
     image: z.string().optional(),

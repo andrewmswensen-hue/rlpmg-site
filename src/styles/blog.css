@@ -1,9 +1,10 @@
 /* Blog post components, restyled in the brand palette. Markup comes from scripts/import-wxr.py (migrated posts)
    and from the same class names in new posts. Hardcoded hex on purpose: no dependency on CSS variables inside content. */
-.post-body { max-width: 72ch; font-size: 1.0625rem; line-height: 1.7; }
+.post-body { max-width: 70ch; font-size: 1.0625rem; line-height: 1.7; }
 .post-body > * + * { margin-top: 1.1rem; }
-.post-body h2 { margin-top: 2.6rem; font-size: 1.75rem; line-height: 1.15; color: #123143; }
-.post-body h3 { margin-top: 1.8rem; font-size: 1.3rem; color: #123143; }
+.post-body h2 { margin-top: 2.6rem; font-size: 1.75rem; line-height: 1.15; color: #123143; font-weight: 800; }
+.post-body h2::after { content: ""; display: block; width: 44px; height: 3px; background: #a60530; margin-top: 0.7rem; }
+.post-body h3 { margin-top: 1.8rem; font-size: 1.3rem; color: #123143; font-weight: 800; }
 .post-body ul { list-style: disc; padding-left: 1.4rem; }
 .post-body ol { list-style: decimal; padding-left: 1.4rem; }
 .post-body li + li { margin-top: 0.35rem; }
@@ -15,20 +16,21 @@
 .post-body img.aligncenter { display: block; margin: 1.5rem auto; }
 .post-body table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
 .post-body th, .post-body td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid #dddddd; vertical-align: top; }
-.post-body th { font-weight: 600; color: #123143; border-bottom: 2px solid #123143; }
+.post-body th { font-weight: 800; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: #ffffff; background: #123143; border-bottom: 0; }
+.post-body tbody tr:nth-child(even) { background: #f7f5f3; }
 .post-body iframe { max-width: 100%; }
 .post-body hr { border: 0; border-top: 1px solid #dddddd; margin: 2rem 0; }
 
-.post-box { padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: #f2f2f2; border-left: 4px solid #123143; }
-.post-box-label { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #123143; margin: 0 0 0.5rem; }
+.post-box { padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: #f7f5f3; border-left: 4px solid #123143; }
+.post-box-label { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: #123143; margin: 0 0 0.5rem; }
 .post-box > * + * { margin-top: 0.6rem; }
-.post-tldr { border-left-color: #59070e; background: #f7eef0; }
+.post-tldr { border-left-color: #59070e; background: #f5dde3; }
 .post-tldr .post-box-label { color: #59070e; }
 .post-takeaways { border-left-color: #123143; }
 .post-toc { border-left-color: #a60530; background: #fff; border: 1px solid #dddddd; border-left-width: 4px; }
 .post-toc ol { margin: 0; padding-left: 1.25rem; line-height: 1.9; }
 .post-related { background: #fff; border: 1px solid #dddddd; border-left: 4px solid #123143; }
-.post-pullquote { border-left: 3px solid #a60530; background: #f2f2f2; padding: 1.1rem 1.5rem; margin: 2rem 0; font-size: 1.15rem; font-style: italic; color: #123143; }
+.post-pullquote { border-left: 3px solid #a60530; background: #f7f5f3; padding: 1.1rem 1.5rem; margin: 2rem 0; font-size: 1.15rem; font-style: italic; color: #123143; }
 .post-pullquote p { margin: 0; }
 .post-cta { background: #123143; color: #fff; padding: 1.5rem; margin: 2.5rem 0; }
 .post-cta a { color: #fff; }

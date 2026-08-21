@@ -47,7 +47,8 @@ const guide = d.marketGuideSlug;
     related={d.related}
     lastVerified={d.lastVerified}
     reviewedBy={d.reviewedBy}
-    eyebrow={`${d.county} · ${d.relationToColumbus}`}
+    eyebrow={d.county}
+    metrics={d.metrics}
     breadcrumbs={crumbs}
   >
     <Content />
@@ -81,19 +82,6 @@ const guide = d.marketGuideSlug;
       {d.neighborhoods.length > 0 && <> Areas within and around {d.name} include {d.neighborhoods.join(', ')}.</>}
       {d.zipCodes.length > 0 && <> ZIP codes: {d.zipCodes.join(', ')}.</>}
     </p>
-
-    <h2>Are there rental rules specific to {d.name}?</h2>
-    <p>
-      {d.sourceOfIncomeProtection.applies
-        ? `${d.name} prohibits housing discrimination based on source of income, which means a rental owner may not refuse an applicant solely because they intend to pay with a housing voucher. ${d.sourceOfIncomeProtection.note ?? ''}`
-        : `No municipal source-of-income ordinance was found for ${d.name} as of August 2026, and Ohio has no statewide source-of-income protection. ${d.sourceOfIncomeProtection.note ?? ''}`}
-    </p>
-    {d.localRegulation.length > 0 && (
-      <ul>
-        {d.localRegulation.map((r) => <li>{r}</li>)}
-      </ul>
-    )}
-    <p class="text-sm text-navy-600">Local rules change. Information here is current as of August 2026 and is informational, not legal advice.</p>
 
     {d.county.includes(',') || d.county.includes(' and ') ? (
       <>

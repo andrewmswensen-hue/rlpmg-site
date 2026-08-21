@@ -48,6 +48,8 @@ const faq = [
   { q: 'Is there a volume discount?', a: `Yes. Owners with 5 to 9 units receive 10 percent off monthly management fees on each unit. Owners with 10 or more units receive custom pricing.` },
   { q: 'Are there any other fees?', a: `An annual accounting and technology fee of ${usd(f.annualAccountingAndTechnologyFee)}, a ${usd(f.leaseRenewalFee)} lease renewal fee, turn project management of 15 percent on the first $15,000, and professional listing photography at vendor cost plus markup (typically ${usd(f.photography.typicalMin)} to ${usd(f.photography.typicalMax)}) effective October 1, 2026. Final terms are in the Property Management Agreement.` },
 ];
+const metrics = pricing.plans.map((p) => ({ value: usd(p.monthlyFee), label: `${p.name} plan`, caption: `${usd(p.maintenanceApprovalLimit)} approval limit` }));
+metrics.push({ value: usd(f.leasingFee), label: 'Leasing fee', caption: 'All three plans' });
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Pricing', path }];
 const schema = [webPageNode({ path, title, description, dateModified: pricing.asOf > LAST_VERIFIED ? pricing.asOf : LAST_VERIFIED }), breadcrumbNode(crumbs), faqNode(path, faq), ...pricingNodes(path)];
 const related = [
@@ -61,7 +63,7 @@ const related = [
 ---
 
 <Base {title} {description} {path} {schema}>
-  <AeoPage title="Property management pricing in Columbus, Ohio" {directAnswer} {keyFacts} {faq} {related} lastVerified={LAST_VERIFIED} eyebrow={`Flat-fee pricing, effective ${pricing.effectiveLabel}`} breadcrumbs={crumbs}>
+  <AeoPage title="Property management pricing in Columbus, Ohio" {directAnswer} {keyFacts} {faq} {related} {metrics} lastVerified={LAST_VERIFIED} eyebrow={`Flat-fee pricing, effective ${pricing.effectiveLabel}`} breadcrumbs={crumbs} wide>
     <h2>What does RL Property Management charge per month?</h2>
     <p>RL Property Management charges one flat fee per unit per month, set by plan: {usd(passive.monthlyFee)} for Passive, {usd(standard.monthlyFee)} for Standard, and {usd(premium.monthlyFee)} for Premium, as of {pricing.effectiveLabel}. The fee does not change with the rent amount. The plans differ in how much repair spending RL Property Management can approve without asking, and in whether association support, pre-listing support, and owner-chosen vendors are included.</p>
     <div class="table-wrap">

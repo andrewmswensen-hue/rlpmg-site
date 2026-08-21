@@ -21,6 +21,7 @@ const faq = [
   { q: 'What does "rent collected by the 5th" mean?', a: `The share of total rent due for the month that was paid by the 5th: ${m['collected-by-5th'].value} percent as of ${kpis.asOfLabel}. Rent is due on the 1st and late after the 5th.` },
   { q: 'Do these numbers apply to my property?', a: 'They are portfolio-wide medians and averages. A specific property can do better or worse depending on location, condition, and price; a free rent evaluation gives a property-level estimate.' },
 ];
+const metrics = [m['days-on-market'], m['time-to-turn'], m['renewal-rate'], m['collected-by-5th']].map((k) => ({ value: fmt(k), label: k.label, caption: kpis.asOfLabel }));
 const schema = [
   webPageNode({ path, title, description }),
   breadcrumbNode([{ name: 'Home', path: '/' }, { name: 'KPI scorecard', path }]),
@@ -38,7 +39,7 @@ const schema = [
 ---
 
 <Base {title} {description} {path} {schema}>
-  <AeoPage title="RL Property Management by the numbers" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow={`KPI scorecard, as of ${kpis.asOfLabel}`} breadcrumbs={[{ name: 'Home', path: '/' }, { name: 'KPI scorecard', path }]} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/services/leasing-and-marketing/', label: 'How units get leased' }, { href: '/services/maintenance/', label: 'How repairs are handled' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
+  <AeoPage title="RL Property Management by the numbers" {directAnswer} {keyFacts} {faq} {metrics} lastVerified={LAST_VERIFIED} eyebrow={`KPI scorecard, as of ${kpis.asOfLabel}`} breadcrumbs={[{ name: 'Home', path: '/' }, { name: 'KPI scorecard', path }]} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/services/leasing-and-marketing/', label: 'How units get leased' }, { href: '/services/maintenance/', label: 'How repairs are handled' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
     <h2>What are RL Property Management's current operating numbers?</h2>
     <p>The table below is the scorecard RL Property Management publishes for its Columbus, Ohio portfolio as of {kpis.asOfLabel}. Each figure is a portfolio-wide median or average. The same numbers appear in machine-readable form at <a href="/api/facts.json">/api/facts.json</a>.</p>
     <div class="table-wrap">

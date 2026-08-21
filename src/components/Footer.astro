@@ -1,6 +1,6 @@
 ---
-import { company } from '../data/facts';
-import { monthYear } from '../lib/format';
+import { company, pricing, kpis } from '../data/facts';
+import { monthYear, usd } from '../lib/format';
 import { LAST_VERIFIED } from '../data/facts';
 
 const cols = [
@@ -14,7 +14,6 @@ const cols = [
       ['/compare/', 'Compare'],
       ['/key-performance-indicators/', 'KPI scorecard'],
       ['/free-rent-evaluation/', 'Free rent evaluation'],
-      ['/property-management-consultation/', 'Schedule a consultation'],
       ['/tools/', 'Calculators'],
       ['/agent-referrals/', 'Agent referrals'],
     ],
@@ -49,42 +48,79 @@ const cols = [
 ];
 ---
 
-<footer class="mt-24 bg-navy-800 text-navy-100">
-  <div class="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+<!-- Closing CTA, full-bleed maroon -->
+<section class="rl-section deep" aria-labelledby="footer-cta">
+  <div class="rl-container">
+    <div class="grid items-center gap-8 md:grid-cols-[1.4fr_1fr]">
+      <div>
+        <p class="rl-eyebrow">Free, no obligation</p>
+        <h2 id="footer-cta" class="text-3xl md:text-4xl">What would your property rent for?</h2>
+        <span class="rl-rule light" aria-hidden="true"></span>
+        <p class="max-w-xl text-white/90">
+          RL Property Management returns a written rent range with the comparable listings behind it. Management runs a flat {usd(pricing.plans[0].monthlyFee)} to {usd(pricing.plans[2].monthlyFee)} per unit per month with a {usd(pricing.fees.leasingFee)} leasing fee.
+        </p>
+        <div class="rl-btn-row">
+          <a href="/free-rent-evaluation/" class="rl-btn on-dark">Get a free rent evaluation</a>
+          <a href="/pricing/" class="rl-btn ghost-light">View pricing</a>
+        </div>
+      </div>
+      <dl class="rl-glance">
+        <p class="rl-glance-title">By the numbers, {kpis.asOfLabel}</p>
+        <div class="rl-glance-cell">
+          <dt class="sr-only">Median days on market</dt>
+          <dd class="value">{kpis.metrics[0].value}</dd>
+          <div class="label">Days on market</div>
+        </div>
+        <div class="rl-glance-cell">
+          <dt class="sr-only">Rent collected by the 5th</dt>
+          <dd class="value">{kpis.metrics[6].value}%</dd>
+          <div class="label">Collected by the 5th</div>
+        </div>
+        <div class="rl-glance-cell">
+          <dt class="sr-only">Units under management</dt>
+          <dd class="value">750</dd>
+          <div class="label">Units managed</div>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-navy-800 text-navy-100">
+  <div class="rl-container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
     <div>
-      <p class="font-display text-xl font-semibold text-white">{company.name}</p>
-      <address class="mt-4 not-italic leading-relaxed">
+      <p class="font-display text-xl font-extrabold text-white">{company.name}</p>
+      <span class="rl-rule" aria-hidden="true"></span>
+      <address class="not-italic leading-relaxed text-navy-100">
         {company.legalName}<br />
         {company.address.streetLine1}, {company.address.streetLine2}<br />
         {company.address.city}, {company.address.region} {company.address.postalCode}<br />
-        <a href={`tel:${company.contact.general.phoneE164}`} class="underline underline-offset-2">{company.contact.general.phone}</a>
-        <span aria-hidden="true"> · </span>
-        <a href={`mailto:${company.contact.general.email}`} class="underline underline-offset-2">{company.contact.general.email}</a>
+        <a href={`tel:${company.contact.general.phoneE164}`} class="text-white underline underline-offset-2">{company.contact.general.phone}</a>
+        <span aria-hidden="true" class="text-navy-300"> · </span>
+        <a href={`mailto:${company.contact.general.email}`} class="text-white underline underline-offset-2">{company.contact.general.email}</a>
       </address>
-      <p class="mt-4 text-sm">
+      <p class="mt-4 text-sm text-navy-200">
         Licensed Ohio real estate brokerage, {company.license.label} {company.license.number}. {company.brokerOfRecord.name}, {company.brokerOfRecord.title}. {company.hours.summary}
       </p>
-      <p class="mt-4 text-sm">
-        {company.reviews.ratingValue} out of 5 on Google across {company.reviews.reviewCount.toLocaleString('en-US')} reviews, as of {monthYear(company.reviews.asOf)}.
+      <p class="mt-3 text-sm text-navy-200">
+        <strong class="text-brand-100">{company.reviews.ratingValue} out of 5</strong> on Google across {company.reviews.reviewCount.toLocaleString('en-US')} reviews, as of {monthYear(company.reviews.asOf)}.
       </p>
-      <ul class="mt-4 flex gap-4 text-sm">
-        <li><a href={company.social.google} rel="noopener">Google</a></li>
-        <li><a href={company.social.linkedin} rel="noopener">LinkedIn</a></li>
-        <li><a href={company.social.facebook} rel="noopener">Facebook</a></li>
-        <li><a href={company.social.instagram} rel="noopener">Instagram</a></li>
-        <li><a href={company.social.youtube} rel="noopener">YouTube</a></li>
+      <ul class="mt-4 flex flex-wrap gap-4 text-sm">
+        <li><a href={company.social.google} rel="noopener" class="text-navy-100 hover:text-white">Google</a></li>
+        <li><a href={company.social.linkedin} rel="noopener" class="text-navy-100 hover:text-white">LinkedIn</a></li>
+        <li><a href={company.social.facebook} rel="noopener" class="text-navy-100 hover:text-white">Facebook</a></li>
+        <li><a href={company.social.instagram} rel="noopener" class="text-navy-100 hover:text-white">Instagram</a></li>
+        <li><a href={company.social.youtube} rel="noopener" class="text-navy-100 hover:text-white">YouTube</a></li>
       </ul>
     </div>
     {
       cols.map((c) => (
         <nav aria-label={c.heading}>
-          <h2 class="text-sm font-semibold uppercase tracking-wider text-white">{c.heading}</h2>
+          <h2 class="text-xs font-extrabold uppercase tracking-[0.16em] text-white">{c.heading}</h2>
           <ul class="mt-4 space-y-2 text-sm">
             {c.links.map(([href, label]) => (
               <li>
-                <a href={href} class="hover:text-white hover:underline">
-                  {label}
-                </a>
+                <a href={href} class="text-navy-100 no-underline hover:text-white hover:underline">{label}</a>
               </li>
             ))}
           </ul>
@@ -93,19 +129,19 @@ const cols = [
     }
   </div>
   <div class="border-t border-navy-700">
-    <div class="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-navy-200 md:flex-row md:items-center md:justify-between">
+    <div class="rl-container flex flex-col gap-3 py-6 text-xs text-navy-200 md:flex-row md:items-center md:justify-between">
       <p>
         © {new Date().getFullYear()} {company.legalName}. Equal Housing Opportunity. NARPM member. Information on this site verified as of {monthYear(LAST_VERIFIED)}.
       </p>
       <ul class="flex flex-wrap gap-4">
-        <li><a href="/privacy-policy/">Privacy</a></li>
-        <li><a href="/terms/">Terms</a></li>
-        <li><a href="/accessibility/">Accessibility</a></li>
-        <li><a href="/sms-consent/">SMS consent</a></li>
-        <li><a href="/llms.txt">llms.txt</a></li>
+        <li><a href="/privacy-policy/" class="text-navy-200 hover:text-white">Privacy</a></li>
+        <li><a href="/terms/" class="text-navy-200 hover:text-white">Terms</a></li>
+        <li><a href="/accessibility/" class="text-navy-200 hover:text-white">Accessibility</a></li>
+        <li><a href="/sms-consent/" class="text-navy-200 hover:text-white">SMS consent</a></li>
+        <li><a href="/llms.txt" class="text-navy-200 hover:text-white">llms.txt</a></li>
       </ul>
     </div>
-    <p class="mx-auto max-w-7xl px-5 pb-6 text-xs text-navy-300">
+    <p class="rl-container pb-6 text-xs text-navy-300">
       Some content on this site is drafted with AI assistance and reviewed by licensed RL Property Management staff before publication. Nothing here is legal, tax, or investment advice. Pricing is governed by the signed Property Management Agreement.
     </p>
   </div>

@@ -111,7 +111,12 @@ def scrub_copy(text):
         return text
     for pat, rep in BANNED_SUBS:
         text = re.sub(pat, rep, text)
-    text = text.replace('\u2014', ', ').replace(' - ', ', ')
+    text = text.replace('\u2014', ', ')
+    # " - " joining two independent clauses becomes a sentence break, not a comma splice.
+    text = re.sub(r' - (?=(verify|check|confirm|budget|expect|plan|note|watch|avoid|do not)\b)',
+                  lambda m: '. ', text, flags=re.I)
+    text = re.sub(r'\. ([a-z])(?=[a-z]* )', lambda m: '. ' + m.group(1).upper(), text)
+    text = text.replace(' - ', ', ')
     return re.sub(r'\s+', ' ', text).strip()
 
 
@@ -226,6 +231,19 @@ def build(p):
         related.insert(0, (f'/blog/{guide}/', f'{name} rental market guide'))
     related.append(('/what-we-manage/', 'What RL Property Management manages'))
 
+    # ---- Hero metrics: the kit's signature big-number strip -----------------
+    metrics = []
+    if pop:
+        metrics.append((f'{pop:,}', 'Population', f'{p.get("populationYear", "")} census'.strip()))
+    if p.get('distanceMilesFromDowntown') is not None:
+        metrics.append((f"{p['distanceMilesFromDowntown']} mi", 'From downtown Columbus', ''))
+    if rent_ctx:
+        r0 = rent_ctx[0]
+        metrics.append((r0['value'], r0['label'], f"{r0['source']}, {r0['asOf']}"))
+    if districts:
+        metrics.append((str(len(districts)), 'School district' + ('s' if len(districts) != 1 else ''), districts[0] if len(districts) == 1 else 'Varies by street'))
+    metrics = metrics[:4]
+
     fm = ['---']
     fm.append(f'title: {y(title)}')
     fm.append(f'seoTitle: {y(seo)}')
@@ -266,13 +284,19 @@ def build(p):
     if soi.get('note'):
         fm.append(f'  note: {y(soi["note"])}')
     fm.append('localRegulation: [' + ', '.join(y(r) for r in regs) + ']')
+    fm.append('metrics:' if metrics else 'metrics: []')
+    for v, l, c in metrics:
+        fm.append(f'  - value: {y(v)}')
+        fm.append(f'    label: {y(l)}')
+        if c:
+            fm.append(f'    caption: {y(c)}')
     if guide:
         fm.append(f'marketGuideSlug: {y(guide)}')
     if p.get('geo'):
         fm.append(f'geo: {{ latitude: {p["geo"]["latitude"]}, longitude: {p["geo"]["longitude"]} }}')
     fm.append('---')
 
-    # Body: distinct per place, built from what the research actually found.
+    # ---- Body ---------------------------------------------------------------
     b = []
     b.append(f'## What is it like to own a rental in {name}?')
     b.append('')
@@ -280,7 +304,6 @@ def build(p):
     kind_phrase = 'a Columbus neighborhood' if is_nbhd else f'{art} {kind}'
     intro = f'{name} is {kind_phrase} in {county}'
     if rel:
-        # The research sentence often repeats the kind; strip that lead-in before appending.
         r = re.sub(r'^(Located|Situated)\s+', '', rel).strip()
         r = re.sub(r'^(a|an)\s+(Columbus\s+)?(neighborhood|city|village|township|unincorporated community)\s+', '', r, flags=re.I)
         intro += f', {r[0].lower() + r[1:]}'.rstrip('.')
@@ -288,10 +311,74 @@ def build(p):
     if pop:
         intro += f' Population is approximately {pop:,}.'
     if marks:
-        intro += f' Local landmarks and anchors include {sentence_list(marks[:4])}.'
-    if notes:
-        intro += f' {notes}'
+        intro += f' Local anchors include {sentence_list(marks[:4])}.'
     b.append(re.sub(r'\s+', ' ', intro).strip())
+    b.append('')
+
+    # The research notes carry the genuinely local detail: employers, housing stock, HOA rules,
+    # competing supply. Render them as prose rather than discarding them.
+    if notes:
+        b.append(f'## What should an owner know about the {name} rental market?')
+        b.append('')
+        b.append(notes)
+        b.append('')
+
+    # ---- Rules that apply here: a table, positive framing for each place ----
+    b.append(f'## Which rental rules apply in {name}?')
+    b.append('')
+    b.append(f'The table below lists the rules RL Property Management checks for a {name} property, and whether each one applies, as of August 2026. Rules are set at the state, county, and municipal level, so two properties a few miles apart can sit under different requirements.')
+    b.append('')
+    big_county = any(c in county for c in ['Franklin', 'Delaware', 'Licking', 'Fairfield'])
+    reg_text = ' '.join(regs)
+    rows = []
+    rows.append((
+        'Source-of-income protection',
+        'Applies' if soi.get('applies') else 'Does not apply',
+        (f"{name} prohibits refusing an applicant solely because they would pay with a housing voucher."
+         if soi.get('applies')
+         else f"No municipal ordinance in {name}, and Ohio has no statewide protection. A voucher may still be accepted by choice."),
+    ))
+    rows.append((
+        'County rental registration (ORC 5323.02)',
+        'Applies' if 'Franklin' in county else ('Check by parcel' if big_county else 'Does not apply'),
+        ('Owners must file contact information with the county auditor within 60 days. Registration is free and one time; the penalty for missing it is $150 per property per tax year.'
+         if 'Franklin' in county
+         else 'The requirement covers counties over 200,000 residents, so it turns on which county the parcel sits in.'),
+    ))
+    if 'short-term' in reg_text.lower() or 'Chapter 598' in reg_text:
+        rows.append((
+            'Short-term rental permit',
+            'Applies',
+            'Rentals under 30 consecutive days need a City of Columbus short-term rental permit, zoning clearance, and liability coverage. Standard 12-month leases are unaffected.',
+        ))
+    if 'historic' in reg_text.lower() or 'Commission' in reg_text or 'Architectural Review' in reg_text:
+        rows.append((
+            'Historic or architectural review',
+            'Applies',
+            'Exterior changes need approval before work starts, which adds time and cost to turns and capital items.',
+        ))
+    if 'HOA' in notes or 'homeowners association' in notes.lower():
+        rows.append((
+            'HOA rental restrictions',
+            'Common',
+            f'Many {name} neighborhoods sit under an association with rental caps or leasing rules. RL Property Management checks the association documents before a property is listed.',
+        ))
+    b.append('<div class="table-wrap">')
+    b.append('<table>')
+    b.append(f'<caption>Rental rules checked for a {name}, Ohio property, as of August 2026</caption>')
+    b.append('<thead><tr><th scope="col">Rule</th><th scope="col">Status</th><th scope="col">What it means for an owner</th></tr></thead>')
+    b.append('<tbody>')
+    for label, status, meaning in rows:
+        b.append(f'<tr><th scope="row">{label}</th><td><strong>{status}</strong></td><td>{meaning}</td></tr>')
+    b.append('</tbody></table></div>')
+    b.append('')
+    if regs:
+        b.append('Sources and detail:')
+        b.append('')
+        for r in regs:
+            b.append(f'- {r}')
+        b.append('')
+    b.append('This summary is informational and is not legal advice. Local rules change; RL Property Management tracks them in the [weekly Central Ohio landlord policy update](/policy-updates/).')
     b.append('')
 
     if hoods:
@@ -306,17 +393,21 @@ def build(p):
     b.append('')
     who = f'Renter demand in {name} tracks the local drivers: '
     drivers = []
+    nl = (notes or '').lower()
     if districts:
         drivers.append(f'families choosing {sentence_list(districts)}')
-    if any(k in (notes or '').lower() for k in ('university', 'college', 'ohio state', 'osu')):
+    if any(k in nl for k in ('university', 'college', 'ohio state', 'osu', 'student')):
         drivers.append('students and university staff')
-    if any(k in (notes or '').lower() for k in ('intel', 'honda', 'amazon', 'employer', 'jobs')):
-        drivers.append('workers at nearby employers')
+    if any(k in nl for k in ('intel', 'honda', 'amazon', 'employer', 'cardinal health', 'ohiohealth', 'corporate')):
+        drivers.append('employees of nearby major employers, including corporate relocations')
+    if any(k in nl for k in ('downtown', 'walkable', 'professionals', 'empty nester')):
+        drivers.append('professionals who want to be close to downtown')
     if not drivers:
         drivers.append('households working across the Columbus metro')
     who += sentence_list(drivers) + '. '
-    who += ('Screening applies the same published standard everywhere RL Property Management operates: household income of at least 3 times the monthly rent, '
-            'no evictions in the past 5 years, no violent criminal convictions, and verified rental history.')
+    who += ('Screening applies the same published standard everywhere RL Property Management operates: household income of at least 3 times '
+            'the monthly rent, no evictions in the past 5 years, no violent criminal convictions, and verified rental history, '
+            'applied consistently under federal, Ohio, and applicable local fair housing law.')
     b.append(who)
     b.append('')
 

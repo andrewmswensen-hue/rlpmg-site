@@ -73,10 +73,10 @@ if (import.meta.env.DEV && (description.length < 120 || description.length > 160
     <script type="application/ld+json" set:html={jsonld} />
     <slot name="head" />
   </head>
-  <body class:list={['min-h-screen flex flex-col bg-paper text-ink', bodyClass]}>
+  <body class:list={['flex min-h-screen flex-col bg-white text-ink', bodyClass]}>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-paper focus:px-4 focus:py-2 focus:outline focus:outline-2 focus:outline-accent-600"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:outline focus:outline-2 focus:outline-crimson"
       >Skip to content</a
     >
     <Header />

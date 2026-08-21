@@ -27,6 +27,12 @@ const faq = [
   { q: 'How do I find a rental managed by RL Property Management?', a: 'Current listings are on the Available Rentals page, with online applications and self-guided tours on many units.' },
 ];
 const schema = [webPageNode({ path, title, description }), faqNode(path, faq)];
+const metrics = [
+  { value: '750', label: 'Units managed', caption: 'Columbus metro, August 2026' },
+  { value: `${usd(pricing.plans[0].monthlyFee)}`, label: 'Flat monthly fee, from', caption: 'Per unit, any rent level' },
+  { value: `${usd(pricing.fees.leasingFee)}`, label: 'Leasing fee', caption: 'On all three plans' },
+  { value: `${company.reviews.ratingValue}/5`, label: 'Google rating', caption: `${company.reviews.reviewCount} reviews` },
+];
 const jobs = [
   { href: '/homes-for-rent/', label: 'What is available to rent?', sub: 'Current listings, applications, tours' },
   { href: '/pricing/', label: 'What does management cost?', sub: `${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month, ${usd(pricing.fees.leasingFee)} leasing fee` },
@@ -35,9 +41,14 @@ const jobs = [
 ---
 
 <Base {title} {description} {path} {schema}>
-  <AeoPage title="Property management in Columbus, Ohio" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow={`Flat-fee management, ${company.scale.unitsLabel} units`} related={[{ href: '/columbus-property-management/', label: 'Services' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/areas-we-serve/', label: 'Areas served' }, { href: '/faq/', label: 'Owner FAQ' }, { href: '/blog/', label: 'Blog' }]}>
-    <nav aria-label="Most common tasks" class="not-prose mb-12 grid gap-4 md:grid-cols-3" data-md-skip>
-      {jobs.map((j) => <a href={j.href} class="block border-t-4 border-brand-800 bg-offwhite p-5 no-underline hover:bg-gray"><span class="block text-lg font-semibold text-navy-800">{j.label}</span><span class="mt-1 block text-sm text-navy-600">{j.sub}</span></a>)}
+  <AeoPage title="Property management in Columbus, Ohio" {directAnswer} {keyFacts} {faq} {metrics} lastVerified={LAST_VERIFIED} eyebrow="Licensed Ohio brokerage since 2013" related={[{ href: '/columbus-property-management/', label: 'Services' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/areas-we-serve/', label: 'Areas served' }, { href: '/faq/', label: 'Owner FAQ' }, { href: '/blog/', label: 'Blog' }]}>
+    <nav aria-label="Most common tasks" class="not-prose mb-12 rl-grid rl-grid-3" data-md-skip>
+      {jobs.map((j) => (
+        <a href={j.href} class="rl-card accent no-underline transition-colors hover:bg-paper">
+          <span class="rl-card-title block">{j.label}</span>
+          <span class="mt-1 block text-sm text-muted">{j.sub}</span>
+        </a>
+      ))}
     </nav>
 
     <h2>How much does property management cost in Columbus, Ohio?</h2>
