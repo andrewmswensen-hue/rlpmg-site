@@ -1,0 +1,29 @@
+---
+import { longDate } from '../lib/format';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  showType?: boolean;
+}
+const { posts, showType = false } = Astro.props;
+const LABEL: Record<string, string> = {
+  'market-guide': 'Market guide',
+  'policy-update': 'Policy update',
+  podcast: 'Podcast',
+  article: 'Article',
+};
+---
+
+<ul class="not-prose grid gap-6 sm:grid-cols-2" style="list-style:none;padding-left:0">
+  {posts.map((p) => (
+    <li class="border-t-2 border-gray pt-4">
+      {showType && <p class="text-xs font-semibold uppercase tracking-wider text-accent-600">{LABEL[p.data.type]}</p>}
+      <h3 class="mt-1 text-lg font-semibold leading-snug">
+        <a href={`/blog/${p.id}/`} class="text-navy-800 no-underline hover:text-brand-800 hover:underline">{p.data.title}</a>
+      </h3>
+      <p class="mt-1 text-xs text-navy-600">{longDate(p.data.pubDate)}</p>
+      {p.data.description && <p class="mt-2 text-sm leading-relaxed">{p.data.description}</p>}
+    </li>
+  ))}
+</ul>

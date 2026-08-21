@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;800&display=swap">
 <style>
 /* ============================================================================
-   RL Property Management — Rent vs. Sell Calculator
+   RL Property Management: Rent vs. Sell Calculator
    Brand tokens are HARDCODED (not CSS custom properties) on purpose:
    rlpmg.com's WordPress editor strips custom properties from pasted HTML.
      Maroon  #59070e   Crimson #a60530   Navy   #123143
@@ -649,7 +649,7 @@
 
 <script>
 /* ===================== ENGINE-START =====================
-   Rent vs. Sell — calculation engine.
+   Rent vs. Sell: calculation engine.
    Pure functions, no DOM. Every number the page shows comes from here.
    ======================================================== */
 var RVS = (function () {
@@ -865,7 +865,7 @@ var RVS = (function () {
 
   /* Starting scenario: a representative Franklin County single-family home.
      Median-ish value, a loan taken out a few years ago, market rent for the
-     house as-is. Deliberately NOT tuned to make renting look good — at these
+     house as-is. Deliberately NOT tuned to make renting look good. At these
      numbers renting wins on wealth but still costs about  a month to carry,
      which is the honest tradeoff most owners are actually weighing. */
   var DEFAULTS = {
@@ -1083,10 +1083,10 @@ var RVS = (function () {
       $('verdictNote').textContent =
         'Everything else on this page is calculated from that number, so we need it first.';
       ['statCF','statSellNow','statUpfront','statBreakEven'].forEach(function (k) {
-        $(k).textContent = '—'; $(k).className = 'rvs-stat-val';
+        $(k).textContent = '–'; $(k).className = 'rvs-stat-val';
       });
-      $('statSellNowSub').textContent = '—';
-      $('statBreakEvenSub').textContent = '—';
+      $('statSellNowSub').textContent = '–';
+      $('statBreakEvenSub').textContent = '–';
       $('tbody').innerHTML = '';
       $('chartNote').textContent = '';
       var svg = $('chart');
@@ -1111,7 +1111,7 @@ var RVS = (function () {
         'renting for ' + s.years + ' years and then selling.';
     if (favorsRent && s.monthlyCashFlowY1 < 0) {
       note += ' Note that renting still costs you ' + money(Math.abs(s.monthlyCashFlowY1)) +
-              ' a month out of pocket in year one — the gain here is equity and appreciation, not income.';
+              ' a month out of pocket in year one. The gain here is equity and appreciation, not income.';
     }
     $('verdictNote').textContent = note;
 
@@ -1143,7 +1143,7 @@ var RVS = (function () {
     $('pmtHint').textContent = state.mortgageBalance > 0 ? money(R.payment) + '/mo' : 'none, the house is paid off';
     var yTax = state.propertyTaxMode === 'percent'
       ? state.homeValue * (state.propertyTaxRate / 100) : state.propertyTaxMonthly * 12;
-    $('taxHint').innerHTML = '<strong>' + money(yTax / 12) + '/mo</strong> — ' + money(yTax) + ' a year';
+    $('taxHint').innerHTML = '<strong>' + money(yTax / 12) + '/mo</strong>, ' + money(yTax) + ' a year';
     $('insHint').innerHTML = 'As a rental, with the ' + state.landlordInsBump + '% landlord markup: <strong>' +
       money(state.insuranceMonthly * (1 + state.landlordInsBump / 100)) + '/mo</strong>';
     $('pmHint').innerHTML = 'About <strong>' + money(state.monthlyRent * state.pmRate / 100) + '/mo</strong> at today’s rent';
@@ -1171,7 +1171,7 @@ var RVS = (function () {
       html += '<tr data-year="' + r.year + '">' +
         '<td>' + r.year + '</td>' +
         '<td>' + money(r.collectedRent) + '</td>' +
-        '<td>' + (r.mortgagePaid > 0 ? '−' + money(r.mortgagePaid) : '—') + '</td>' +
+        '<td>' + (r.mortgagePaid > 0 ? '−' + money(r.mortgagePaid) : '–') + '</td>' +
         '<td>−' + money(r.opex) + '</td>' +
         '<td class="' + (r.netCashFlow >= 0 ? 'pos' : 'neg') + '">' + moneySigned(r.netCashFlow) + '</td>' +
         '<td>' + money(r.houseValue) + '</td>' +

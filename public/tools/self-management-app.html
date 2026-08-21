@@ -532,8 +532,8 @@ const categories = [
     subtitle: 'Evictions, fair housing, lease disputes, attorney retainers',
     rowClass: 'two-col',
     fields: [
-      { id: 'evictionCost', label: 'Avg cost per eviction', type: 'currency', default: 2500, min: 0, max: 15000, step: 100, hint: 'Attorney fees, court costs, lost rent — $2,500-$5,000 in Ohio' },
-      { id: 'evictionsPerYear', label: 'Evictions per year', type: 'number', default: 0, min: 0, max: 20, step: 1, hint: 'Industry avg ~3.5% of units — most small portfolios see 0-1/yr' },
+      { id: 'evictionCost', label: 'Avg cost per eviction', type: 'currency', default: 2500, min: 0, max: 15000, step: 100, hint: 'Attorney fees, court costs, lost rent ,  $2,500-$5,000 in Ohio' },
+      { id: 'evictionsPerYear', label: 'Evictions per year', type: 'number', default: 0, min: 0, max: 20, step: 1, hint: 'Industry avg ~3.5% of units ,  most small portfolios see 0-1/yr' },
       { id: 'legalRetainer', label: 'Annual legal retainer', type: 'currency', default: 1000, min: 0, max: 10000, step: 100, hint: 'Lease reviews, compliance questions, dispute consults' },
       { id: 'fairHousingRisk', label: 'Fair housing reserve', type: 'currency', default: 500, min: 0, max: 10000, step: 100, hint: 'Even one complaint can cost $5k-$50k. This is the annualized reserve.' }
     ],
@@ -558,7 +558,7 @@ const categories = [
     title: 'Vacancy Loss',
     subtitle: 'How many total days did your units sit empty last year?',
     fields: [
-      { id: 'totalVacantDays', label: 'Total vacant days last year (across all units)', type: 'number', default: 25, min: 0, max: 365, step: 1, hint: 'Add up all the days any of your units were sitting empty — Columbus avg is ~23 days per turnover' }
+      { id: 'totalVacantDays', label: 'Total vacant days last year (across all units)', type: 'number', default: 25, min: 0, max: 365, step: 1, hint: 'Add up all the days any of your units were sitting empty ,  Columbus avg is ~23 days per turnover' }
     ],
     calc: (v, doors, avgRent) => {
       const dailyRent = avgRent / 30;
@@ -572,7 +572,7 @@ const categories = [
     title: 'Maintenance & Repairs',
     subtitle: 'What you\'re spending on vendors, repairs, and upkeep',
     fields: [
-      { id: 'annualMaintenance', label: 'What do you spend on maintenance per year?', type: 'currency', default: 12000, min: 0, max: 100000, step: 500, hint: 'Total across all doors — HVAC, plumbing, electrical, handyman, landscaping, etc.' }
+      { id: 'annualMaintenance', label: 'What do you spend on maintenance per year?', type: 'currency', default: 12000, min: 0, max: 100000, step: 500, hint: 'Total across all doors ,  HVAC, plumbing, electrical, handyman, landscaping, etc.' }
     ],
     calc: (v) => v.annualMaintenance * 0.20
   },
@@ -630,7 +630,7 @@ const categories = [
     icon: '👥',
     colorClass: 'bg-staff',
     title: 'Staff & Contractor Costs',
-    subtitle: 'Any help you\'ve hired — assistants, maintenance staff, VAs',
+    subtitle: 'Any help you\'ve hired ,  assistants, maintenance staff, VAs',
     fields: [
       { id: 'staffMonthly', label: 'Monthly staff/contractor costs', type: 'currency', default: 0, min: 0, max: 10000, step: 100, hint: 'Part-time assistant, maintenance person, virtual assistant, etc.' }
     ],
@@ -725,7 +725,7 @@ function calculate() {
   // Update marketing subtitle with computed turnovers
   const turnovers = Math.floor(doors * 0.30);
   const marketingSub = document.querySelector('#section-marketing .cost-header-text p');
-  if (marketingSub) marketingSub.textContent = 'Estimated ' + turnovers + ' turnover' + (turnovers !== 1 ? 's' : '') + '/yr based on ' + doors + ' doors — photography, listing fees, advertising';
+  if (marketingSub) marketingSub.textContent = 'Estimated ' + turnovers + ' turnover' + (turnovers !== 1 ? 's' : '') + '/yr based on ' + doors + ' doors ,  photography, listing fees, advertising';
 
   const pmFeeAnnual = pmFlatRate * doors * 12;
   const diff = totalSelf - pmFeeAnnual;

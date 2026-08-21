@@ -1,0 +1,102 @@
+---
+/** Shared chrome for a blog post: byline, dates, body, newsletter, related posts by category. */
+import '../styles/blog.css';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { longDate, slugify } from '../lib/format';
+import { company } from '../data/facts';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+  crumbs: { name: string; path: string }[];
+}
+const { entry, crumbs } = Astro.props;
+const d = entry.data;
+
+const all = await getCollection('blog', ({ data }) => !data.draft);
+const related = all
+  .filter((p) => p.id !== entry.id && p.data.categories.some((c) => d.categories.includes(c)))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 4);
+
+const TYPE_LABEL: Record<string, { label: string; href: string }> = {
+  'market-guide': { label: 'Neighborhood rental market guide', href: '/guides/' },
+  'policy-update': { label: 'Central Ohio landlord policy update', href: '/policy-updates/' },
+  podcast: { label: 'Owner Occupied podcast', href: '/blog/category/owner-occupied-podcast/' },
+  article: { label: 'Article', href: '/blog/' },
+};
+const kind = TYPE_LABEL[d.type];
+const updated = d.updatedDate && d.updatedDate.getTime() - d.pubDate.getTime() > 86400000;
+---
+
+<article class="mx-auto max-w-3xl px-5 py-10">
+  <nav aria-label="Breadcrumb" class="mb-6 text-sm text-navy-600" data-md-skip>
+    <ol class="flex flex-wrap gap-2">
+      {crumbs.map((b, i) => (
+        <li>
+          {i > 0 && <span aria-hidden="true" class="mr-2">/</span>}
+          {i === crumbs.length - 1 ? (
+            <span aria-current="page" class="line-clamp-1">{b.name}</span>
+          ) : (
+            <a href={b.path} class="underline underline-offset-2">{b.name}</a>
+          )}
+        </li>
+      ))}
+    </ol>
+  </nav>
+
+  <header>
+    <p class="text-sm font-semibold uppercase tracking-wider text-accent-600">
+      <a href={kind.href} class="no-underline hover:underline">{kind.label}</a>
+    </p>
+    <h1 class="mt-2 text-4xl md:text-5xl">{d.title}</h1>
+    <p class="mt-4 text-sm text-navy-600">
+      By {d.author}, {company.name}. Published {longDate(d.pubDate)}{updated && <> · Updated {longDate(d.updatedDate!)}</>}
+    </p>
+    {d.description && <p class="direct-answer mt-5 text-lg leading-relaxed">{d.description}</p>}
+  </header>
+
+  <div class="post-body mt-8">
+    <slot />
+  </div>
+
+  <footer class="mt-12 border-t border-gray pt-6">
+    {d.categories.length > 0 && (
+      <p class="text-sm">
+        Filed under:{' '}
+        {d.categories.map((c, i) => (
+          <>
+            {i > 0 && ', '}
+            <a href={`/blog/category/${slugify(c)}/`} class="underline underline-offset-2">{c}</a>
+          </>
+        ))}
+      </p>
+    )}
+    <p class="mt-4 text-sm text-navy-600">
+      Information in this article reflects conditions as of {longDate(d.updatedDate ?? d.pubDate)} and is informational, not legal, tax, or investment advice.
+    </p>
+
+    <aside class="mt-8 border-l-4 border-brand-800 bg-offwhite p-6">
+      <h2 class="text-xl font-semibold text-navy-800">Own a rental in Central Ohio?</h2>
+      <p class="mt-2">
+        {company.name} manages approximately 750 units across the Columbus metro for a flat monthly fee with a $0 leasing fee.
+      </p>
+      <p class="mt-3 flex flex-wrap gap-3">
+        <a href="/free-rent-evaluation/" class="bg-brand-800 px-4 py-2 font-semibold text-white no-underline hover:bg-accent-600">Get a free rent evaluation</a>
+        <a href="/pricing/" class="border border-navy-800 px-4 py-2 font-semibold text-navy-800 no-underline hover:bg-gray">View pricing</a>
+      </p>
+    </aside>
+
+    {related.length > 0 && (
+      <nav aria-labelledby="related-posts" class="mt-10">
+        <h2 id="related-posts" class="text-sm font-semibold uppercase tracking-wider text-navy-800">Related reading</h2>
+        <ul class="mt-3 space-y-2">
+          {related.map((p) => (
+            <li>
+              <a href={`/blog/${p.id}/`} class="text-brand-800 underline underline-offset-2 hover:text-accent-600">{p.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </footer>
+</article>

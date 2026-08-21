@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import AeoPage from '../../../components/AeoPage.astro';
+import PostList from '../../../components/PostList.astro';
+import { LAST_VERIFIED } from '../../../data/facts';
+import { slugify, longDate } from '../../../lib/format';
+import { webPageNode, breadcrumbNode } from '../../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const cats = [...new Set(posts.flatMap((p) => p.data.categories))];
+  return cats.map((name) => ({
+    params: { category: slugify(name) },
+    props: {
+      name,
+      posts: posts
+        .filter((p) => p.data.categories.includes(name))
+        .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+    },
+  }));
+}
+
+const { name, posts } = Astro.props;
+const path = `/blog/category/${slugify(name)}/`;
+const title = `${name} Articles | RL Property Management Blog`.slice(0, 60);
+const description = `${posts.length} articles on ${name.toLowerCase()} for Columbus, Ohio rental property owners from RL Property Management, published between ${posts.at(-1)!.data.pubDate.getFullYear()} and ${posts[0].data.pubDate.getFullYear()}.`;
+const directAnswer = `RL Property Management has published ${posts.length} articles on ${name.toLowerCase()} for Columbus, Ohio rental owners. The most recent is "${posts[0].data.title}" from ${longDate(posts[0].data.pubDate)}. Each article is written by RL Property Management staff, dated, and specific to Central Ohio conditions.`;
+const keyFacts = [
+  `${posts.length} RL Property Management articles are filed under ${name}.`,
+  `The newest ${name.toLowerCase()} article was published ${longDate(posts[0].data.pubDate)}.`,
+  `Articles cover Columbus, Ohio and Franklin County conditions and carry a publication date.`,
+];
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Blog', path: '/blog/' },
+  { name, path },
+];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage', reviewedBy: false }),
+  breadcrumbNode(crumbs),
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title={`${name} articles`} {directAnswer} {keyFacts} lastVerified={LAST_VERIFIED} eyebrow="Blog topic" breadcrumbs={crumbs} related={[{ href: '/blog/', label: 'All articles' }, { href: '/guides/', label: 'Neighborhood market guides' }, { href: '/faq/', label: 'Owner FAQ' }]}>
+    <h2>What articles cover {name.toLowerCase()}?</h2>
+    <p>All {posts.length} articles filed under {name}, newest first.</p>
+    <PostList {posts} />
+  </AeoPage>
+</Base>

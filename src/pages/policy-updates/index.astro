@@ -1,0 +1,80 @@
+---
+/** Date-indexed archive of the weekly Central Ohio landlord policy update. Posts keep their /blog/ URLs. */
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { LAST_VERIFIED, company } from '../../data/facts';
+import { longDate } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/policy-updates/';
+const updates = (await getCollection('blog', ({ data }) => data.type === 'policy-update' && !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+const byYear = [...new Set(updates.map((u) => u.data.pubDate.getFullYear()))].sort((a, b) => b - a);
+const latest = updates[0];
+
+const title = 'Central Ohio Landlord Policy Updates | RL Property Management';
+const description = `Weekly policy updates for Central Ohio rental owners from RL Property Management: legislation, court rules, and local ordinances affecting landlords in Columbus and Franklin County. ${updates.length} editions.`;
+const directAnswer = `RL Property Management publishes a weekly Central Ohio landlord policy update covering legislation, court decisions, and municipal ordinances that affect rental owners in Columbus and Franklin County. ${updates.length} editions are archived here, the most recent published ${longDate(latest.data.pubDate)}. Each edition summarizes what changed, what it means for an owner, and what to watch next.`;
+const keyFacts = [
+  `${updates.length} editions of the Central Ohio landlord policy update are archived as of August 2026.`,
+  `The series covers Ohio legislation, Franklin County court practice, and municipal ordinances in Columbus and surrounding suburbs.`,
+  `The most recent edition was published ${longDate(latest.data.pubDate)}.`,
+  `Editions are informational summaries for rental owners and are not legal advice.`,
+];
+const faq = [
+  { q: 'How often is the policy update published?', a: 'Weekly. Each edition is dated and archived here.' },
+  { q: 'What does the policy update cover?', a: 'Ohio state legislation, Franklin County Municipal Court practice and fees, and municipal ordinances in Columbus and Central Ohio suburbs that affect rental owners.' },
+  { q: 'Is this legal advice?', a: 'No. The updates are informational summaries for rental owners. Specific situations need an attorney.' },
+  { q: 'How do I get the update by email?', a: 'Each edition includes a newsletter signup. Subscribers receive the update the day it publishes.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Policy updates', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage' }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  {
+    '@type': 'ItemList',
+    '@id': `${company.url}${path}#list`,
+    name: 'Central Ohio landlord policy updates',
+    numberOfItems: updates.length,
+    itemListElement: updates.map((u, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: u.data.title,
+      url: `${company.url}/blog/${u.id}/`,
+    })),
+  },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Central Ohio landlord policy updates" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Published weekly" breadcrumbs={crumbs} related={[{ href: '/services/evictions/', label: 'How evictions work in Franklin County' }, { href: '/blog/', label: 'All articles' }, { href: '/faq/', label: 'Owner FAQ' }, { href: '/rss.xml', label: 'RSS feed' }]}>
+    <h2>What is the latest policy update?</h2>
+    <p>
+      The most recent edition is <a href={`/blog/${latest.id}/`}>{latest.data.title}</a>, published {longDate(latest.data.pubDate)}.
+      {latest.data.description && <> {latest.data.description}</>}
+    </p>
+
+    <h2>Where is the full archive?</h2>
+    <p>All {updates.length} editions, newest first. Each edition keeps its original address on the blog.</p>
+    {byYear.map((y) => (
+      <>
+        <h3>{y}</h3>
+        <ul>
+          {updates.filter((u) => u.data.pubDate.getFullYear() === y).map((u) => (
+            <li>
+              <a href={`/blog/${u.id}/`}>{u.data.title}</a>
+              <span class="text-sm text-navy-600"> · {longDate(u.data.pubDate)}</span>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+
+    <h2>Why does a property manager track policy?</h2>
+    <p>Because rules that change quietly cost owners money: a filing fee schedule, a rental registration deadline, a notice requirement, a source-of-income ordinance in one suburb but not the next. RL Property Management tracks these for the approximately 750 units it manages and publishes the summary rather than keeping it internal.</p>
+    <p class="text-sm text-navy-600">Policy updates are informational summaries as of their publication date and are not legal advice. Confirm specifics with an attorney.</p>
+  </AeoPage>
+</Base>

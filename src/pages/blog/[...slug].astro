@@ -1,0 +1,51 @@
+---
+/** One page per migrated or new post, at the existing /blog/<slug>/ URL. */
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostLayout from '../../components/PostLayout.astro';
+import { articleNode, webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const path = `/blog/${entry.id}/`;
+const title = d.seoTitle ?? `${d.title} | RL Property Management`;
+const description = d.description ?? d.title;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Blog', path: '/blog/' },
+  { name: d.title, path },
+];
+const schema: unknown[] = [
+  webPageNode({
+    path,
+    title,
+    description,
+    dateModified: d.updatedDate?.toISOString().slice(0, 10),
+    datePublished: d.pubDate.toISOString().slice(0, 10),
+    reviewedBy: false,
+  }),
+  articleNode({
+    path,
+    title: d.title,
+    description,
+    datePublished: d.pubDate.toISOString(),
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString(),
+    author: d.author,
+    image: d.heroImage,
+  }),
+  breadcrumbNode(crumbs),
+];
+if (d.faq?.length) schema.push(faqNode(path, d.faq));
+---
+
+<Base {title} {description} {path} {schema} type="article" ogImage={d.heroImage}>
+  <PostLayout entry={entry} {crumbs}>
+    <Content />
+  </PostLayout>
+</Base>

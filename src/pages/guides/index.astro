@@ -1,0 +1,72 @@
+---
+/** Curated index of the neighborhood rental market guides. The guides keep their /blog/ URLs. */
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { LAST_VERIFIED, company } from '../../data/facts';
+import { longDate } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/guides/';
+const guides = (await getCollection('blog', ({ data }) => data.type === 'market-guide' && !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+const years = [...new Set(guides.map((g) => g.data.pubDate.getFullYear()))].sort((a, b) => b - a);
+
+const title = 'Columbus Neighborhood Rental Market Guides | RLPM';
+const description = `${guides.length} neighborhood rental market guides for Columbus, Ohio from RL Property Management, covering rent levels, housing stock, and demand in German Village, Clintonville, Dublin, Westerville, and more.`;
+const directAnswer = `RL Property Management publishes ${guides.length} rental market guides for Columbus, Ohio neighborhoods and suburbs, each covering local rent levels, housing stock, tenant demand, and what an owner should expect from a rental there. The most recent guide is "${guides[0].data.title}", published ${longDate(guides[0].data.pubDate)}. Each guide is dated and written for owners deciding where to buy or how to price.`;
+const keyFacts = [
+  `RL Property Management has published ${guides.length} Columbus-area neighborhood rental market guides as of August 2026.`,
+  `Guides cover both city neighborhoods (German Village, Clintonville, Short North, Grandview Heights) and suburbs (Dublin, Westerville, Hilliard, Powell, New Albany).`,
+  `The most recent guide was published ${longDate(guides[0].data.pubDate)}.`,
+  `Each guide states rent context with a source and a date rather than general impressions.`,
+];
+const faq = [
+  { q: 'What is in a rental market guide?', a: 'Local rent levels, the kind of housing stock available, who rents in the area, school districts, and what an owner should expect on pricing and demand.' },
+  { q: 'How current are the guides?', a: 'Each guide carries a publication date and is refreshed as conditions change. Figures inside cite their own source and date.' },
+  { q: 'Do the guides cover suburbs as well as city neighborhoods?', a: 'Yes. Both Columbus neighborhoods and Franklin, Delaware, and Licking County suburbs are covered.' },
+  { q: 'Can I get a rent estimate for a specific address?', a: `Yes. A free rent evaluation from ${company.name} gives a property-level range rather than a neighborhood average.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Neighborhood guides', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage' }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  {
+    '@type': 'ItemList',
+    '@id': `${company.url}${path}#list`,
+    name: 'Columbus neighborhood rental market guides',
+    numberOfItems: guides.length,
+    itemListElement: guides.map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: g.data.title,
+      url: `${company.url}/blog/${g.id}/`,
+    })),
+  },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Columbus neighborhood rental market guides" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/areas-we-serve/', label: 'Areas RL Property Management serves' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }, { href: '/blog/', label: 'All articles' }, { href: '/2026-columbus-market-report/', label: '2026 Columbus market report' }]}>
+    <h2>Which Columbus neighborhoods have a rental market guide?</h2>
+    <p>All {guides.length} guides are listed below, newest first. Each one is a full article covering rent levels, housing stock, and demand in that neighborhood or suburb.</p>
+    {years.map((y) => (
+      <>
+        <h3>{y} guides</h3>
+        <ul>
+          {guides.filter((g) => g.data.pubDate.getFullYear() === y).map((g) => (
+            <li>
+              <a href={`/blog/${g.id}/`}>{g.data.title}</a>
+              <span class="text-sm text-navy-600"> · {longDate(g.data.pubDate)}</span>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+
+    <h2>How should an owner use a market guide?</h2>
+    <p>To set expectations before buying or pricing. A guide gives the range a neighborhood supports and the kind of resident who rents there. It does not price a specific property: condition, layout, parking, and timing move a single address well off the neighborhood average. Pair a guide with a <a href="/free-rent-evaluation/">free rent evaluation</a> for the address in question.</p>
+  </AeoPage>
+</Base>

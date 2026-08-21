@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import PostList from '../../components/PostList.astro';
+import { company, LAST_VERIFIED } from '../../data/facts';
+import { slugify, longDate } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/blog/';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+const recent = posts.slice(0, 24);
+const cats = [...new Set(posts.flatMap((p) => p.data.categories))]
+  .map((c) => ({ name: c, count: posts.filter((p) => p.data.categories.includes(c)).length }))
+  .sort((a, b) => b.count - a.count);
+const guides = posts.filter((p) => p.data.type === 'market-guide').length;
+const policy = posts.filter((p) => p.data.type === 'policy-update').length;
+const newest = posts[0];
+
+const title = 'Columbus, Ohio Rental Property Blog | RL Property Management';
+const description = `${posts.length} articles for Central Ohio rental owners from RL Property Management: pricing, leasing, maintenance, evictions, Columbus neighborhood market guides, and weekly landlord policy updates.`;
+const directAnswer = `RL Property Management publishes ${posts.length} articles for rental owners in Columbus, Ohio, covering leasing, screening, maintenance, evictions, and investing. The library includes ${guides} neighborhood rental market guides and ${policy} weekly Central Ohio landlord policy updates. The most recent post is "${newest.data.title}", published ${longDate(newest.data.pubDate)}.`;
+const keyFacts = [
+  `The RL Property Management blog holds ${posts.length} published articles as of August 2026.`,
+  `${guides} Columbus neighborhood rental market guides cover rent levels and conditions block by block.`,
+  `${policy} Central Ohio landlord policy updates track legislation and code changes affecting rental owners.`,
+  `Articles are written by ${company.brokerOfRecord.name} and RL Property Management staff and are dated at publication and update.`,
+];
+const faq = [
+  { q: 'What does the RL Property Management blog cover?', a: 'Owner education on leasing, screening, rent collection, maintenance, evictions, and investing in Central Ohio rentals, plus neighborhood market guides and policy updates.' },
+  { q: 'How often are new articles published?', a: 'Weekly, with the Central Ohio landlord policy update running on its own weekly cadence.' },
+  { q: 'Who writes the articles?', a: `${company.brokerOfRecord.name}, ${company.brokerOfRecord.title}, and RL Property Management staff. Each article carries an author and a publication date.` },
+  { q: 'Is the advice specific to Ohio?', a: 'Yes. Legal and market content is written for Columbus, Franklin County, and Central Ohio, and carries a date. It is informational, not legal advice.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Blog', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage', reviewedBy: false }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage
+    title="Rental property blog for Central Ohio owners"
+    {directAnswer}
+    {keyFacts}
+    {faq}
+    lastVerified={LAST_VERIFIED}
+    breadcrumbs={crumbs}
+    related={[
+      { href: '/guides/', label: 'Neighborhood rental market guides' },
+      { href: '/policy-updates/', label: 'Central Ohio landlord policy updates' },
+      { href: '/faq/', label: 'Owner FAQ' },
+      { href: '/rss.xml', label: 'RSS feed' },
+    ]}
+  >
+    <h2>What are the newest articles?</h2>
+    <p>The {recent.length} most recent posts appear below, newest first. The complete library of {posts.length} articles is browsable by topic underneath.</p>
+    <PostList posts={recent} showType />
+
+    <h2>What topics are covered?</h2>
+    <p>Articles are filed by topic. The largest categories are owner education, property management education, and investing in rental properties. Pick one to see its full list.</p>
+    <ul class="not-prose flex flex-wrap gap-2" style="list-style:none;padding-left:0">
+      {cats.map((c) => (
+        <li>
+          <a href={`/blog/category/${slugify(c.name)}/`} class="inline-block border border-gray px-3 py-1 text-sm no-underline hover:border-brand-800">
+            {c.name} <span class="text-navy-600">({c.count})</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2>Where do the market guides and policy updates live?</h2>
+    <p>Both series stay in the blog at their original addresses and are also collected on their own index pages: <a href="/guides/">neighborhood rental market guides</a> ({guides} guides) and <a href="/policy-updates/">Central Ohio landlord policy updates</a> ({policy} editions, published weekly).</p>
+  </AeoPage>
+</Base>
