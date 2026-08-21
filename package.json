@@ -15,7 +15,8 @@
     "deploy": "astro build && wrangler deploy",
     "deploy:preview": "astro build && wrangler versions upload",
     "check:schema": "node scripts/check-schema.mjs",
-    "verify": "npm run build && npm run check:schema && npm run lint:copy"
+    "verify": "npm run build && npm run check:schema && npm run lint:copy && npm run check:redirects",
+    "check:redirects": "node scripts/check-redirects.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.7",

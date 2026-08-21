@@ -1,0 +1,30 @@
+---
+/** Landing page for the Beehiiv unsubscribe link in the weekly policy update email. Slug preserved. */
+import Base from '../../layouts/Base.astro';
+import { company } from '../../data/facts';
+const path = '/weekly-policy-updates-unsubscribe-confirmed/';
+---
+
+<Base
+  title="Unsubscribe confirmed | RL Property Management"
+  description="You have been unsubscribed from the Central Ohio landlord policy update from RL Property Management. The archive stays free to read on rlpmg.com at any time."
+  {path}
+  noindex
+  markdownTwin={false}
+>
+  <section class="mx-auto max-w-3xl px-5 py-20">
+    <h1 class="text-4xl">Unsubscribe confirmed</h1>
+    <p class="mt-4 text-lg">
+      You are no longer subscribed to the weekly Central Ohio landlord policy update. No further emails in that series will arrive.
+    </p>
+    <p class="mt-4">
+      The full archive stays free to read at <a href="/policy-updates/" class="underline">rlpmg.com/policy-updates</a>, with no signup.
+    </p>
+    <p class="mt-6">
+      Unsubscribed by mistake, or want to change which emails you get? Email
+      <a href={`mailto:${company.contact.general.email}`} class="underline">{company.contact.general.email}</a>
+      or call <a href={`tel:${company.contact.general.phoneE164}`} class="underline">{company.contact.general.phone}</a>.
+    </p>
+    <p class="mt-8"><a href="/" class="underline">Back to the home page</a></p>
+  </section>
+</Base>

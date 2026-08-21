@@ -1,0 +1,540 @@
+---
+/**
+ * Migrated from WordPress. This page carries its own scoped CSS (Andrew's long-form kit), so the styles
+ * travel with the markup rather than using the site's Tailwind components.
+ * Regenerate with: python3 scripts/import-longform.py
+ */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode } from '../../lib/schema';
+
+const path = "/client-handbook/";
+const title = "Client Handbook | RL Property Management";
+const description = "The client handbook for RL Property Management owners in Columbus, Ohio: rent disbursement, maintenance reserves, leasing, evictions, fair housing standards, fees, and contacts.";
+const directAnswer = "The RL Property Management client handbook is the operating reference for property owners under management in Columbus, Ohio. It covers when rent is disbursed, how the maintenance reserve works, what happens during vacancy and leasing, how repairs are authorized and billed, lease renewals and rent increases, fair housing and screening standards, the full fee schedule, and who to contact for each type of question.";
+const keyFacts = [
+  "The handbook is the operating reference for current RL Property Management clients in Columbus, Ohio.",
+  "It covers rent disbursement timing, maintenance reserves, leasing, evictions, renewals, and the full fee schedule.",
+  "Fair housing standards cover federal, Ohio (military status), and Columbus (sexual orientation, gender identity, source of income) protected classes.",
+  "Terms in the signed Property Management Agreement control where the handbook and the agreement differ."
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: "RL Property Management client handbook", path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs)];
+// The page's own scoped CSS, migrated with the markup. is:inline keeps Tailwind's parser out of it
+// (the original stylesheet contains text Tailwind reads as a malformed at-rule).
+const migratedCss = " tag through the\n  final </div>) into a single Divi Code Module on a new page.\n\n  ALL CSS is scoped under `.rl-handbook` so it can't collide\n  with your Divi styles. Font: Open Sans (inherited from rlpmg.com).\n  All colors are hardcoded hex (no var()) so WordPress won't\n  strip them on paste.\n\n  PLACEHOLDERS TO REPLACE BEFORE PUBLISHING:\n  - PDF download link (search \"REPLACE-PDF-URL\")\n  - Any image marked \"REPLACE-IMAGE\" if you want different photos\n  - Confirm the flagged text items (see Andrew's notes / CLAUDE.md)\n  ============================================================\n-->\n\n<style>\n/* ============================================================\n   Scope: everything under .rl-handbook so Divi can't leak in.\n   ============================================================ */\n.rl-handbook {\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  color: #1a1a1a;\n  line-height: 1.55;\n  font-size: 17px;\n  background: #ffffff;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.rl-handbook *,\n.rl-handbook *::before,\n.rl-handbook *::after { box-sizing: border-box; }\n\n.rl-handbook h1,\n.rl-handbook h2,\n.rl-handbook h3,\n.rl-handbook h4,\n.rl-handbook h5,\n.rl-handbook h6 {\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  color: #123143;\n  line-height: 1.15;\n  margin: 0 0 12px 0;\n  font-weight: 800;\n  letter-spacing: -0.005em;\n  text-transform: none;\n}\n.rl-handbook p {\n  margin: 0 0 16px 0;\n  max-width: 68ch;\n  color: #1a1a1a;\n}\n.rl-handbook a {\n  color: #a60530;\n  text-decoration: underline;\n  text-decoration-thickness: 1px;\n  text-underline-offset: 3px;\n}\n.rl-handbook a:hover { color: #59070e; }\n.rl-handbook ul,\n.rl-handbook ol { margin: 0 0 16px 0; padding-left: 22px; }\n.rl-handbook li { margin-bottom: 8px; }\n.rl-handbook strong,\n.rl-handbook b { font-weight: 700; color: inherit; }\n\n/* ============================================================\n   Layout shell\n   ============================================================ */\n.rl-handbook .rl-container {\n  max-width: 1120px;\n  margin: 0 auto;\n  padding-left: clamp(20px, 5vw, 64px);\n  padding-right: clamp(20px, 5vw, 64px);\n  width: 100%;\n}\n.rl-handbook .rl-section {\n  padding-top: clamp(36px, 5vw, 60px);\n  padding-bottom: clamp(36px, 5vw, 60px);\n  border-bottom: 1px solid #dddddd;\n}\n.rl-handbook .rl-section:last-of-type { border-bottom: 0; }\n/* Cream backgrounds removed in favor of the thin gray divider line above. */\n.rl-handbook .rl-section.alt { background: transparent; }\n\n/* Faded image band: white text on a darkened photo with the brand overlay */\n.rl-handbook .rl-section.imgband {\n  position: relative;\n  overflow: hidden;\n  background: #123143;\n  color: #ffffff;\n  border-bottom: 0;\n  padding-left: clamp(24px, 4vw, 44px);\n  padding-right: clamp(24px, 4vw, 44px);\n}\n.rl-handbook .rl-section.imgband::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background-image: url('https://rlpmg.com/wp-content/uploads/2026/04/autumn-street.jpg'); /* REPLACE-IMAGE (section bands) */\n  background-size: cover;\n  background-position: center;\n  filter: saturate(0.85) brightness(0.65);\n  z-index: 0;\n}\n.rl-handbook .rl-section.imgband::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(180deg, rgba(18,49,67,0.88) 0%, rgba(89,7,14,0.88) 100%);\n  z-index: 1;\n}\n.rl-handbook .rl-section.imgband > * { position: relative; z-index: 2; }\n.rl-handbook .rl-section.imgband h2,\n.rl-handbook .rl-section.imgband h3,\n.rl-handbook .rl-section.imgband p,\n.rl-handbook .rl-section.imgband li,\n.rl-handbook .rl-section.imgband strong,\n.rl-handbook .rl-section.imgband b { color: #ffffff; }\n.rl-handbook .rl-section.imgband .rl-eyebrow { color: #f5dde3; }\n.rl-handbook .rl-section.imgband .rl-rule { background: #ffffff; }\n.rl-handbook .rl-section.imgband a { color: #ffffff; text-decoration-color: rgba(255,255,255,0.6); }\n/* Protect the white address card so it stays dark-on-light inside a band */\n.rl-handbook .rl-section.imgband .rl-address,\n.rl-handbook .rl-section.imgband .rl-address strong,\n.rl-handbook .rl-section.imgband .rl-address b { color: #1a1a1a; }\n.rl-handbook .rl-section.imgband .rl-address b { color: #123143; }\n.rl-handbook .rl-section.imgband .rl-address a { color: #a60530; }\n\n/* Eyebrow + brand rule */\n.rl-handbook .rl-eyebrow {\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.22em;\n  text-transform: uppercase;\n  color: #a60530;\n  margin-bottom: 10px;\n}\n.rl-handbook .rl-rule {\n  display: block;\n  width: 56px;\n  height: 3px;\n  background: #a60530;\n  margin: 14px 0 24px 0;\n}\n.rl-handbook .rl-h2 { font-size: clamp(28px, 4vw, 40px); }\n.rl-handbook .rl-lead { font-size: clamp(17px, 1.9vw, 20px); color: #123143; font-weight: 600; }\n\n/* ============================================================\n   HERO\n   ============================================================ */\n.rl-handbook .rl-hero {\n  position: relative;\n  min-height: 82vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 48px 0 56px;\n  background: #123143;\n  overflow: hidden;\n  color: #ffffff;\n}\n.rl-handbook .rl-hero::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background-image: url('https://rlpmg.com/wp-content/uploads/2026/04/hero-row-homes-scaled.jpg'); /* REPLACE-IMAGE (hero) */\n  background-size: cover;\n  background-position: center;\n  filter: saturate(0.85) brightness(0.6);\n  z-index: 0;\n}\n.rl-handbook .rl-hero::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(180deg, rgba(18,49,67,0.5) 0%, rgba(89,7,14,0.7) 55%, rgba(89,7,14,0.92) 100%);\n  z-index: 1;\n}\n.rl-handbook .rl-hero .rl-container { position: relative; z-index: 2; }\n.rl-handbook .rl-hero-top {\n  position: absolute;\n  top: 0; left: 0; right: 0;\n  z-index: 2;\n  padding: 28px 0;\n}\n.rl-handbook .rl-hero-top .rl-container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 12px;\n}\n.rl-handbook .rl-hero-label {\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.26em;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.95);\n}\n.rl-handbook .rl-hero-title-rule { width: 64px; height: 4px; background: #ffffff; margin-bottom: 22px; }\n.rl-handbook .rl-hero-kicker {\n  font-weight: 700;\n  font-size: 13px;\n  letter-spacing: 0.26em;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.95);\n  margin-bottom: 18px;\n}\n.rl-handbook .rl-hero h1 {\n  font-weight: 800;\n  font-size: clamp(40px, 7vw, 78px);\n  line-height: 1.0;\n  color: #ffffff;\n  letter-spacing: -0.02em;\n  margin: 0 0 20px 0;\n  max-width: 16ch;\n}\n.rl-handbook .rl-hero-year {\n  font-weight: 800;\n  font-size: clamp(48px, 8vw, 82px);\n  line-height: 0.9;\n  color: #a60530;\n  letter-spacing: -0.03em;\n  display: block;\n  margin: 0 0 24px 0;\n}\n.rl-handbook .rl-hero-subtitle {\n  font-size: clamp(16px, 1.7vw, 20px);\n  line-height: 1.5;\n  max-width: 600px;\n  color: rgba(255,255,255,0.95);\n  margin: 0;\n  font-weight: 600;\n}\n.rl-handbook .rl-hero-metrics {\n  margin-top: 44px;\n  padding-top: 28px;\n  border-top: 3px solid #a60530;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 24px;\n}\n.rl-handbook .rl-hero-metric .value {\n  font-weight: 800;\n  font-size: clamp(28px, 4vw, 42px);\n  color: #ffffff;\n  line-height: 1;\n  letter-spacing: -0.02em;\n}\n.rl-handbook .rl-hero-metric .label {\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  margin-top: 10px;\n  color: rgba(255,255,255,0.95);\n}\n.rl-handbook .rl-hero-metric .caption { font-size: 12px; margin-top: 4px; color: rgba(255,255,255,0.7); }\n\n/* Download band */\n.rl-handbook .rl-dl-band {\n  background: #f7f5f3;\n  padding: 30px 24px;\n  text-align: center;\n  border-bottom: 1px solid #dddddd;\n}\n.rl-handbook .rl-dl-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  background: #a60530;\n  color: #ffffff !important;\n  padding: 14px 30px;\n  font-weight: 800;\n  font-size: 13px;\n  letter-spacing: 0.16em;\n  text-transform: uppercase;\n  text-decoration: none !important;\n  border: 2px solid #a60530;\n  transition: all 160ms;\n}\n.rl-handbook .rl-dl-btn:hover { background: #59070e; border-color: #59070e; color: #ffffff !important; }\n.rl-handbook .rl-dl-sub { font-size: 13px; color: #555555; margin-top: 12px; }\n\n/* ============================================================\n   Body with sticky TOC\n   ============================================================ */\n.rl-handbook .rl-toc-wrap {\n  display: grid;\n  grid-template-columns: 230px minmax(0, 1fr);\n  gap: 56px;\n  max-width: 1120px;\n  margin: 0 auto;\n  padding-left: clamp(20px, 5vw, 64px);\n  padding-right: clamp(20px, 5vw, 64px);\n}\n.rl-handbook .rl-toc {\n  position: sticky;\n  top: 24px;\n  align-self: start;\n  font-size: 13px;\n  padding: 24px 20px 24px 0;\n  max-height: 100vh;\n  overflow-y: auto;\n  border-right: 1px solid #dddddd;\n}\n.rl-handbook .rl-toc-title {\n  font-size: 11px;\n  font-weight: 700;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  color: #a60530;\n  margin-bottom: 16px;\n}\n.rl-handbook .rl-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: rltoc; }\n.rl-handbook .rl-toc li {\n  margin: 0 0 10px 0;\n  counter-increment: rltoc;\n  display: flex;\n  gap: 10px;\n}\n.rl-handbook .rl-toc li::before {\n  content: counter(rltoc, decimal-leading-zero);\n  color: #a60530;\n  font-weight: 700;\n  font-size: 11px;\n}\n.rl-handbook .rl-toc a { color: #123143; text-decoration: none; font-weight: 600; line-height: 1.3; }\n.rl-handbook .rl-toc a:hover { color: #a60530; }\n\n/* Quick-facts glance grid */\n.rl-handbook .rl-glance {\n  margin-top: 28px;\n  background: #123143;\n  color: #ffffff;\n  padding: 32px;\n  border-top: 3px solid #a60530;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 24px 36px;\n}\n.rl-handbook .rl-glance-title {\n  grid-column: 1 / -1;\n  font-weight: 800;\n  font-size: 14px;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  padding-bottom: 14px;\n  border-bottom: 1px solid rgba(255,255,255,0.2);\n  margin: 0;\n  color: #ffffff;\n}\n.rl-handbook .rl-glance-cell .value { font-weight: 800; font-size: 26px; color: #f5dde3; line-height: 1.05; letter-spacing: -0.01em; }\n.rl-handbook .rl-glance-cell .label { font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 10px; color: #ffffff; }\n.rl-handbook .rl-glance-cell .caption { font-size: 12px; margin-top: 4px; color: rgba(255,255,255,0.78); }\n\n/* Split layout */\n.rl-handbook .rl-split {\n  display: grid;\n  grid-template-columns: 1.1fr 1fr;\n  gap: 40px;\n  margin: 28px 0;\n  align-items: start;\n}\n.rl-handbook .rl-split-img {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 4 / 3;\n  background: #dddddd;\n  border: 1px solid #dddddd;\n}\n.rl-handbook .rl-split-img img { width: 100%; height: 100%; object-fit: cover; display: block; }\n.rl-handbook .rl-split-img .tag {\n  position: absolute;\n  bottom: 0; left: 0;\n  background: #59070e;\n  color: #ffffff;\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.2em;\n  padding: 8px 14px;\n  text-transform: uppercase;\n}\n\n/* Pullquote + dark quote */\n.rl-handbook .rl-pullquote {\n  font-weight: 700;\n  font-style: italic;\n  font-size: clamp(19px, 2.2vw, 26px);\n  line-height: 1.3;\n  color: #59070e;\n  text-align: center;\n  padding: 32px 24px;\n  margin: 36px 0;\n  border-top: 2px solid #dddddd;\n  border-bottom: 2px solid #dddddd;\n  max-width: none;\n}\n.rl-handbook .rl-dark-quote {\n  background: #59070e;\n  color: #ffffff;\n  padding: 32px 36px;\n  margin: 36px 0;\n  font-weight: 600;\n  font-style: italic;\n  font-size: clamp(18px, 2vw, 22px);\n  line-height: 1.35;\n  text-align: center;\n  border-left: 4px solid #a60530;\n}\n\n/* Callout box */\n.rl-handbook .rl-callout {\n  background: #f7f5f3;\n  border-left: 3px solid #a60530;\n  padding: 16px 20px;\n  font-size: 15px;\n  color: #444444;\n  margin: 22px 0;\n  line-height: 1.6;\n}\n.rl-handbook .rl-callout b { color: #123143; }\n.rl-handbook .rl-callout.navy { border-left-color: #123143; }\n\n/* Tables */\n.rl-handbook .rl-table-wrap { overflow-x: auto; margin: 24px 0; }\n.rl-handbook table.rl-table {\n  width: 100%;\n  border-collapse: collapse;\n  font-size: 14.5px;\n  min-width: 560px;\n}\n.rl-handbook table.rl-table thead th {\n  background: #123143;\n  color: #ffffff;\n  padding: 12px 16px;\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  text-align: left;\n  border-right: 1px solid rgba(255,255,255,0.15);\n}\n.rl-handbook table.rl-table thead th:last-child { border-right: 0; }\n.rl-handbook table.rl-table tbody td {\n  padding: 12px 16px;\n  border-bottom: 1px solid #dddddd;\n  vertical-align: top;\n  line-height: 1.5;\n}\n.rl-handbook table.rl-table tbody tr:nth-child(even) td { background: #f7f5f3; }\n.rl-handbook table.rl-table td.num { font-weight: 800; color: #59070e; white-space: nowrap; }\n.rl-handbook table.rl-table td.label { font-weight: 700; color: #123143; }\n.rl-handbook table.rl-fees thead th { background: #59070e; }\n\n/* Numbered process checklist */\n.rl-handbook .rl-checklist { border: 1px solid #dddddd; background: #f7f5f3; margin: 18px 0; }\n.rl-handbook .rl-checklist-row {\n  display: flex;\n  align-items: flex-start;\n  gap: 14px;\n  padding: 13px 18px;\n  border-bottom: 1px solid #dddddd;\n  font-size: 15px;\n  line-height: 1.5;\n}\n.rl-handbook .rl-checklist-row:last-child { border-bottom: 0; }\n.rl-handbook .rl-checklist-row:nth-child(even) { background: #ffffff; }\n.rl-handbook .rl-checkbox {\n  flex-shrink: 0;\n  width: 18px; height: 18px;\n  border: 1.5px solid #123143;\n  background: #ffffff;\n  border-radius: 2px;\n  margin-top: 2px;\n}\n.rl-handbook .rl-stepnum {\n  flex-shrink: 0;\n  width: 24px; height: 24px;\n  background: #59070e;\n  color: #ffffff;\n  border-radius: 50%;\n  font-weight: 800;\n  font-size: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-top: 1px;\n}\n\n/* Contact / info cards */\n.rl-handbook .rl-emp-grid {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  gap: 16px;\n  margin: 22px 0;\n}\n.rl-handbook .rl-emp-card { background: #f7f5f3; border-left: 3px solid #123143; padding: 16px 20px; }\n.rl-handbook .rl-emp-card h5 {\n  font-size: 12px;\n  color: #59070e;\n  margin: 0 0 6px 0;\n  letter-spacing: 0.1em;\n  text-transform: uppercase;\n  font-weight: 800;\n}\n.rl-handbook .rl-emp-card .role { font-style: italic; color: #123143; font-weight: 600; font-size: 14px; margin: 0 0 6px 0; }\n.rl-handbook .rl-emp-card p { font-size: 14px; margin: 0; color: #222222; line-height: 1.55; }\n\n/* Numbered value cards */\n.rl-handbook .rl-value {\n  border: 1px solid #dddddd;\n  background: #ffffff;\n  display: grid;\n  grid-template-columns: 72px 1fr;\n  margin: 14px 0;\n}\n.rl-handbook .rl-value .num {\n  background: #123143;\n  color: #ffffff;\n  font-weight: 800;\n  font-size: 30px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.rl-handbook .rl-value .body { padding: 18px 24px; }\n.rl-handbook .rl-value .body h4 { font-size: 20px; color: #123143; margin: 0 0 6px 0; font-weight: 800; }\n.rl-handbook .rl-value .body p { margin: 0; font-size: 15px; line-height: 1.55; }\n\n/* FAQ accordion */\n.rl-handbook .rl-faq { border-top: 1px solid #dddddd; padding: 18px 0; }\n.rl-handbook .rl-faq summary {\n  font-weight: 800;\n  font-size: 17px;\n  color: #123143;\n  cursor: pointer;\n  list-style: none;\n  padding-right: 32px;\n  position: relative;\n  line-height: 1.35;\n}\n.rl-handbook .rl-faq summary::-webkit-details-marker { display: none; }\n.rl-handbook .rl-faq summary::after {\n  content: '+';\n  position: absolute;\n  right: 0; top: 0;\n  width: 24px; height: 24px;\n  color: #a60530;\n  font-size: 24px;\n  font-weight: 400;\n  line-height: 1;\n}\n.rl-handbook .rl-faq[open] summary::after { content: '\\2212'; }\n.rl-handbook .rl-faq p { margin: 10px 0 0 0; font-size: 15px; line-height: 1.6; }\n\n/* Address block */\n.rl-handbook .rl-address {\n  background: #ffffff;\n  border: 1px solid #dddddd;\n  border-left: 3px solid #a60530;\n  padding: 16px 20px;\n  font-size: 15px;\n  line-height: 1.6;\n  margin: 20px 0;\n  max-width: 420px;\n}\n.rl-handbook .rl-address b { color: #123143; }\n\n/* CTA */\n.rl-handbook .rl-cta-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  background: #123143;\n  color: #ffffff;\n  margin-top: 24px;\n}\n.rl-handbook .rl-cta-grid .box { padding: 28px 32px; border-right: 1px solid rgba(255,255,255,0.2); }\n.rl-handbook .rl-cta-grid .box:last-child { border-right: 0; }\n.rl-handbook .rl-cta-grid h3 { color: #ffffff; font-size: 20px; margin: 0 0 10px 0; font-weight: 800; }\n.rl-handbook .rl-cta-grid p { color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 18px; max-width: none; }\n.rl-handbook .rl-cta-btn {\n  display: inline-block;\n  background: #ffffff;\n  color: #59070e !important;\n  padding: 12px 24px;\n  font-weight: 800;\n  font-size: 12px;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  text-decoration: none !important;\n  border: 2px solid #ffffff;\n  transition: background 160ms, color 160ms;\n}\n.rl-handbook .rl-cta-btn:hover { background: #a60530; color: #ffffff !important; border-color: #a60530; }\n.rl-handbook .rl-cta-contact {\n  margin-top: 22px;\n  padding-top: 18px;\n  border-top: 1px solid #dddddd;\n  font-weight: 700;\n  font-size: 15px;\n  color: #123143;\n  text-align: center;\n  line-height: 1.7;\n}\n.rl-handbook .rl-cta-contact .phone { color: #a60530; }\n\n.rl-handbook .rl-muted { color: #555555; font-size: 13px; }\n.rl-handbook .rl-small-note { font-size: 12.5px; color: #555555; line-height: 1.55; margin-top: 16px; }\n.rl-handbook .rl-about-logo { max-width: 260px; height: auto; margin: 8px 0 16px 0; }\n\n/* Responsive */\n@media (max-width: 960px) {\n  .rl-handbook .rl-toc-wrap { grid-template-columns: minmax(0, 1fr); gap: 0; }\n  .rl-handbook .rl-toc { display: none; }\n}\n@media (max-width: 720px) {\n  .rl-handbook { font-size: 16px; }\n  .rl-handbook .rl-hero { min-height: 72vh; padding-bottom: 40px; }\n  .rl-handbook .rl-hero-metrics { grid-template-columns: 1fr; gap: 16px; }\n  .rl-handbook .rl-glance { grid-template-columns: 1fr 1fr; padding: 22px; gap: 18px 20px; }\n  .rl-handbook .rl-glance-cell .value { font-size: 22px; }\n  .rl-handbook .rl-split { grid-template-columns: 1fr; gap: 20px; }\n  .rl-handbook .rl-emp-grid { grid-template-columns: 1fr; }\n  .rl-handbook .rl-cta-grid { grid-template-columns: 1fr; }\n  .rl-handbook .rl-cta-grid .box { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.2); }\n  .rl-handbook .rl-cta-grid .box:last-child { border-bottom: 0; }\n}\n@media (max-width: 480px) {\n  .rl-handbook .rl-glance { grid-template-columns: 1fr; }\n  .rl-handbook .rl-value { grid-template-columns: 56px 1fr; }\n  .rl-handbook .rl-value .num { font-size: 22px; }\n}\n";
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage
+    title="RL Property Management client handbook"
+    {directAnswer}
+    {keyFacts}
+    lastVerified={LAST_VERIFIED}
+    breadcrumbs={crumbs}
+    related={[
+      { href: '/pricing/', label: 'Pricing' },
+      { href: '/faq/', label: 'Owner FAQ' },
+      { href: '/key-performance-indicators/', label: 'KPI scorecard' },
+      { href: '/contact-us/', label: 'Contact' },
+    ]}
+  >
+    <div class="longform" set:html={`<!--
+  ============================================================
+  RL PROPERTY MANAGEMENT : CLIENT HANDBOOK (WEB VERSION)
+  ------------------------------------------------------------
+  HOW TO USE:
+  Paste this ENTIRE block (from the 
+
+<div class="rl-handbook">
+
+  <!-- ==================== HERO ==================== -->
+  <header class="rl-hero">
+    <div class="rl-hero-top">
+      <div class="rl-container">
+        <span class="rl-hero-label">RL Property Management</span>
+        <span class="rl-hero-label" style="color:rgba(255,255,255,0.85);">Owner's Guide · 2026 Edition</span>
+      </div>
+    </div>
+    <div class="rl-container">
+      <div class="rl-hero-title-rule"></div>
+      <div class="rl-hero-kicker">Everything You Need to Work With Us</div>
+      <h2>Client Handbook</h2>
+      <span class="rl-hero-year">2026</span>
+      <p class="rl-hero-subtitle">Our mission is simple: to help property owners be successful with their real estate investments. This handbook explains how we work: our services, policies, fees, and the people behind them.</p>
+
+      <div class="rl-hero-metrics">
+        <div class="rl-hero-metric">
+          <div class="value">10th</div>
+          <div class="label">Rent Disbursed</div>
+          <div class="caption">Electronically, each month</div>
+        </div>
+        <div class="rl-hero-metric">
+          <div class="value">24/7</div>
+          <div class="label">Owner Portal</div>
+          <div class="caption">Reports, leases & documents</div>
+        </div>
+        <div class="rl-hero-metric">
+          <div class="value">614.725.3059</div>
+          <div class="label">Our Office</div>
+          <div class="caption">Press 0 to reach the team</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== PDF DOWNLOAD BAND ==================== -->
+  <div class="rl-dl-band">
+    <a class="rl-dl-btn" href="/wp-content/uploads/2026/07/RL_Client_Handbook_2026_FINAL.pdf" download>
+      <span style="font-size:16px; line-height:1;">↓</span> Download PDF Version
+    </a>
+    <div class="rl-dl-sub">Prefer a printable copy? Download the full handbook as a PDF.</div>
+  </div>
+
+  <!-- ==================== BODY WITH STICKY TOC ==================== -->
+  <div class="rl-toc-wrap">
+
+    <!-- STICKY TOC (desktop only) -->
+    <nav class="rl-toc">
+      <div class="rl-toc-title">In This Handbook</div>
+      <ol>
+        <li><a href="#rl-rent">Rent Disbursement</a></li>
+        <li><a href="#rl-contact">Contact Information</a></li>
+        <li><a href="#rl-portal">Online Account Access</a></li>
+        <li><a href="#rl-balance">Property Account Balance</a></li>
+        <li><a href="#rl-reserve">Maintenance Reserve</a></li>
+        <li><a href="#rl-vacant-utils">Vacant at Handover: Utilities</a></li>
+        <li><a href="#rl-eviction">Rent Payments & Eviction</a></li>
+        <li><a href="#rl-leasing">Vacancies & Leasing</a></li>
+        <li><a href="#rl-fairhousing">Fair Housing & Screening</a></li>
+        <li><a href="#rl-renewals">Lease Renewals & Rent Increases</a></li>
+        <li><a href="#rl-maintenance">Maintenance & Repairs</a></li>
+        <li><a href="#rl-utilities">Utility Setup & Billing</a></li>
+        <li><a href="#rl-office">Office Information</a></li>
+        <li><a href="#rl-fees">Additional Services & Fees</a></li>
+        <li><a href="#rl-values">Our Core Values</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+
+      <!-- WELCOME -->
+      <section class="rl-section" style="border-top:0; padding-top:56px;" id="rl-welcome">
+        <div class="rl-eyebrow">Welcome</div>
+        <p class="rl-lead">Thank you for selecting RL Property Management for your Columbus property management needs. We appreciate your business!</p>
+        <p>Please read this handbook carefully. It contains important information about our services, policies, and processes. Use the menu on the left (or scroll) to jump to any section. If anything is unclear, please let us know. We're consistently happy to help.</p>
+      </section>
+
+      <!-- 01 RENT DISBURSEMENT -->
+      <section class="rl-section" id="rl-rent">
+        <div class="rl-eyebrow">Section 01</div>
+        <h2 class="rl-h2">Rent Disbursement</h2>
+        <span class="rl-rule"></span>
+        <p>We disburse funds electronically on the <b>10th of each month.</b> It takes about 2 to 3 business days to appear in your account. You will receive an automated email when the funds are issued.</p>
+      </section>
+
+      <!-- 02 CONTACT INFORMATION -->
+      <section class="rl-section alt" id="rl-contact">
+        <div class="rl-eyebrow">Section 02</div>
+        <h2 class="rl-h2">Contact Information</h2>
+        <span class="rl-rule"></span>
+        <p>After your client onboarding is complete, <b>you'll be assigned to a Property Manager who will be your primary point of contact at RL.</b> However, if your assigned Property Manager is ever unreachable for some reason, you can consistently call our office at <b>614-725-3059</b> and <b>press 0</b> to connect with a member of our team. You can also email us at <b>info@rlpmg.com</b> to ensure your request is seen and addressed promptly.</p>
+        <p>If you need to reach a specific staff member, their direct numbers are listed below. If they're unable to assist directly, we'll make sure you get the answers you need from the right person.</p>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">Who to Contact</h3>
+        <div class="rl-emp-grid">
+          <div class="rl-emp-card">
+            <h5>General Questions</h5>
+            <p class="role">Customer Service Lead</p>
+            <p>info@rlpmg.com<br>Ext. 103 · Direct: <a href="tel:6149322158">614-932-2158</a><br>Handles general client and resident questions and can connect you with the right person if more expertise is needed.</p>
+          </div>
+          <div class="rl-emp-card">
+            <h5>Leasing</h5>
+            <p class="role">Leasing Lead</p>
+            <p>info@rlpmg.com<br>Ext. 127 · Direct: <a href="tel:6144561939">614-456-1939</a><br>Handles listing and showing units for rent, collecting applications, and scheduling move-ins.</p>
+          </div>
+          <div class="rl-emp-card">
+            <h5>Turns</h5>
+            <p class="role">Vacant Unit Manager</p>
+            <p>projects@rlpmg.com<br>Ext. 106 · Direct: <a href="tel:6145914355">614-591-4355</a><br>Handles vacant unit maintenance including turnover and prep for move-in.</p>
+          </div>
+          <div class="rl-emp-card">
+            <h5>Maintenance</h5>
+            <p class="role">Occupied Maintenance Supervisor</p>
+            <p>oncall@rlpmg.com<br>Ext. 115 · Direct: <a href="tel:6146787877">614-678-7877</a><br>Handles general maintenance questions, maintenance-related billing questions, and interacts with the Field Services Team.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 ONLINE ACCOUNT ACCESS -->
+      <section class="rl-section" id="rl-portal">
+        <div class="rl-eyebrow">Section 03</div>
+        <h2 class="rl-h2">Online Account Access (Owner Portal)</h2>
+        <span class="rl-rule"></span>
+        <p>To log in to your owner portal, scroll to the bottom of our website <a href="https://www.rlpmg.com" target="_blank" rel="noopener">www.rlpmg.com</a> and click "Owner Login," or go directly to <a href="https://rlp.managebuilding.com/Manager" target="_blank" rel="noopener">rlp.managebuilding.com/Manager</a>.</p>
+        <p>The owner portal is your go-to place for all the latest information about your property, including:</p>
+        <ul>
+          <li>Reports, such as Rent Roll, Income (Profit & Loss) Statements, and Balance Sheets</li>
+          <li>Downloadable PDF copies of your Property Management Agreement (PMA)</li>
+          <li>Downloadable PDF copies of all leases</li>
+          <li>Downloadable PDF copies of all invoices and bills, including maintenance</li>
+          <li>Check to see if your residents have paid rent</li>
+          <li>View the status of security deposits</li>
+          <li>...and more</li>
+        </ul>
+        <p>Many clients find the owner portal is one of their favorite features, as it gives them access to critical information instantly. If you have any questions about how to navigate the portal, or you forget your username or password, don't hesitate to contact us. The owner portal is a built-in feature of the property management software (Buildium) we use here in the office, so it stays current.</p>
+      </section>
+
+      <!-- 04 PROPERTY ACCOUNT BALANCE -->
+      <section class="rl-section alt" id="rl-balance">
+        <div class="rl-eyebrow">Section 04</div>
+        <h2 class="rl-h2">Your Property Account Balance</h2>
+        <span class="rl-rule"></span>
+        <p>Each property you have under management is allocated its own financial account in our system. As rent comes in (or as you make owner contributions), the dollar amount goes up. As funds are disbursed to you (or come out to pay maintenance and repairs), it goes down. The cash belonging to that specific property at any given point in time is referred to as the property balance.</p>
+        <div class="rl-callout"><b>Note:</b> this account is property-specific, so for example, if you have a duplex, both units share an account.</div>
+        <p>If your property account balance ever goes into the negative, we may ask you to make an owner contribution in order to restore it. This is a State of Ohio regulatory requirement.</p>
+      </section>
+
+      <!-- 05 MAINTENANCE RESERVE -->
+      <section class="rl-section" id="rl-reserve">
+        <div class="rl-eyebrow">Section 05</div>
+        <h2 class="rl-h2">Your Maintenance Reserve</h2>
+        <span class="rl-rule"></span>
+        <p>To ensure rapid service when required, we set a target amount (or minimum threshold) for your property account balance. This is called your maintenance reserve. The amount varies depending on the type and number of properties you have under our management but is typically around <b>$500 per unit.</b> Ideally, the dollar amount in each of your property accounts do not goes below this. Note that this is not a separate account, but merely a target dollar amount.</p>
+        <p>When we do a disbursement to you, we will issue all the money available in the property account, down to the maintenance reserve. So, for example, if you have $1,500 in your property account on the 10th of the month, and the maintenance reserve is $500, you would receive a disbursement that month in the amount of $1,000. If the property balance is below the target maintenance reserve, you will not receive a disbursement that month.</p>
+      </section>
+
+      <!-- 06 VACANT AT HANDOVER -->
+      <section class="rl-section imgband" id="rl-vacant-utils">
+        <div class="rl-eyebrow">Section 06</div>
+        <h2 class="rl-h2">If Your Unit Is Vacant at Handover: Utility Bills</h2>
+        <span class="rl-rule"></span>
+        <p>When we take over a vacant property, the only bill we automatically take over paying on your behalf right away is the water bill (typically issued by the City of Columbus). We take care of updating the city (by providing them a copy of your PMA) and the bills start coming to our office. There is a <b>$10 bill-pay fee per bill.</b> If you continue receiving water bills, please notify us.</p>
+        <p>If you would like us to handle the other utility bills while the property is vacant, simply update the billing address on file with the provider to:</p>
+        <div class="rl-address">
+          [your name]<br>
+          <b>c/o RL Property Management</b><br>
+          750 Cross Pointe Rd STE B<br>
+          Columbus, OH 43230
+        </div>
+      </section>
+
+      <!-- 07 RENT PAYMENTS & EVICTION -->
+      <section class="rl-section" id="rl-eviction">
+        <div class="rl-eyebrow">Section 07</div>
+        <h2 class="rl-h2">Rent Payments & Eviction</h2>
+        <span class="rl-rule"></span>
+        <p>Rent is due by the 1st. We find that in practice, many residents pay between the 1st and the 5th. If applicable, late fees are assessed. If a resident has not paid after the 5th, here is the timetable of escalation. At any time throughout this process, the resident can pay the balance in full to cancel the pending eviction.</p>
+
+        <div class="rl-checklist">
+          <div class="rl-checklist-row"><div class="rl-stepnum">1</div><div><b>On or about the 15th,</b> we prepare and post 3-day notices on the doors of residents who have still not paid. The notice specifies that they have 3 business days to pay in full or move out. We include a statement showing the past 3 months of account activity, including the current amount due.</div></div>
+          <div class="rl-checklist-row"><div class="rl-stepnum">2</div><div><b>Three business days after that,</b> we file for eviction with our attorneys (who in turn file with the county).</div></div>
+          <div class="rl-checklist-row"><div class="rl-stepnum">3</div><div>The county will set a <b>hearing date for 2 to 3 weeks</b> after the filing.</div></div>
+          <div class="rl-checklist-row"><div class="rl-stepnum">4</div><div>Typically, we receive judgment in our favor at the hearing and proceed with scheduling a setout with the bailiff if required.</div></div>
+        </div>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:32px;">Cost of a Normal Eviction</h3>
+        <p class="rl-muted">Subject to change without notice.</p>
+        <div class="rl-table-wrap">
+          <table class="rl-table">
+            <thead>
+              <tr><th style="width:26%">Fee</th><th style="width:22%">Amount</th><th style="width:52%">Paid To / Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">Attorney Fee</td><td class="num">$150</td><td>Paid to eviction attorney for filing the eviction and court appearances (up to 2).</td></tr>
+              <tr><td class="label">Court Filing Fee</td><td class="num">$123</td><td>Known as the "Eviction Complaint." Paid to Franklin County.</td></tr>
+              <tr><td class="label">Eviction Fee</td><td class="num">$199</td><td>Paid to RLPM for handling the eviction process including appearances (up to 2).</td></tr>
+              <tr><td class="label">Tag & Setout Fee <span class="rl-muted">(if required)</span></td><td class="num">$80</td><td>Paid to Franklin County. For posting a red tag on the resident's door if they have not vacated after the eviction judgment is granted. Includes appearance by the Bailiff at the setout if required.</td></tr>
+              <tr><td class="label">Setout Fee <span class="rl-muted">(if required)</span></td><td class="num">$250</td><td>Paid to RLPM if a setout is needed. Includes scheduling the setout with the Bailiff, scheduling the locksmith and clean-out crew, and appearing at the setout.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 08 VACANCIES & LEASING -->
+      <section class="rl-section alt" id="rl-leasing">
+        <div class="rl-eyebrow">Section 08</div>
+        <h2 class="rl-h2">Vacancies & Leasing</h2>
+        <span class="rl-rule"></span>
+        <p>RL Property Management has a system for turning over rental property. This process begins as soon as we receive notice of a move-out (or become aware of a vacancy). You can expect us to take the following steps before, during, and after a turn. A "turn" is what we call the process of turning over a vacant unit and making it ready to rent again.</p>
+
+        <h3 style="font-size:18px; color:#59070e;">In Advance of the Vacancy <span class="rl-muted">(if we receive notice)</span></h3>
+        <ul>
+          <li>Communicate with the residents as to their exact move-out date.</li>
+          <li>Provide the residents detailed move-out instructions.</li>
+          <li>Arrange for the appropriate utilities to be placed into the property owner's name, c/o our office.</li>
+          <li>Perform a pre-moveout inspection within 30-60 days of a scheduled vacancy to assess the unit's condition. A detailed Turn Scope will be prepared with cost estimates for necessary repairs and improvements.</li>
+        </ul>
+
+        <h3 style="font-size:18px; color:#59070e; margin-top:8px;">Once Vacant</h3>
+        <ul>
+          <li>A lock box is placed at the property.</li>
+          <li>We immediately secure the property (locks are re-keyed by a professional locksmith and windows/doors are locked) and perform a move-out inspection. If the unit has a pest infestation, these steps will be delayed until pest treatments have successfully eradicated the pests.</li>
+          <li>Any remaining items/garbage are removed and disposed of by our hauling vendor.</li>
+          <li>A list of items to be repaired and a price estimate is generated (the scope).</li>
+          <li>The scope is sent to the owner for final review and approval.</li>
+          <li>Owner remits funds (required to begin work at the property).</li>
+          <li>Once the owner has approved the turnover work and provided funding, our maintenance team will make the unit rent-ready. This proactive process helps minimize vacancy time. Alternatively, the owner may choose to handle all of the rent-ready work themselves (for supported plans).</li>
+        </ul>
+
+        <h3 style="font-size:18px; color:#59070e;">Listing</h3>
+        <ul>
+          <li>At our discretion, if work is underway and a work completion date is fairly well known, we may "list" the unit in order to generate leads.</li>
+          <li>Professional photos are taken.</li>
+          <li>The property is listed for rent on over 50 rental listing websites including Zillow, Realtor, Trulia, Zumper, and Hotpads.</li>
+        </ul>
+
+        <h3 style="font-size:18px; color:#59070e;">After Listing</h3>
+        <ul>
+          <li>Leads (via phone and email) are organized and followed up with.</li>
+          <li>Prospective residents who express interest are pre-screened on the phone, and if qualified, we schedule a showing with them.</li>
+          <li>At the showing, prospective residents are told to fill out an application online.</li>
+          <li>Once we receive a complete application (from all adults who plan to live at the property), including proof of income and rental history, we process it and either approve or deny.</li>
+          <li>If approved, a lease signing is scheduled.</li>
+          <li>At the lease signing, we collect the security deposit. If they plan to move in right away, we collect 1st month's rent and give them the keys.</li>
+          <li>After a lease is signed, we de-list the property and notify the owner.</li>
+          <li>We confirm that the residents have placed the utilities into their name.</li>
+          <li>If your property has been listed for rent for <b>longer than 60 days,</b> we will proactively credit management fees to your account as appropriate. This ensures fairness and transparency when properties experience extended vacancies.</li>
+          <li>If a tenant moves in mid-month, we typically collect a full month's rent at move-in. Any prorated rent for the partial first month is applied to the second month, so the second rent payment may be lower than the first.</li>
+          <li>Vacant unit inspections are conducted biweekly during the leasing period and weekly in winter for <b>$20 each.</b> Contact us with any questions.</li>
+        </ul>
+      </section>
+
+      <!-- 09 FAIR HOUSING -->
+      <section class="rl-section" id="rl-fairhousing">
+        <div class="rl-eyebrow">Section 09</div>
+        <h2 class="rl-h2">Fair Housing Compliance & Resident Screening Standards</h2>
+        <span class="rl-rule"></span>
+        <p>Owning and leasing rental property comes with important legal responsibilities. Fair Housing laws exist to ensure equal access to housing and to protect both residents and property owners through consistent, non-discriminatory practices.</p>
+        <p>Our leasing and screening processes are designed to comply with federal, state, and local Fair Housing laws while helping place qualified residents who respect the property and meet lease obligations.</p>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">Fair Housing Laws</h3>
+        <p>At the federal level, the Fair Housing Act (1968) prohibits discrimination in housing based on the following protected classes:</p>
+        <ul>
+          <li>Race</li>
+          <li>Color</li>
+          <li>National origin</li>
+          <li>Religion</li>
+          <li>Sex (including sexual orientation and gender identity)</li>
+          <li>Disability</li>
+          <li>Familial Status (including pregnancy and households with children)</li>
+        </ul>
+        <p>In addition to federal protections:</p>
+        <ul>
+          <li>Ohio law adds protections related to military status.</li>
+          <li>The City of Columbus includes protections for sexual orientation, gender identity, and source of income, including lawful housing assistance programs such as Section 8.</li>
+        </ul>
+        <div class="rl-callout navy">These protections apply to advertising, showings, screening decisions, leasing, and ongoing property management.</div>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">Section 8 Housing</h3>
+        <p>We comply with Section 8 and source-of-income (SOI) housing laws in all applicable jurisdictions, including Columbus, Bexley, Reynoldsburg, and Westerville. Where required, CMHA voucher holders are permitted to apply and are screened using the same objective, written criteria as all applicants. Approval or denial decisions are based solely on documented screening standards, not the source of income.</p>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">Our Resident Screening Standards</h3>
+        <p>All applicants are screened using the same written criteria and process to ensure fairness and consistency. Our screening includes a review of:</p>
+        <ul>
+          <li>Credit history</li>
+          <li>Criminal background (as permitted by law)</li>
+          <li>Rental history, including prior evictions and landlord references</li>
+          <li>Employment and income verification (such as pay stubs or bank statements)</li>
+        </ul>
+        <p>All adult occupants must submit a complete application and supporting documentation before a leasing decision is made. Approval or denial decisions are based solely on objective, documented screening criteria, not personal characteristics or subjective judgment.</p>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">RL's Commitment to Fair Housing Compliance</h3>
+        <p>Fair Housing compliance is not optional, and it is not treated as a checkbox. We are committed to:</p>
+        <ul>
+          <li>Applying the same screening standards to each applicant</li>
+          <li>Using consistent advertising, showing, and leasing practices</li>
+          <li>Staying informed of changes to federal, Ohio, and Columbus Fair Housing regulations</li>
+          <li>Protecting property owners from avoidable legal risk through compliant processes</li>
+        </ul>
+        <p>By following clear standards and documented procedures, we help reduce liability, prevent discrimination claims, and create a professional, transparent leasing process.</p>
+      </section>
+
+      <!-- 10 LEASE RENEWALS -->
+      <section class="rl-section alt" id="rl-renewals">
+        <div class="rl-eyebrow">Section 10</div>
+        <h2 class="rl-h2">Lease Renewals & Rent Increases</h2>
+        <span class="rl-rule"></span>
+        <p>The standard RL lease includes language that will automatically renew the lease upon its expiration, unless the resident or the broker provide 30 days written notice. Property owners may request a larger rent increase than 2.5% on renewal. Simply notify our office at least 90 days prior to renewal if you prefer a larger increase. Note this may increase the risk of a non-renewal. This automatic renewal also includes a <b>2.5% rent increase.</b> Residents may elect to sign a new (clean) lease renewal, but it is not required and not pursued by our company by default. In either case (automatic renewal or signing of a lease renewal), a Lease Renewal Fee is charged to the owner on the date the lease renews.</p>
+        <p>Residents may elect to go month-to-month at the end of the initial lease term, however language in our lease requires a <b>20.0% rent increase</b> should they choose this option (but we do allow it). Should a resident select this option, a Lease Renewal Fee is not charged on the expiration of the lease (the day it goes month-to-month). However, should the resident remain in the property in month-to-month status for 12 consecutive months at the higher rental rate, a Lease Renewal Fee will be charged to the owner at that time. The same applies for a Section 8 resident for whom our company secured a rental rate increase from CMHA (after 12 months at the new rental rate, a Lease Renewal Fee is charged).</p>
+        <div class="rl-callout"><b>Prefer longer leases?</b> Most property owners prefer 2-year or 3-year leases for stability. Please let us know if this is you, so we can note it on your account.</div>
+      </section>
+
+      <!-- 11 MAINTENANCE & REPAIRS -->
+      <section class="rl-section" id="rl-maintenance">
+        <div class="rl-eyebrow">Section 11</div>
+        <h2 class="rl-h2">Maintenance & Repairs</h2>
+        <span class="rl-rule"></span>
+        <p>Requests for maintenance/repairs come to our office from the residents and are handled by our maintenance department.</p>
+        <p>Many requests are able to be handled by our internal maintenance team (direct employees of RL Property Management). The maintenance labor rate in 2026 for our employees is <b>$84/hour + a $15 trip charge per visit</b> during normal business hours. Materials are generally provided at cost. We do not have a minimum charge. In the rare event that our maintenance employees do work after-hours (or on weekends), the labor rate is 2x for weekday evenings and Saturdays, and 3x for Sundays.</p>
+        <p>Other work is contracted out. The total cost of contracted work, services, and purchases required for property repair, operation, maintenance, or improvements managed by our company is subject to a <b>15% project management fee on vendor costs up to $3,000 (max $450/project).</b> This fee does <u>not</u> apply to (1) work done by our internal maintenance team and (2) work done for property turns.</p>
+
+        <h3 style="font-size:20px; color:#123143; margin-top:28px;">Key Maintenance Rates</h3>
+        <div class="rl-table-wrap">
+          <table class="rl-table">
+            <thead>
+              <tr><th style="width:44%">Item</th><th style="width:56%">Rate</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">Internal labor (business hours)</td><td>$84/hour + $15 trip charge per visit · materials at cost</td></tr>
+              <tr><td class="label">After-hours labor</td><td>2x for weekday evenings & Saturdays · 3x for Sundays</td></tr>
+              <tr><td class="label">Vendor project management fee</td><td>15% on vendor costs up to $3,000 (max $450/project)</td></tr>
+              <tr><td class="label">Vendor fee (property turns)</td><td>15% on turns up to $15,000 · 10% on $15,001-25,000 · 7.5% on $25,000+</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The residents are provided a 24h maintenance emergency number that they can call in the event of a serious problem. The call center is authorized to dispatch certain repair companies if there is a true safety or building integrity issue.</p>
+      </section>
+
+      <!-- 12 UTILITY SETUP -->
+      <section class="rl-section imgband" id="rl-utilities">
+        <div class="rl-eyebrow">Section 12</div>
+        <h2 class="rl-h2">Utility Setup & Billing</h2>
+        <span class="rl-rule"></span>
+        <p>By default, we transfer water/sewer, electric, and gas service (as needed) into the property owner's name once a unit becomes vacant. The Utility Setup Fee for handling this is <b>$30 per utility.</b> This covers the time of dealing with the utility companies to get service set up into the owner's name between residents (typically AEP and Columbia Gas), which have become much more difficult to deal with for property owners and managers recently. This fee also covers the process of checking and confirming that incoming residents set up service in their own name (thus removing service from the owner's name) and following up to ensure any overlapping usage is correctly pro-rated and billed to the resident.</p>
+        <p>Utility bills handled and paid by our company on behalf of your property have a flat rate <b>$10 bill-pay fee (per bill).</b></p>
+        <p>For new units under management, utilities (electric, gas, and water) must be active for us to inspect and approve the property for leasing. If our team visits and finds utilities are not active as expected, a <b>trip fee of $55/hour</b> will apply for the time spent traveling to resolving the issue.</p>
+      </section>
+
+      <!-- 13 OFFICE INFORMATION -->
+      <section class="rl-section" id="rl-office">
+        <div class="rl-eyebrow">Section 13</div>
+        <h2 class="rl-h2">Office Information</h2>
+        <span class="rl-rule"></span>
+        <p>Our office <b>(750 Cross Pointe Rd STE B, Columbus, OH 43230)</b> is open by appointment only. Please call or email us in advance if you would like to visit the office, and we will be happy to schedule an appointment.</p>
+        <p>RL Property Management Group, Inc. is a licensed real estate brokerage in the State of Ohio. If you need to make an owner contribution, please make the check out to <b>RL Property Management</b> and mail to the above address.</p>
+        <div class="rl-address">
+          <b>RL Property Management Group, Inc.</b><br>
+          750 Cross Pointe Rd STE B<br>
+          Columbus, OH 43230<br>
+          <a href="tel:6147253059">614-725-3059</a> · info@rlpmg.com
+        </div>
+      </section>
+
+      <!-- 14 ADDITIONAL SERVICES & FEES -->
+      <section class="rl-section alt" id="rl-fees">
+        <div class="rl-eyebrow">Section 14</div>
+        <h2 class="rl-h2">Additional Services & Other Fees</h2>
+        <span class="rl-rule"></span>
+        <p>Below is a full list of additional services we offer and the fees that apply. Many of these are optional or situational, so you'll only ever be charged for what applies to your property.</p>
+
+        <div class="rl-table-wrap">
+          <table class="rl-table rl-fees">
+            <thead>
+              <tr><th style="width:30%">Service</th><th style="width:20%">Fee</th><th style="width:50%">What's Involved</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">Ownership Entity Change</td><td class="num">$250</td><td>Prepare and send new PMA, prepare and send year-to-date financials for the old entity, send the new PMA to the utility companies, and enter the new entity information into our system.</td></tr>
+              <tr><td class="label">Key Recovery</td><td class="num">Labor + materials</td><td>We require a working set of keys to all properties we manage. If you turn over a property without a working key, we contact the current resident (by mail, phone, or stopping by), obtain their key, make copies, and return the original. Billed at maintenance labor rates + material costs.</td></tr>
+              <tr><td class="label">Notice Posting</td><td class="num">Labor rate</td><td>Time spent posting any physical notice (such as a Cure-Or-Quit or Entry Notice) is billed at our maintenance labor rate. Exception: no charge to post 3-day or 30-day notices to vacate.</td></tr>
+              <tr><td class="label">New Unit Pre-Signature Inspection</td><td class="num">$300</td><td>Assess new property condition, identify necessary repairs, provide cost estimates, and prepare for management. Fee credited toward onboarding if the Property Management Agreement is signed.</td></tr>
+              <tr><td class="label">Oversee Property/Casualty Insurance Claim</td><td class="num">$1,250</td><td>We act as your administrator/advocate to handle an insurance claim from damage to your property, including documentation, adjusters, contractors, and insurance agents, start to finish. The 15% project management fee is waived for insurance claim work if you hire us to manage it.</td></tr>
+              <tr><td class="label">Property Photography</td><td class="num">$300</td><td>Flat-rate professional photography for new vacant properties coming under management and properties that have undergone turns with major cosmetic updates, such as paint, flooring, etc. No charge for photos taken after move-out, before move-in, and for property listings.</td></tr>
+              <tr><td class="label">Owner Property Visit</td><td class="num">Labor rate</td><td>We can arrange for someone to meet you or your representative at the property for a special trip (walkthrough, appraisal, etc.). Cost of posting an entry notice and visiting is billed at our maintenance labor rate. Alternatively, arrange key pickup at our office at no charge.</td></tr>
+              <tr><td class="label">Delinquent Tenant Setup Fee</td><td class="num">$300</td><td>If we take over management of an occupied unit with a delinquent tenant (tenant owes more than $300), an additional setup fee applies.</td></tr>
+              <tr><td class="label">Turn Scope</td><td class="num">$250</td><td>When our company provides you with a turn scope for your vacant unit, this charge applies if you choose to complete the turn scope work yourself or hire another vendor to complete it.</td></tr>
+              <tr><td class="label">Early Termination Fee</td><td class="num">$450 / $250 per unit</td><td>If the Owner terminates the PMA prior to expiration for any reason (including sale, switching management companies, or self-managing): $450 per unit within the first year of management; $250 per unit if terminated after renewal and mid-term.</td></tr>
+              <tr><td class="label">Appraisal-to-Sale Fee</td><td class="num">$300 / unit</td><td>If an appraisal or valuation is completed by our team and the property is subsequently sold, this fee is charged to account for administrative time and coordination related to the transaction.</td></tr>
+              <tr><td class="label">Key Copies</td><td class="num">$2.50 each</td><td>We make copies of the keys to your unit(s) as necessary. Company standard is to retain 2 working copies in the office (1 to be loaned out, 1 backup in case it's lost).</td></tr>
+              <tr><td class="label">Equipment Rental</td><td class="num">$1-$120 / day</td><td>Daily rental rates for use of our heating, drying, and air-cleaning equipment. Rates vary by equipment.</td></tr>
+              <tr><td class="label">Lawsuit Defense</td><td class="num">$75 / hr</td><td>Plus travel and printing expenses, for time spent in connection with any lawsuit (except normal evictions) related to your property, even if our company is the named defendant. Includes gathering/organizing files, communicating with attorneys, depositions, court appearances, and prep time.</td></tr>
+              <tr><td class="label">Other Activities</td><td class="num">$90 / hr</td><td>Services above and beyond day-to-day management not otherwise described in this document or the PMA. Examples: condo/association battles, clearing up existing code or permit violations, requesting a reduction in your property tax bill, providing a Broker's Opinion of Value (BPO), etc.</td></tr>
+              <tr><td class="label">Failure to Provide Possession</td><td class="num">3 months' rent</td><td>Should you fail to provide possession of a unit (for any reason) to our company at least 14 calendar days prior to an executed lease term start date, a fee equal to 3 months of the executed lease rent amount applies, some or all of which is used to negotiate a mutual release between Tenant, Owner, and Broker as needed. This fee does not limit your other liability under the PMA.</td></tr>
+              <tr><td class="label">Failure to Provide Evidence of Additionally Insured</td><td class="num">$20 / unit / month</td><td>Should you fail to provide evidence that you've added us as "additionally insured" to your rental dwelling policy or homeowner's insurance policy (as required by item B9 in the PMA).</td></tr>
+              <tr><td class="label">Annual Technology & Accounting Fee</td><td class="num">$125 / business entity</td><td>Covers increased technology costs and annual account and tax reporting requirements. This fee ensures we can continue providing accurate and timely financial reporting and account administration.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 15 CORE VALUES -->
+      <section class="rl-section" id="rl-values">
+        <div class="rl-eyebrow">Section 15</div>
+        <h2 class="rl-h2">Our Core Values</h2>
+        <span class="rl-rule"></span>
+        <p>At RL Property Management, we understand that owning rental properties can be both rewarding and challenging. That's why our purpose is simple: <b>to help property owners be successful with their real estate investments.</b> The following six core values aren't just slogans on a wall, they're guiding principles we live by. They ensure we're aligned as a team so we can deliver the kind of care, attention, and results our clients and residents deserve.</p>
+
+        <div class="rl-value">
+          <div class="num">1</div>
+          <div class="body">
+            <h4>Clear Communication</h4>
+            <p>We prioritize clear, transparent communication to keep property owners informed and confident in each decision. Whether it's an update, a plan, or a concern, we ensure each conversation provides the context and clarity needed to build trust and streamline the process.</p>
+          </div>
+        </div>
+        <div class="rl-value">
+          <div class="num">2</div>
+          <div class="body">
+            <h4>Figure It Out & Get It Done</h4>
+            <p>We take ownership of challenges and focus on finding solutions quickly and effectively. From maintenance issues to resident concerns, our proactive approach ensures each task is completed with care and professionalism, giving property owners peace of mind.</p>
+          </div>
+        </div>
+        <div class="rl-value">
+          <div class="num">3</div>
+          <div class="body">
+            <h4>A Place for Everything and Everything in Its Place</h4>
+            <p>Organization is the backbone of our operations. Each task, document, and interaction is managed with precision to keep things running smoothly and minimize errors. This attention to detail ensures reliable, efficient service for property owners and residents alike.</p>
+          </div>
+        </div>
+        <div class="rl-value">
+          <div class="num">4</div>
+          <div class="body">
+            <h4>We Lend a Hand, Consistently</h4>
+            <p>We're here to help, whether it's resolving resident issues, answering owner questions, or supporting teammates. Our culture of collaboration and care ensures clients and residents feel supported at each turn, fostering trust and long-lasting relationships.</p>
+          </div>
+        </div>
+        <div class="rl-value">
+          <div class="num">5</div>
+          <div class="body">
+            <h4>Do It in Real-Time</h4>
+            <p>We act promptly and document thoroughly to address issues the moment they arise. Real-time action keeps property owners informed, reduces downtime, and ensures tasks are completed efficiently to maintain the value and integrity of their investments.</p>
+          </div>
+        </div>
+        <div class="rl-value">
+          <div class="num">6</div>
+          <div class="body">
+            <h4>Respect Clients, Residents, and Each Other</h4>
+            <p>We treat each owner, resident, and teammate with courtesy, honesty, and fairness. Whether it's a resident concern, an owner inquiry, or a team discussion, we actively listen, respond promptly, and handle each situation with professionalism and care.</p>
+          </div>
+        </div>
+
+        <div class="rl-pullquote">Living Our Values. Serving Our Purpose.</div>
+        <p>Together, these values form the backbone of how we help property owners succeed with their real estate investments. They guide the way we approach challenges, make decisions, and deliver results, creating an experience that is reliable, thoughtful, and tailored to your needs. Experience the RL Property Management difference, where your success is our purpose.</p>
+      </section>
+
+      <!-- CLOSING CTA -->
+      <section class="rl-section alt" id="rl-help" style="border-bottom:0;">
+        <div class="rl-eyebrow">We're Here to Help</div>
+        <h2 class="rl-h2">Questions About Anything in This Handbook?</h2>
+        <span class="rl-rule"></span>
+        <p>Your assigned Property Manager is your first point of contact. For anything else, our team is a call or email away.</p>
+
+        <div class="rl-cta-grid">
+          <div class="box">
+            <h3>Log In to Your Owner Portal</h3>
+            <p>Access reports, leases, invoices, and rent status anytime. It stays current.</p>
+            <a class="rl-cta-btn" href="https://rlp.managebuilding.com/Manager" target="_blank" rel="noopener">Owner Login →</a>
+          </div>
+          <div class="box">
+            <h3>Reach Our Team</h3>
+            <p>Call the office and press 0, or email us and we'll route your request to the right person.</p>
+            <a class="rl-cta-btn" href="mailto:info@rlpmg.com">Email Us →</a>
+          </div>
+        </div>
+
+        <div class="rl-cta-contact">
+          <span class="phone">614.725.3059</span> · info@rlpmg.com<br>
+          750 Cross Pointe Rd, STE B, Columbus, OH 43230
+        </div>
+        <p class="rl-small-note" style="text-align:center;">Thank you for selecting RL Property Management!  ·  RL Property Management Group, Inc. is a licensed Ohio real estate brokerage.</p>
+      </section>
+
+    </main>
+  </div>
+</div>`} />
+  </AeoPage>
+</Base>
+
+<style is:inline set:html={migratedCss} />

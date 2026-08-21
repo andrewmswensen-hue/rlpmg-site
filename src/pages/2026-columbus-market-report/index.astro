@@ -1,0 +1,627 @@
+---
+/**
+ * Migrated from WordPress. This page carries its own scoped CSS (Andrew's long-form kit), so the styles
+ * travel with the markup rather than using the site's Tailwind components.
+ * Regenerate with: python3 scripts/import-longform.py
+ */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode } from '../../lib/schema';
+
+const path = "/2026-columbus-market-report/";
+const title = "2026 Columbus Rental Market Report | RLPM";
+const description = "RL Property Management's 2026 Columbus single-family rental market report: median prices, rent growth, cap rates by neighborhood, regulatory changes, and the investor outlook.";
+const directAnswer = "RL Property Management publishes an annual report on the Columbus, Ohio single-family rental market covering median home prices, rent levels and growth, cap rates by neighborhood, employment drivers, regulatory changes affecting landlords, and the outlook for the year ahead. The 2026 edition draws on Columbus REALTORS, RentCafe, Arbor, Redfin, the Franklin County Auditor, and RL Property Management's own portfolio of approximately 750 units.";
+const keyFacts = [
+  "The report covers the Columbus, Ohio single-family rental market across 30+ neighborhoods.",
+  "Sources include Columbus REALTORS, RentCafe, Arbor, Redfin, the Franklin County Auditor, and RL Property Management's own operating data.",
+  "Sections cover housing market overview, rental performance, best neighborhoods for investment, employment drivers, regulatory updates, and the 2026 outlook.",
+  "RL Property Management has served Columbus investors since 2013 and manages approximately 750 units."
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: "2026 Columbus Single-Family Rental Market Report", path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs)];
+// The page's own scoped CSS, migrated with the markup. is:inline keeps Tailwind's parser out of it
+// (the original stylesheet contains text Tailwind reads as a malformed at-rule).
+const migratedCss = " through </div>)\n  into a single Divi Code Module on a new page.\n\n  ALL CSS is scoped under `.rl-report-2026` so your Divi styles\n  can't collide. Font: Open Sans (inherited from rlpmg.com).\n\n  BEFORE PUBLISHING, replace each IMAGE_URL_* placeholder below\n  with the real URL from your WordPress Media Library.\n  ============================================================\n-->\n\n<style>\n/* ============================================================\n   Scope: everything is under .rl-report-2026 so Divi can't leak in.\n   ============================================================ */\n.rl-report-2026 {\n  --rl-maroon:    #59070e;\n  --rl-crimson:   #a60530;\n  --rl-crimson-d: #8a0427;\n  --rl-crimson-l: #f5dde3;\n  --rl-navy:      #123143;\n  --rl-navy-l:    #2a5b7a;\n  --rl-silver:    #dddddd;\n  --rl-paper:     #f7f5f3;\n  --rl-paper-2:   #ece7e2;\n  --rl-stone-400: #9a9a9a;\n  --rl-stone-600: #555555;\n  --rl-stone-800: #222222;\n  --rl-ink:       #1a1a1a;\n  --rl-white:     #ffffff;\n\n  --rl-font: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n\n  --rl-container: 1120px;\n  --rl-pad-x: clamp(20px, 5vw, 64px);\n  --rl-section-y: clamp(48px, 8vw, 96px);\n\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  color: #1a1a1a;\n  line-height: 1.55;\n  font-size: 17px;\n  background: #ffffff;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.rl-report-2026 *,\n.rl-report-2026 *::before,\n.rl-report-2026 *::after {\n  box-sizing: border-box;\n}\n\n/* Reset Divi header/paragraph defaults inside our scope */\n.rl-report-2026 h1,\n.rl-report-2026 h2,\n.rl-report-2026 h3,\n.rl-report-2026 h4,\n.rl-report-2026 h5,\n.rl-report-2026 h6 {\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  color: #123143;\n  line-height: 1.15;\n  margin: 0 0 12px 0;\n  font-weight: 800;\n  letter-spacing: -0.005em;\n  text-transform: none;\n}\n.rl-report-2026 p {\n  margin: 0 0 16px 0;\n  max-width: 68ch;\n  color: #1a1a1a;\n}\n.rl-report-2026 a {\n  color: #a60530;\n  text-decoration: underline;\n  text-decoration-thickness: 1px;\n  text-underline-offset: 3px;\n}\n.rl-report-2026 a:hover { color: #59070e; }\n.rl-report-2026 ul,\n.rl-report-2026 ol {\n  margin: 0 0 16px 0;\n  padding-left: 22px;\n}\n.rl-report-2026 li {\n  margin-bottom: 6px;\n}\n.rl-report-2026 strong,\n.rl-report-2026 b { font-weight: 700; color: inherit; }\n\n/* ============================================================\n   Layout shell\n   ============================================================ */\n.rl-report-2026 .rl-container {\n  max-width: 1120px;\n  margin: 0 auto;\n  padding-left: clamp(20px, 5vw, 64px);\n  padding-right: clamp(20px, 5vw, 64px);\n  width: 100%;\n}\n.rl-report-2026 .rl-section {\n  padding-top: clamp(48px, 8vw, 96px);\n  padding-bottom: clamp(48px, 8vw, 96px);\n  border-bottom: 1px solid #dddddd;\n}\n.rl-report-2026 .rl-section:last-of-type { border-bottom: 0; }\n.rl-report-2026 .rl-section.alt { background: #f7f5f3; }\n\n/* ============================================================\n   Eyebrow + brand rule\n   ============================================================ */\n.rl-report-2026 .rl-eyebrow {\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.22em;\n  text-transform: uppercase;\n  color: #a60530;\n  margin-bottom: 10px;\n}\n.rl-report-2026 .rl-rule {\n  display: block;\n  width: 56px;\n  height: 3px;\n  background: #a60530;\n  margin: 14px 0 24px 0;\n}\n\n/* ============================================================\n   HERO\n   ============================================================ */\n.rl-report-2026 .rl-hero {\n  position: relative;\n  min-height: 86vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 48px 0 56px;\n  background: #123143;\n  overflow: hidden;\n  color: #ffffff;\n}\n.rl-report-2026 .rl-hero::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background-image: url('https://rlpmg.com/wp-content/uploads/2026/04/autumn-street.jpg');\n  background-size: cover;\n  background-position: center;\n  filter: saturate(0.85) brightness(0.65);\n  z-index: 0;\n}\n.rl-report-2026 .rl-hero::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(180deg, rgba(18,49,67,0.5) 0%, rgba(89,7,14,0.7) 55%, rgba(89,7,14,0.92) 100%);\n  z-index: 1;\n}\n.rl-report-2026 .rl-hero .rl-container {\n  position: relative;\n  z-index: 2;\n}\n.rl-report-2026 .rl-hero-top {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 2;\n  padding: 28px 0;\n}\n.rl-report-2026 .rl-hero-top .rl-container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: 12px;\n}\n.rl-report-2026 .rl-hero-label {\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.26em;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.95);\n}\n.rl-report-2026 .rl-hero-title-rule {\n  width: 64px;\n  height: 4px;\n  background: #ffffff;\n  margin-bottom: 22px;\n}\n.rl-report-2026 .rl-hero-kicker {\n  font-weight: 700;\n  font-size: 13px;\n  letter-spacing: 0.26em;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.95);\n  margin-bottom: 20px;\n}\n.rl-report-2026 .rl-hero h1 {\n  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n  font-weight: 800;\n  font-size: clamp(38px, 6vw, 68px);\n  line-height: 1.03;\n  color: #ffffff;\n  letter-spacing: -0.015em;\n  margin: 0 0 18px 0;\n  max-width: 14ch;\n}\n.rl-report-2026 .rl-hero-year {\n  font-weight: 800;\n  font-size: clamp(72px, 12vw, 140px);\n  line-height: 0.9;\n  color: #a60530;\n  letter-spacing: -0.03em;\n  display: block;\n  margin: 4px 0 24px 0;\n}\n.rl-report-2026 .rl-hero-subtitle {\n  font-size: clamp(15px, 1.6vw, 18px);\n  line-height: 1.55;\n  max-width: 560px;\n  color: rgba(255,255,255,0.95);\n  margin: 0;\n}\n\n.rl-report-2026 .rl-hero-metrics {\n  margin-top: 44px;\n  padding-top: 28px;\n  border-top: 3px solid #a60530;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 24px;\n}\n.rl-report-2026 .rl-hero-metric .value {\n  font-weight: 800;\n  font-size: clamp(28px, 4vw, 42px);\n  color: #ffffff;\n  line-height: 1;\n  letter-spacing: -0.02em;\n}\n.rl-report-2026 .rl-hero-metric .label {\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  margin-top: 10px;\n  color: rgba(255,255,255,0.95);\n}\n.rl-report-2026 .rl-hero-metric .caption {\n  font-size: 12px;\n  margin-top: 4px;\n  color: rgba(255,255,255,0.7);\n}\n\n/* ============================================================\n   Section layout w/ optional sticky TOC\n   ============================================================ */\n.rl-report-2026 .rl-toc-wrap {\n  display: grid;\n  grid-template-columns: 220px 1fr;\n  gap: 56px;\n  max-width: 1120px;\n  margin: 0 auto;\n  padding-left: clamp(20px, 5vw, 64px);\n  padding-right: clamp(20px, 5vw, 64px);\n}\n.rl-report-2026 .rl-toc {\n  position: sticky;\n  top: 24px;\n  align-self: start;\n  font-size: 13px;\n  padding: 24px 0;\n  max-height: 100vh;\n  overflow-y: auto;\n  border-right: 1px solid #dddddd;\n  padding-right: 20px;\n}\n.rl-report-2026 .rl-toc-title {\n  font-size: 11px;\n  font-weight: 700;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  color: #a60530;\n  margin-bottom: 16px;\n}\n.rl-report-2026 .rl-toc ol {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  counter-reset: rltoc;\n}\n.rl-report-2026 .rl-toc li {\n  margin: 0 0 10px 0;\n  counter-increment: rltoc;\n  display: flex;\n  gap: 10px;\n}\n.rl-report-2026 .rl-toc li::before {\n  content: counter(rltoc, decimal-leading-zero);\n  color: #a60530;\n  font-weight: 700;\n  font-size: 11px;\n}\n.rl-report-2026 .rl-toc a {\n  color: #123143;\n  text-decoration: none;\n  font-weight: 600;\n  line-height: 1.3;\n}\n.rl-report-2026 .rl-toc a:hover { color: #a60530; }\n\n/* ============================================================\n   At-a-glance grid\n   ============================================================ */\n.rl-report-2026 .rl-glance {\n  margin-top: 28px;\n  background: #123143;\n  color: #ffffff;\n  padding: 32px;\n  border-top: 3px solid #a60530;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 24px 36px;\n}\n.rl-report-2026 .rl-glance-title {\n  grid-column: 1 / -1;\n  font-weight: 800;\n  font-size: 14px;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  padding-bottom: 14px;\n  border-bottom: 1px solid rgba(255,255,255,0.2);\n  margin: 0;\n  color: #ffffff;\n}\n.rl-report-2026 .rl-glance-cell .value {\n  font-weight: 800;\n  font-size: 30px;\n  color: #f5dde3;\n  line-height: 1;\n  letter-spacing: -0.02em;\n}\n.rl-report-2026 .rl-glance-cell .label {\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.18em;\n  text-transform: uppercase;\n  margin-top: 10px;\n  color: #ffffff;\n}\n.rl-report-2026 .rl-glance-cell .caption {\n  font-size: 12px;\n  margin-top: 4px;\n  color: rgba(255,255,255,0.78);\n}\n\n/* ============================================================\n   Two-column split layout\n   ============================================================ */\n.rl-report-2026 .rl-split {\n  display: grid;\n  grid-template-columns: 1.1fr 1fr;\n  gap: 40px;\n  margin: 28px 0;\n  align-items: start;\n}\n.rl-report-2026 .rl-split-img {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 4 / 3;\n  background: #dddddd;\n  border: 1px solid #dddddd;\n}\n.rl-report-2026 .rl-split-img img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.rl-report-2026 .rl-split-img .tag {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  background: #59070e;\n  color: #ffffff;\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.2em;\n  padding: 8px 14px;\n  text-transform: uppercase;\n}\n\n/* ============================================================\n   Pullquote\n   ============================================================ */\n.rl-report-2026 .rl-pullquote {\n  font-weight: 700;\n  font-style: italic;\n  font-size: clamp(19px, 2.2vw, 26px);\n  line-height: 1.3;\n  color: #59070e;\n  text-align: center;\n  padding: 32px 24px;\n  margin: 36px 0;\n  border-top: 2px solid #dddddd;\n  border-bottom: 2px solid #dddddd;\n  max-width: none;\n}\n\n.rl-report-2026 .rl-dark-quote {\n  background: #59070e;\n  color: #ffffff;\n  padding: 32px 36px;\n  margin: 36px 0;\n  font-weight: 600;\n  font-style: italic;\n  font-size: clamp(18px, 2vw, 22px);\n  line-height: 1.35;\n  text-align: center;\n  border-left: 4px solid #a60530;\n}\n\n/* ============================================================\n   Chart cards\n   ============================================================ */\n.rl-report-2026 .rl-chart {\n  background: #ffffff;\n  border: 1px solid #dddddd;\n  padding: 24px;\n  margin: 24px 0;\n}\n.rl-report-2026 .rl-chart.paper { background: #f7f5f3; }\n.rl-report-2026 .rl-chart-title {\n  font-weight: 800;\n  font-size: 16px;\n  color: #123143;\n  margin: 0 0 2px 0;\n}\n.rl-report-2026 .rl-chart-subtitle {\n  font-size: 13px;\n  color: #555555;\n  margin-bottom: 14px;\n}\n.rl-report-2026 .rl-chart-caption {\n  font-size: 12px;\n  color: #555555;\n  font-style: italic;\n  margin-top: 12px;\n  line-height: 1.5;\n}\n.rl-report-2026 .rl-chart-legend {\n  display: flex;\n  gap: 20px;\n  justify-content: flex-end;\n  margin-bottom: 4px;\n  font-size: 12px;\n  font-weight: 700;\n  color: #123143;\n}\n.rl-report-2026 .rl-chart-legend .dot {\n  display: inline-block;\n  width: 11px;\n  height: 11px;\n  margin-right: 6px;\n  vertical-align: middle;\n}\n.rl-report-2026 .rl-chart svg {\n  display: block;\n  width: 100%;\n  height: auto;\n}\n.rl-report-2026 .rl-chart-grid2 {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 20px;\n}\n\n/* ============================================================\n   Metrics table\n   ============================================================ */\n.rl-report-2026 .rl-table-wrap { overflow-x: auto; margin: 24px 0; }\n.rl-report-2026 table.rl-table {\n  width: 100%;\n  border-collapse: collapse;\n  font-size: 14px;\n  min-width: 560px;\n}\n.rl-report-2026 table.rl-table thead th {\n  background: #123143;\n  color: #ffffff;\n  padding: 12px 16px;\n  font-weight: 700;\n  font-size: 12px;\n  letter-spacing: 0.14em;\n  text-transform: uppercase;\n  text-align: left;\n  border-right: 1px solid rgba(255,255,255,0.15);\n}\n.rl-report-2026 table.rl-table thead th:last-child { border-right: 0; }\n.rl-report-2026 table.rl-table tbody td {\n  padding: 12px 16px;\n  border-bottom: 1px solid #dddddd;\n  vertical-align: top;\n}\n.rl-report-2026 table.rl-table tbody tr:nth-child(even) td { background: #f7f5f3; }\n.rl-report-2026 table.rl-table td.num {\n  font-weight: 800;\n  color: #59070e;\n}\n.rl-report-2026 table.rl-table td.label {\n  font-weight: 700;\n  color: #123143;\n}\n.rl-report-2026 table.rl-playbook thead th { background: #59070e; }\n.rl-report-2026 table.rl-playbook td.strategy { font-weight: 700; color: #123143; }\n\n/* ============================================================\n   Neighborhood cards\n   ============================================================ */\n.rl-report-2026 .rl-nbhd {\n  border: 1px solid #dddddd;\n  background: #ffffff;\n  display: grid;\n  grid-template-columns: 72px 1fr 160px;\n  margin: 14px 0;\n}\n.rl-report-2026 .rl-nbhd .num {\n  background: #59070e;\n  color: #ffffff;\n  font-weight: 800;\n  font-size: 32px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.rl-report-2026 .rl-nbhd .body {\n  padding: 18px 22px;\n}\n.rl-report-2026 .rl-nbhd .body h4 {\n  font-size: 18px;\n  color: #123143;\n  margin: 0 0 6px 0;\n  font-weight: 800;\n}\n.rl-report-2026 .rl-nbhd .meta {\n  font-size: 13px;\n  color: #555555;\n  margin-bottom: 10px;\n  line-height: 1.5;\n}\n.rl-report-2026 .rl-nbhd .meta b { color: #123143; }\n.rl-report-2026 .rl-nbhd .body p {\n  margin: 0;\n  font-size: 14px;\n  line-height: 1.55;\n}\n.rl-report-2026 .rl-nbhd .cap {\n  background: #f7f5f3;\n  padding: 18px 16px;\n  text-align: center;\n  border-left: 1px solid #dddddd;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.rl-report-2026 .rl-nbhd .cap .cr-label {\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  color: #555555;\n}\n.rl-report-2026 .rl-nbhd .cap .cr-value {\n  font-weight: 800;\n  font-size: 22px;\n  color: #a60530;\n  line-height: 1.1;\n  margin: 4px 0;\n}\n.rl-report-2026 .rl-nbhd .cap .cr-profile {\n  font-size: 11px;\n  color: #555555;\n}\n\n/* ============================================================\n   Regulatory section\n   ============================================================ */\n.rl-report-2026 .rl-callout {\n  background: #f7f5f3;\n  border-left: 3px solid #a60530;\n  padding: 14px 20px;\n  font-size: 14px;\n  color: #555555;\n  margin: 20px 0;\n}\n.rl-report-2026 .rl-callout b { color: #123143; }\n\n.rl-report-2026 .rl-reg {\n  border-top: 1px solid #dddddd;\n  padding: 20px 0;\n}\n.rl-report-2026 .rl-reg h3 {\n  font-size: 19px;\n  color: #59070e;\n  margin: 0 0 8px 0;\n  font-weight: 800;\n}\n.rl-report-2026 .rl-reg h3 .reg-num {\n  color: #a60530;\n  font-size: 14px;\n  letter-spacing: 0.08em;\n  margin-right: 12px;\n}\n.rl-report-2026 .rl-reg p { font-size: 15px; line-height: 1.6; }\n\n/* Checklist */\n.rl-report-2026 .rl-checklist {\n  border: 1px solid #dddddd;\n  background: #f7f5f3;\n  margin: 16px 0;\n}\n.rl-report-2026 .rl-checklist-row {\n  display: flex;\n  align-items: flex-start;\n  gap: 14px;\n  padding: 12px 18px;\n  border-bottom: 1px solid #dddddd;\n  font-size: 14px;\n}\n.rl-report-2026 .rl-checklist-row:last-child { border-bottom: 0; }\n.rl-report-2026 .rl-checklist-row:nth-child(even) { background: #ffffff; }\n.rl-report-2026 .rl-checkbox {\n  flex-shrink: 0;\n  width: 18px;\n  height: 18px;\n  border: 1.5px solid #123143;\n  background: #ffffff;\n  border-radius: 2px;\n  margin-top: 2px;\n}\n\n/* ============================================================\n   FAQ - click to expand\n   ============================================================ */\n.rl-report-2026 .rl-faq {\n  border-top: 1px solid #dddddd;\n  padding: 18px 0;\n}\n.rl-report-2026 .rl-faq summary {\n  font-weight: 800;\n  font-size: 17px;\n  color: #123143;\n  cursor: pointer;\n  list-style: none;\n  padding-right: 32px;\n  position: relative;\n  line-height: 1.35;\n}\n.rl-report-2026 .rl-faq summary::-webkit-details-marker { display: none; }\n.rl-report-2026 .rl-faq summary::after {\n  content: '+';\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 24px;\n  height: 24px;\n  color: #a60530;\n  font-size: 24px;\n  font-weight: 400;\n  line-height: 1;\n  transition: transform 180ms ease;\n}\n.rl-report-2026 .rl-faq[open] summary::after { content: '\u2212'; }\n.rl-report-2026 .rl-faq p {\n  margin: 10px 0 0 0;\n  font-size: 15px;\n  line-height: 1.6;\n}\n\n/* ============================================================\n   CTA Section\n   ============================================================ */\n.rl-report-2026 .rl-cta-hero {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 16 / 6;\n  margin: 24px 0 32px 0;\n  background: #123143;\n  min-height: 240px;\n}\n.rl-report-2026 .rl-cta-hero img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  filter: saturate(0.85) brightness(0.85);\n}\n.rl-report-2026 .rl-cta-hero .overlay {\n  position: absolute;\n  inset: 0;\n  background: linear-gradient(90deg, rgba(89,7,14,0.9) 0%, rgba(89,7,14,0.35) 100%);\n  display: flex;\n  align-items: center;\n  padding: 32px;\n}\n.rl-report-2026 .rl-cta-hero h2 {\n  color: #ffffff;\n  font-weight: 800;\n  font-size: clamp(22px, 3vw, 32px);\n  line-height: 1.1;\n  margin: 0;\n}\n.rl-report-2026 .rl-cta-hero p {\n  color: rgba(255,255,255,0.92);\n  font-weight: 700;\n  font-size: 11px;\n  letter-spacing: 0.18em;\n  text-transform: uppercase;\n  margin: 10px 0 0 0;\n}\n\n.rl-report-2026 .rl-cta-grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  background: #123143;\n  color: #ffffff;\n  margin-top: 20px;\n}\n.rl-report-2026 .rl-cta-grid .box {\n  padding: 28px 32px;\n  border-right: 1px solid rgba(255,255,255,0.2);\n}\n.rl-report-2026 .rl-cta-grid .box:last-child { border-right: 0; }\n.rl-report-2026 .rl-cta-grid h3 {\n  color: #ffffff;\n  font-size: 20px;\n  margin: 0 0 10px 0;\n  font-weight: 800;\n}\n.rl-report-2026 .rl-cta-grid p {\n  color: rgba(255,255,255,0.9);\n  font-size: 14px;\n  margin-bottom: 18px;\n  max-width: none;\n}\n.rl-report-2026 .rl-cta-btn {\n  display: inline-block;\n  background: #ffffff;\n  color: #59070e !important;\n  padding: 12px 24px;\n  font-weight: 800;\n  font-size: 12px;\n  letter-spacing: 0.2em;\n  text-transform: uppercase;\n  text-decoration: none !important;\n  border: 2px solid #ffffff;\n  transition: background 160ms, color 160ms;\n}\n.rl-report-2026 .rl-cta-btn:hover {\n  background: #a60530;\n  color: #ffffff !important;\n  border-color: #a60530;\n}\n.rl-report-2026 .rl-cta-contact {\n  margin-top: 22px;\n  padding-top: 18px;\n  border-top: 1px solid #dddddd;\n  font-weight: 700;\n  font-size: 15px;\n  color: #123143;\n  text-align: center;\n}\n.rl-report-2026 .rl-cta-contact .phone { color: #a60530; }\n\n/* ============================================================\n   Employer cards grid\n   ============================================================ */\n.rl-report-2026 .rl-emp-grid {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  gap: 16px;\n  margin: 20px 0;\n}\n.rl-report-2026 .rl-emp-card {\n  background: #f7f5f3;\n  border-left: 3px solid #123143;\n  padding: 14px 18px;\n}\n.rl-report-2026 .rl-emp-card h5 {\n  font-size: 12px;\n  color: #59070e;\n  margin: 0 0 4px 0;\n  letter-spacing: 0.1em;\n  text-transform: uppercase;\n  font-weight: 800;\n}\n.rl-report-2026 .rl-emp-card p {\n  font-size: 13px;\n  margin: 0;\n  color: #222222;\n  line-height: 1.45;\n}\n\n/* Source items */\n.rl-report-2026 .rl-source {\n  padding: 12px 0;\n  border-bottom: 1px solid #dddddd;\n  font-size: 14px;\n  line-height: 1.6;\n}\n.rl-report-2026 .rl-source:last-child { border-bottom: 0; }\n.rl-report-2026 .rl-source b { color: #123143; }\n\n/* About page-like block */\n.rl-report-2026 .rl-about-logo {\n  max-width: 280px;\n  height: auto;\n  margin: 18px 0 16px 0;\n}\n\n/* Small utility */\n.rl-report-2026 .rl-muted { color: #555555; font-size: 13px; }\n.rl-report-2026 .rl-small-disclaimer {\n  font-size: 12px;\n  color: #555555;\n  line-height: 1.55;\n  margin-top: 16px;\n}\n\n/* ============================================================\n   RESPONSIVE ,  mobile breakpoints\n   ============================================================ */\n@media (max-width: 960px) {\n  .rl-report-2026 .rl-toc-wrap { grid-template-columns: 1fr; gap: 0; }\n  .rl-report-2026 .rl-toc { display: none; }\n}\n@media (max-width: 720px) {\n  .rl-report-2026 { font-size: 16px; }\n  .rl-report-2026 .rl-hero { min-height: 72vh; padding-bottom: 40px; }\n  .rl-report-2026 .rl-hero-metrics {\n    grid-template-columns: 1fr;\n    gap: 16px;\n  }\n  .rl-report-2026 .rl-glance { grid-template-columns: 1fr 1fr; padding: 22px; gap: 18px 20px; }\n  .rl-report-2026 .rl-glance-cell .value { font-size: 24px; }\n  .rl-report-2026 .rl-split { grid-template-columns: 1fr; gap: 20px; }\n  .rl-report-2026 .rl-chart-grid2 { grid-template-columns: 1fr; }\n  .rl-report-2026 .rl-cta-grid { grid-template-columns: 1fr; }\n  .rl-report-2026 .rl-cta-grid .box { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.2); }\n  .rl-report-2026 .rl-cta-grid .box:last-child { border-bottom: 0; }\n  .rl-report-2026 .rl-emp-grid { grid-template-columns: 1fr; }\n  .rl-report-2026 .rl-nbhd { grid-template-columns: 60px 1fr; }\n  .rl-report-2026 .rl-nbhd .cap {\n    grid-column: 1 / -1;\n    border-left: 0;\n    border-top: 1px solid #dddddd;\n    flex-direction: row;\n    gap: 14px;\n    justify-content: center;\n    padding: 12px;\n  }\n  .rl-report-2026 .rl-nbhd .cap .cr-value { font-size: 18px; }\n  .rl-report-2026 .rl-cta-hero { aspect-ratio: 4 / 3; }\n}\n@media (max-width: 480px) {\n  .rl-report-2026 .rl-glance { grid-template-columns: 1fr; }\n}\n\n\n.rl-dl-band{background:#f7f5f3;padding:32px 24px;text-align:center;border-bottom:1px solid #dddddd;}\n.rl-dl-btn{display:inline-flex;align-items:center;gap:10px;background:#a60530;color:#ffffff !important;padding:14px 30px;font-family:'Open Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none !important;border:2px solid #a60530;transition:all 160ms;}\n.rl-dl-btn:hover{background:#59070e;border-color:#59070e;color:#ffffff !important;}\n.rl-dl-arrow{font-size:16px;line-height:1;}\n.rl-dl-sub{font-size:13px;color:#555;margin-top:12px;font-family:'Open Sans',sans-serif;}\n";
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage
+    title="2026 Columbus Single-Family Rental Market Report"
+    {directAnswer}
+    {keyFacts}
+    lastVerified={LAST_VERIFIED}
+    breadcrumbs={crumbs}
+    related={[
+      { href: '/pricing/', label: 'Pricing' },
+      { href: '/faq/', label: 'Owner FAQ' },
+      { href: '/key-performance-indicators/', label: 'KPI scorecard' },
+      { href: '/contact-us/', label: 'Contact' },
+    ]}
+  >
+    <div class="longform" set:html={`<div class="rl-report-2026">
+
+  <!-- ==================== HERO ==================== -->
+  <header class="rl-hero">
+    <div class="rl-hero-top">
+      <div class="rl-container">
+        <span class="rl-hero-label">RL Property Management</span>
+        <span class="rl-hero-label" style="color:rgba(255,255,255,0.85);">Investor Report · H1 2026 Update</span>
+      </div>
+    </div>
+    <div class="rl-container">
+      <div class="rl-hero-title-rule"></div>
+      <div class="rl-hero-kicker">A Data-Driven Market Update</div>
+      <h2>Columbus Single-Family Rental Market Update</h2>
+      <span class="rl-hero-year">2026</span>
+      <p class="rl-hero-subtitle">An operator's view of the Columbus, Ohio metro single-family rental market ,  rent trends, neighborhood yields, regulatory shifts, and the 2026 investor playbook.</p>
+
+      <div class="rl-hero-metrics">
+        <div class="rl-hero-metric">
+          <div class="value">$1,725</div>
+          <div class="label">Avg 3BR Rent</div>
+          <div class="caption">Columbus apartments, mid-2026</div>
+        </div>
+        <div class="rl-hero-metric">
+          <div class="value">95%+</div>
+          <div class="label">Occupancy</div>
+          <div class="caption">Well-managed properties</div>
+        </div>
+        <div class="rl-hero-metric">
+          <div class="value">+2.2–4%</div>
+          <div class="label">YoY Rent Growth</div>
+          <div class="caption">Outperforming national avg</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- ==================== PDF DOWNLOAD BAND ==================== -->
+
+<div class="rl-dl-band">
+  <a class="rl-dl-btn" href="/wp-content/uploads/2026/04/2026-Columbus-SFR-Market-Report.pdf" download>
+    <span class="rl-dl-arrow">↓</span> Download PDF Version
+  </a>
+  <div class="rl-dl-sub">Get the full 18-page report as a printable PDF.</div>
+</div>
+
+  <!-- ==================== BODY WITH STICKY TOC ==================== -->
+  <div class="rl-toc-wrap">
+
+    <!-- STICKY TOC (desktop only) -->
+    <nav class="rl-toc">
+      <div class="rl-toc-title">In This Report</div>
+      <ol>
+        <li><a href="#rl-summary">Executive Summary</a></li>
+        <li><a href="#rl-market">Housing Market Overview</a></li>
+        <li><a href="#rl-rental">Rental Market Performance</a></li>
+        <li><a href="#rl-nbhds">Best Neighborhoods</a></li>
+        <li><a href="#rl-economy">Economic & Employment Drivers</a></li>
+        <li><a href="#rl-regulatory">Regulatory Updates</a></li>
+        <li><a href="#rl-outlook">2026 Investment Outlook</a></li>
+        <li><a href="#rl-faq">Frequently Asked Questions</a></li>
+        <li><a href="#rl-cta">Ready to Invest</a></li>
+        <li><a href="#rl-sources">Methodology & Sources</a></li>
+        <li><a href="#rl-about">About RL Property Management</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+
+      <!-- EXECUTIVE SUMMARY -->
+      <section class="rl-section" id="rl-summary" style="border-top:0; padding-top:56px;">
+        <div class="rl-eyebrow">Section 01</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Executive Summary</h2>
+        <span class="rl-rule"></span>
+        <p>Columbus remains one of the strongest single-family rental markets in the Midwest entering 2026, but the investor playbook looks different than it did in 2025. Intel's New Albany semiconductor project has delayed production start from 2025 to 2030–2031. The Columbus Rental Registry passed in April 2026, introducing new compliance requirements for each residential rental in the city. Franklin County's 2026 Triennial Update delivered updated assessed values in June, raising residential valuations by about 9% on average.</p>
+        <p>Through these shifts, market fundamentals remain intact. Median home prices reached $350,000 across the Columbus & Central Ohio Regional MLS by May 2026 ,  roughly 20% below the national median. Year-over-year price growth has moderated to a healthy 4.3%. Rent growth continues to outperform the national average, and occupancy in well-managed properties remains above 95%. Inventory has improved meaningfully, climbing to roughly 5,200 homes and pushing months of supply to 2.0, giving disciplined investors more room to underwrite properly and negotiate from strength.</p>
+        <p>The 2026 opportunity is different from the 2021–2023 boom. This is a year that rewards careful acquisition, realistic underwriting, and operational excellence rather than momentum-driven buying.</p>
+
+        <div class="rl-glance">
+          <h3 class="rl-glance-title">At a Glance · Columbus SFR Market, H1 2026</h3>
+          <div class="rl-glance-cell">
+            <div class="value">$350K</div>
+            <div class="label">Median Home Price</div>
+            <div class="caption">MLS · May 2026</div>
+          </div>
+          <div class="rl-glance-cell">
+            <div class="value">+4.3%</div>
+            <div class="label">YoY Price Growth</div>
+            <div class="caption">Columbus REALTORS</div>
+          </div>
+          <div class="rl-glance-cell">
+            <div class="value">29–49</div>
+            <div class="label">Days on Market</div>
+            <div class="caption">H1 seasonal range</div>
+          </div>
+          <div class="rl-glance-cell">
+            <div class="value">95%+</div>
+            <div class="label">Occupancy</div>
+            <div class="caption">Well-managed properties</div>
+          </div>
+          <div class="rl-glance-cell">
+            <div class="value">7–10%</div>
+            <div class="label">Value-Market Cap Rates</div>
+            <div class="caption">Whitehall, Eastmoor, Blacklick</div>
+          </div>
+          <div class="rl-glance-cell">
+            <div class="value">$1,725</div>
+            <div class="label">Avg 3BR Rent</div>
+            <div class="caption">Columbus apartments</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOUSING MARKET OVERVIEW -->
+      <section class="rl-section" id="rl-market">
+        <div class="rl-eyebrow">Section 02</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Columbus Housing Market Overview</h2>
+        <div style="color:#a60530; font-weight:700; font-size:15px; margin-bottom:16px;">H1 2026 Snapshot</div>
+        <span class="rl-rule"></span>
+
+        <div class="rl-split">
+          <div>
+            <p>Columbus's housing market enters 2026 in a more balanced posture than it held through most of 2024 and 2025. According to the Columbus REALTORS May 2026 Local Market Update, median sale price across the Columbus & Central Ohio Regional MLS reached <b>$350,000</b> in May, up 4.3% year-over-year after firming steadily through the first half from $319,900 in January. Inventory improved to 5,223 homes for sale ,  up roughly 8% year-over-year ,  and months of supply rose to 2.0, still well below the 6-month threshold that defines a balanced market.</p>
+            <p>Days on market followed the usual seasonal path. Homes took 46 to 49 days to sell in the winter months, then compressed to 29 days by May as the spring market arrived ,  though that still ran slightly longer than a year earlier as inventory built. Buyers have more breathing room, but sellers still receive an average of nearly 99% of their original list price.</p>
+          </div>
+          <div class="rl-split-img">
+            <img loading="eager" data-no-lazy="1" data-skip-lazy="true" class="no-lazy skip-lazy" src="https://rlpmg.com/wp-content/uploads/2026/04/autumn-street.jpg" alt="Suburban Columbus home" />
+            <div class="tag">Suburban Columbus</div>
+          </div>
+        </div>
+
+        <div class="rl-chart">
+          <div class="rl-chart-title">Median Home Price · Columbus & Central Ohio MLS</div>
+          <div class="rl-chart-subtitle">Year-over-year, with national comparison</div>
+          <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNzIwIDIyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgc3Ryb2tlPSIjZGRkZGRkIiBzdHJva2Utd2lkdGg9IjEiPgo8bGluZSB4MT0iNjAiIHkxPSIzMCIgeDI9IjcwMCIgeTI9IjMwIiAvPgo8bGluZSB4MT0iNjAiIHkxPSI3NSIgeDI9IjcwMCIgeTI9Ijc1IiAvPgo8bGluZSB4MT0iNjAiIHkxPSIxMjAiIHgyPSI3MDAiIHkyPSIxMjAiIC8+CjxsaW5lIHgxPSI2MCIgeTE9IjE2NSIgeDI9IjcwMCIgeTI9IjE2NSIgLz4KPC9nPgo8ZyBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjOWE5YTlhIj4KPHRleHQgeD0iNTIiIHk9IjM0IiB0ZXh0LWFuY2hvcj0iZW5kIj4kNTAwSzwvdGV4dD4KPHRleHQgeD0iNTIiIHk9Ijc5IiB0ZXh0LWFuY2hvcj0iZW5kIj4kNDAwSzwvdGV4dD4KPHRleHQgeD0iNTIiIHk9IjEyNCIgdGV4dC1hbmNob3I9ImVuZCI+JDMwMEs8L3RleHQ+Cjx0ZXh0IHg9IjUyIiB5PSIxNjkiIHRleHQtYW5jaG9yPSJlbmQiPiQyMDBLPC90ZXh0Pgo8L2c+CjxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiM1NTU1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgo8dGV4dCB4PSI5MCIgeT0iMTkyIj4yMDIxPC90ZXh0Pgo8dGV4dCB4PSIyMTIiIHk9IjE5MiI+MjAyMjwvdGV4dD4KPHRleHQgeD0iMzM0IiB5PSIxOTIiPjIwMjM8L3RleHQ+Cjx0ZXh0IHg9IjQ1NiIgeT0iMTkyIj4yMDI0PC90ZXh0Pgo8dGV4dCB4PSI1NzgiIHk9IjE5MiI+MjAyNTwvdGV4dD4KPHRleHQgeD0iNjk0IiB5PSIxOTIiPjIwMjYgSDE8L3RleHQ+CjwvZz4KPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E2MDUzMCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHBvaW50cz0iOTAsOTYgMjEyLDgxIDMzNCw4MCA0NTYsNzIgNTc4LDY3IDY5NCw1NyIvPgo8cG9seWxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTIzMTQzIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgcG9pbnRzPSI5MCwxMzYgMjEyLDEyMiAzMzQsMTE4IDQ1NiwxMTEgNTc4LDEwNCA2OTQsOTgiLz4KPGcgZmlsbD0iI2E2MDUzMCI+CjxjaXJjbGUgY3g9IjkwIiBjeT0iOTYiIHI9IjMuNSIvPjxjaXJjbGUgY3g9IjIxMiIgY3k9IjgxIiByPSIzLjUiLz48Y2lyY2xlIGN4PSIzMzQiIGN5PSI4MCIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iNDU2IiBjeT0iNzIiIHI9IjMuNSIvPjxjaXJjbGUgY3g9IjU3OCIgY3k9IjY3IiByPSIzLjUiLz48Y2lyY2xlIGN4PSI2OTQiIGN5PSI1NyIgcj0iNCIvPgo8L2c+CjxnIGZpbGw9IiMxMjMxNDMiPgo8Y2lyY2xlIGN4PSI5MCIgY3k9IjEzNiIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iMjEyIiBjeT0iMTIyIiByPSIzLjUiLz48Y2lyY2xlIGN4PSIzMzQiIGN5PSIxMTgiIHI9IjMuNSIvPjxjaXJjbGUgY3g9IjQ1NiIgY3k9IjExMSIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iNTc4IiBjeT0iMTA0IiByPSIzLjUiLz48Y2lyY2xlIGN4PSI2OTQiIGN5PSI5OCIgcj0iNCIvPgo8L2c+CjxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI3MDAiPgo8dGV4dCB4PSI2OTQiIHk9IjUwIiB0ZXh0LWFuY2hvcj0iZW5kIiBmaWxsPSIjYTYwNTMwIj4kNDQxSyBOYXQnbDwvdGV4dD4KPHRleHQgeD0iNjg4IiB5PSIxMTQiIHRleHQtYW5jaG9yPSJlbmQiIGZpbGw9IiMxMjMxNDMiPiQzNTBLIENvbHVtYnVzPC90ZXh0Pgo8L2c+Cjwvc3ZnPg==" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 720.0 / 220.0;" />
+          <div class="rl-chart-legend">
+            <span><span class="dot" style="background:#123143"></span>Columbus MLS</span>
+            <span><span class="dot" style="background:#a60530"></span>National Average</span>
+          </div>
+          <div class="rl-chart-caption">Columbus median sale prices remain roughly 20% below the national median. Year-over-year price growth has moderated from double-digit pandemic highs to the 3–5% range ,  the hallmark of a healthy, sustainable market. Sources: Columbus REALTORS, NAR.</div>
+        </div>
+
+        <div class="rl-pullquote">Columbus's median sale price is roughly 20% below the national median. The affordability advantage is the story that keeps working.</div>
+
+        <p>For investors, this is the environment that rewards patience over speed. Properties that would have drawn five offers in 48 hours in 2022 now sit on the market long enough to underwrite properly, negotiate, and close without paying top-of-market prices.</p>
+      </section>
+
+      <!-- RENTAL MARKET PERFORMANCE -->
+      <section class="rl-section" id="rl-rental">
+        <div class="rl-eyebrow">Section 03</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Rental Market Performance</h2>
+        <span class="rl-rule"></span>
+        <p>The Columbus single-family rental market continues to outperform national averages on both rent growth and occupancy. Average apartment rent in Columbus reached $1,365 as of mid-2026, up about 2% year-over-year, while three-bedroom unit rents average $1,725. Single-family detached rentals typically command higher rents than comparable apartments, with three-bedroom SFRs in desirable Columbus submarkets leasing in the <b>$1,750 to $2,200</b> range depending on condition and neighborhood.</p>
+        <p>Arbor's latest SFR report (Q2 2026) shows national occupancy at 93.9% and cap rates rising to 7.4% ,  a tenth straight quarterly increase ,  as home-price appreciation slowed, while national SFR rents grew 2.6% year-over-year. Columbus fundamentals compare favorably on both occupancy and rent growth.</p>
+
+        <div class="rl-chart">
+          <div class="rl-chart-title">Columbus vs. National Rents · Mid-Year 2026</div>
+          <div class="rl-chart-subtitle">Average monthly rent by unit type</div>
+          <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNzIwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgPHRleHQgeD0iMCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPkF2ZyBBcHQgUmVudDwvdGV4dD4KICAgICAgICAgICAgPHJlY3QgeD0iMTQwIiB5PSIyMiIgd2lkdGg9IjI1MyIgaGVpZ2h0PSIyNiIgZmlsbD0iIzEyMzE0MyIvPgogICAgICAgICAgICA8cmVjdCB4PSIxNDAiIHk9IjUyIiB3aWR0aD0iMzI2IiBoZWlnaHQ9IjI2IiBmaWxsPSIjYTYwNTMwIi8+CiAgICAgICAgICAgIDx0ZXh0IHg9IjM5OCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPiQxLDM2NTwvdGV4dD4KICAgICAgICAgICAgPHRleHQgeD0iNDcyIiB5PSI3MCIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2E2MDUzMCI+JDEsNzIwPC90ZXh0PgogICAgICAgICAgICA8dGV4dCB4PSIwIiB5PSIxMjgiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPjNCUiBBcHQgUmVudDwvdGV4dD4KICAgICAgICAgICAgPHJlY3QgeD0iMTQwIiB5PSIxMTAiIHdpZHRoPSIzMTYiIGhlaWdodD0iMjYiIGZpbGw9IiMxMjMxNDMiLz4KICAgICAgICAgICAgPHJlY3QgeD0iMTQwIiB5PSIxNDAiIHdpZHRoPSI0MjYiIGhlaWdodD0iMjYiIGZpbGw9IiNhNjA1MzAiLz4KICAgICAgICAgICAgPHRleHQgeD0iNDYxIiB5PSIxMjgiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPiQxLDcyNTwvdGV4dD4KICAgICAgICAgICAgPHRleHQgeD0iNTcyIiB5PSIxNTgiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhNjA1MzAiPiQyLDI0ODwvdGV4dD4KICAgICAgICAgICAgPGxpbmUgeDE9IjE0MCIgeTE9IjE3OCIgeDI9IjY0MCIgeTI9IjE3OCIgc3Ryb2tlPSIjZGRkZGRkIi8+CiAgICAgICAgICAgIDxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5YTlhOWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgICAgICAgICAgIDx0ZXh0IHg9IjE0MCIgeT0iMTk0Ij4kMDwvdGV4dD48dGV4dCB4PSIyNDAiIHk9IjE5NCI+JDUwMDwvdGV4dD48dGV4dCB4PSIzNDAiIHk9IjE5NCI+JDEsMDAwPC90ZXh0PgogICAgICAgICAgICAgIDx0ZXh0IHg9IjQ0MCIgeT0iMTk0Ij4kMSw1MDA8L3RleHQ+PHRleHQgeD0iNTQwIiB5PSIxOTQiPiQyLDAwMDwvdGV4dD48dGV4dCB4PSI2NDAiIHk9IjE5NCI+JDIsNTAwPC90ZXh0PgogICAgICAgICAgICA8L2c+CiAgICAgICAgICA8L3N2Zz4=" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 720.0 / 200.0;" />
+          <div class="rl-chart-legend">
+            <span><span class="dot" style="background:#123143"></span>Columbus</span>
+            <span><span class="dot" style="background:#a60530"></span>National</span>
+          </div>
+          <div class="rl-chart-caption">Columbus rents remain significantly below national averages across unit types ,  the affordability advantage that keeps tenant demand strong. Source: RentCafe · Arbor Q2 2026.</div>
+        </div>
+
+        <div class="rl-chart-grid2">
+          <div class="rl-chart paper">
+            <div class="rl-chart-title">Occupancy · Columbus vs National</div>
+            <div class="rl-chart-subtitle">Well-managed SFR portfolios</div>
+            <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzAwIDE3MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MCw4NSkiPgogICAgICAgICAgICAgICAgPGNpcmNsZSByPSI1NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZGRkZGRkIiBzdHJva2Utd2lkdGg9IjE0Ii8+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIHI9IjU1IiBmaWxsPSJub25lIiBzdHJva2U9IiMxMjMxNDMiIHN0cm9rZS13aWR0aD0iMTQiCiAgICAgICAgICAgICAgICAgIHN0cm9rZS1kYXNoYXJyYXk9IjMyOCAzNDUiIHRyYW5zZm9ybT0icm90YXRlKC05MCkiLz4KICAgICAgICAgICAgICAgIDx0ZXh0IHk9Ii00IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iODAwIiBmb250LXNpemU9IjIyIiBmaWxsPSIjNTkwNzBlIj45NSUrPC90ZXh0PgogICAgICAgICAgICAgICAgPHRleHQgeT0iMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM1NTUiIGxldHRlci1zcGFjaW5nPSIxLjUiPkNPTFVNQlVTPC90ZXh0PgogICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMjAsODUpIj4KICAgICAgICAgICAgICAgIDxjaXJjbGUgcj0iNTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RkZGRkZCIgc3Ryb2tlLXdpZHRoPSIxNCIvPgogICAgICAgICAgICAgICAgPGNpcmNsZSByPSI1NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTYwNTMwIiBzdHJva2Utd2lkdGg9IjE0IgogICAgICAgICAgICAgICAgICBzdHJva2UtZGFzaGFycmF5PSIzMjQgMzQ1IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTApIi8+CiAgICAgICAgICAgICAgICA8dGV4dCB5PSItNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjgwMCIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzU5MDcwZSI+OTMuOSU8L3RleHQ+CiAgICAgICAgICAgICAgICA8dGV4dCB5PSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzU1NSIgbGV0dGVyLXNwYWNpbmc9IjEuNSI+TkFUSU9OQUw8L3RleHQ+CiAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L3N2Zz4=" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 300.0 / 170.0;" />
+            <div class="rl-chart-caption" style="text-align:center;">Columbus well-managed properties consistently exceed national SFR occupancy.</div>
+          </div>
+
+          <div class="rl-chart paper">
+            <div class="rl-chart-title">YoY Rent Growth · 2026</div>
+            <div class="rl-chart-subtitle">Columbus vs. national benchmarks</div>
+            <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzAwIDE3MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgICA8cmVjdCB4PSI0MCIgeT0iMzAiIHdpZHRoPSI0OCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMxMjMxNDMiLz4KICAgICAgICAgICAgICA8dGV4dCB4PSI2NCIgeT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMxMjMxNDMiPis0LjAlPC90ZXh0PgogICAgICAgICAgICAgIDx0ZXh0IHg9IjY0IiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM1NTUiPkNvbHVtYnVzPC90ZXh0PgogICAgICAgICAgICAgIDx0ZXh0IHg9IjY0IiB5PSIxNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzlhOWE5YSI+KGhpZ2ggZXN0Lik8L3RleHQ+CiAgICAgICAgICAgICAgPHJlY3QgeD0iMTIwIiB5PSI2NyIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjYzIiBmaWxsPSIjYTYwNTMwIi8+CiAgICAgICAgICAgICAgPHRleHQgeD0iMTQ0IiB5PSI2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2E2MDUzMCI+KzIuNiU8L3RleHQ+CiAgICAgICAgICAgICAgPHRleHQgeD0iMTQ0IiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM1NTUiPk5hdCdsIFNGUjwvdGV4dD4KICAgICAgICAgICAgICA8dGV4dCB4PSIxNDQiIHk9IjE2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjOWE5YTlhIj4oQXJib3IgUTEpPC90ZXh0PgogICAgICAgICAgICAgIDxyZWN0IHg9IjIwMCIgeT0iODAiIHdpZHRoPSI0OCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzU5MDcwZSIvPgogICAgICAgICAgICAgIDx0ZXh0IHg9IjIyNCIgeT0iNzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiM1OTA3MGUiPisyLjIlPC90ZXh0PgogICAgICAgICAgICAgIDx0ZXh0IHg9IjIyNCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjNTU1Ij5Db2x1bWJ1czwvdGV4dD4KICAgICAgICAgICAgICA8dGV4dCB4PSIyMjQiIHk9IjE2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjOWE5YTlhIj4obG93IGVzdC4pPC90ZXh0PgogICAgICAgICAgICAgIDxsaW5lIHgxPSIyMCIgeTE9IjEzMCIgeDI9IjI4MCIgeTI9IjEzMCIgc3Ryb2tlPSIjZGRkZGRkIi8+CiAgICAgICAgICAgIDwvc3ZnPg==" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 300.0 / 170.0;" />
+            <div class="rl-chart-caption" style="text-align:center;">Columbus rent growth brackets the national SFR average.</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:22px; color:#123143; margin-top:32px;">Key Market Metrics</h3>
+        <div style="color:#a60530; font-weight:700; font-size:13px; margin-bottom:8px; letter-spacing:0.08em;">COLUMBUS VS. NATIONAL CONTEXT</div>
+
+        <div class="rl-table-wrap">
+          <table class="rl-table">
+            <thead>
+              <tr>
+                <th style="width:36%">Metric</th>
+                <th style="width:28%">Columbus H1 2026</th>
+                <th style="width:36%">National Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="label">Median home sale price</td><td class="num">$350,000</td><td>~20% below nat'l median</td></tr>
+              <tr><td class="label">YoY price growth</td><td class="num">+4.3%</td><td>Nat'l +1.8% (NAR, Jun)</td></tr>
+              <tr><td class="label">Median days on market</td><td class="num">29–49 days</td><td>Seasonal H1 range</td></tr>
+              <tr><td class="label">Months of supply</td><td class="num">2.0 months</td><td>Balanced = 6 months</td></tr>
+              <tr><td class="label">Avg apartment rent</td><td class="num">$1,365</td><td>~22% below nat'l avg</td></tr>
+              <tr><td class="label">3BR apartment rent</td><td class="num">$1,725</td><td>SFR typically higher</td></tr>
+              <tr><td class="label">YoY rent growth</td><td class="num">+2.2% to +4.0%</td><td>Nat'l SFR +2.6% (Arbor)</td></tr>
+              <tr><td class="label">Projected occupancy</td><td class="num">95%+ (well-managed)</td><td>Nat'l SFR ~93.9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rl-small-disclaimer">Sources: Columbus REALTORS MLS (May 2026), RentCafe/Yardi Matrix (mid-2026), Arbor Q2 2026 SFR Report, MMG Real Estate Advisors, Redfin, Axios Columbus 2026.</p>
+
+        <div class="rl-pullquote">The 2026 Columbus rental story is steady outperformance. Not thrilling, not disappointing. Just consistently better than the national baseline.</div>
+
+        <div class="rl-chart">
+          <div class="rl-chart-title">Rental Demand Is Bifurcating by Price Point</div>
+          <div class="rl-chart-subtitle">YoY rent growth · April 2026 · National SFR</div>
+          <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNjgwIDEzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgPHRleHQgeD0iMCIgeT0iMjgiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPkxvdy1wcmljZWQgcmVudGFsczwvdGV4dD4KICAgICAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSIxNSIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjZGRkZGRkIi8+CiAgICAgICAgICAgIDxyZWN0IHg9IjE4MCIgeT0iMTUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2E2MDUzMCIvPgogICAgICAgICAgICA8dGV4dCB4PSIyMDAiIHk9IjMzIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjYTYwNTMwIj4rMC42JTwvdGV4dD4KICAgICAgICAgICAgPHRleHQgeD0iMCIgeT0iODAiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiPkhpZ2hlci1wcmljZWQgcmVudGFsczwvdGV4dD4KICAgICAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSI2NSIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2RkZGRkZCIvPgogICAgICAgICAgICA8cmVjdCB4PSIxODAiIHk9IjY1IiB3aWR0aD0iMTA1IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTIzMTQzIi8+CiAgICAgICAgICAgIDx0ZXh0IHg9IjMwOCIgeT0iODMiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMxMjMxNDMiPisyLjElPC90ZXh0PgogICAgICAgICAgICA8bGluZSB4MT0iMTgwIiB5MT0iMTA4IiB4Mj0iNjIwIiB5Mj0iMTA4IiBzdHJva2U9IiNkZGRkZGQiLz4KICAgICAgICAgICAgPGcgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzlhOWE5YSI+CiAgICAgICAgICAgICAgPHRleHQgeD0iMTgwIiB5PSIxMjIiPjAlPC90ZXh0Pjx0ZXh0IHg9IjI4MCIgeT0iMTIyIj4xJTwvdGV4dD48dGV4dCB4PSIzODAiIHk9IjEyMiI+MiU8L3RleHQ+CiAgICAgICAgICAgICAgPHRleHQgeD0iNDgwIiB5PSIxMjIiPjMlPC90ZXh0Pjx0ZXh0IHg9IjU4MCIgeT0iMTIyIj40JTwvdGV4dD4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgPC9zdmc+" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 680.0 / 130.0;" />
+          <div class="rl-chart-caption">Columbus investors targeting workforce rentals should expect more modest rent growth than high-end suburban properties in the coming year. Source: Cotality.</div>
+        </div>
+      </section>
+
+      <!-- BEST NEIGHBORHOODS -->
+      <section class="rl-section alt" id="rl-nbhds">
+        <div class="rl-eyebrow">Section 04</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Best Neighborhoods for Investment in 2026</h2>
+        <span class="rl-rule"></span>
+        <p>Not each part of Columbus behaves the same way. Investor strategy should match neighborhood fundamentals. Below are the five categories to watch in 2026, with typical return profiles and operational considerations.</p>
+
+        <div class="rl-chart">
+          <div class="rl-chart-title">Typical Cap Rate Ranges by Columbus Neighborhood Category</div>
+          <div class="rl-chart-subtitle">Low / high range for each neighborhood type</div>
+          <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNjgwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBzdHJva2U9IiNlZWVlZWUiPjxsaW5lIHgxPSI1MCIgeTE9IjMwIiB4Mj0iNjcwIiB5Mj0iMzAiLz48bGluZSB4MT0iNTAiIHkxPSI2NSIgeDI9IjY3MCIgeTI9IjY1Ii8+PGxpbmUgeDE9IjUwIiB5MT0iMTAwIiB4Mj0iNjcwIiB5Mj0iMTAwIi8+PGxpbmUgeDE9IjUwIiB5MT0iMTM1IiB4Mj0iNjcwIiB5Mj0iMTM1Ii8+PGxpbmUgeDE9IjUwIiB5MT0iMTcwIiB4Mj0iNjcwIiB5Mj0iMTcwIi8+PC9nPjxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5YTlhOWEiIHRleHQtYW5jaG9yPSJlbmQiPjx0ZXh0IHg9IjQ0IiB5PSIzNCI+MTIlPC90ZXh0Pjx0ZXh0IHg9IjQ0IiB5PSI2OSI+OSU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjEwNCI+NiU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjEzOSI+MyU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjE3NCI+MCU8L3RleHQ+PC9nPjxyZWN0IHg9IjEwMCIgeT0iNTMiIHdpZHRoPSI5MCIgaGVpZ2h0PSIxMTciIGZpbGw9IiM1OTA3MGUiLz48cmVjdCB4PSIxMDAiIHk9IjUzIiB3aWR0aD0iOTAiIGhlaWdodD0iMzUiIGZpbGw9IiNhNjA1MzAiLz48dGV4dCB4PSIxNDUiIHk9IjQ3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjNTkwNzBlIj43JiM4MjExOzEwJTwvdGV4dD48cmVjdCB4PSIyMjUiIHk9Ijc2IiB3aWR0aD0iOTAiIGhlaWdodD0iOTQiIGZpbGw9IiMxMjMxNDMiLz48cmVjdCB4PSIyMjUiIHk9Ijc2IiB3aWR0aD0iOTAiIGhlaWdodD0iMjQiIGZpbGw9IiMyYTViN2EiLz48dGV4dCB4PSIyNzAiIHk9IjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjMTIzMTQzIj42JiM4MjExOzglPC90ZXh0PjxyZWN0IHg9IjM1MCIgeT0iODgiIHdpZHRoPSI5MCIgaGVpZ2h0PSI4MiIgZmlsbD0iIzEyMzE0MyIvPjxyZWN0IHg9IjM1MCIgeT0iODgiIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMyIgZmlsbD0iIzJhNWI3YSIvPjx0ZXh0IHg9IjM5NSIgeT0iODIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMxMjMxNDMiPjUmIzgyMTE7NyU8L3RleHQ+PHJlY3QgeD0iNDc1IiB5PSIxMDAiIHdpZHRoPSI5MCIgaGVpZ2h0PSI3MCIgZmlsbD0iIzhhMDQyNyIvPjxyZWN0IHg9IjQ3NSIgeT0iMTAwIiB3aWR0aD0iOTAiIGhlaWdodD0iMjQiIGZpbGw9IiNhNjA1MzAiLz48dGV4dCB4PSI1MjAiIHk9Ijk0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjNTkwNzBlIj40JiM4MjExOzYlPC90ZXh0PjxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjx0ZXh0IHg9IjE0NSIgeT0iMTg4Ij5VUkJBTjwvdGV4dD48dGV4dCB4PSIyNzAiIHk9IjE4OCI+RklSU1QtUklORzwvdGV4dD48dGV4dCB4PSIzOTUiIHk9IjE4OCI+U09VVEhFUk48L3RleHQ+PHRleHQgeD0iNTIwIiB5PSIxODgiPlBSRU1JVU08L3RleHQ+PC9nPjwvc3ZnPg==" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 680 / 200;" />
+          <div class="rl-chart-caption">Urban cash-flow neighborhoods generate the highest yields but require active management. Premium suburbs generate lower current yields but trade on appreciation.</div>
+        </div>
+
+        <div class="rl-nbhd">
+          <div class="num">1</div>
+          <div class="body">
+            <h4>High-Yield Value Neighborhoods</h4>
+            <div class="meta"><b>Neighborhoods:</b> Whitehall · Eastmoor · Blacklick · Reynoldsburg · Newark  |  <b>Best for:</b> Monthly cash flow, active management</div>
+            <p>For investors prioritizing monthly cash flow, these east-side and value-tier submarkets offer the strongest rent-to-price ratios in RLPM's service area. Whitehall and Eastmoor combine affordable entry points with steady workforce-tenant demand, while Blacklick and Reynoldsburg pair lower purchase prices with reliable east-side rental demand. Newark, on the Intel corridor, is an emerging value market worth watching on a longer horizon.</p>
+          </div>
+          <div class="cap">
+            <div class="cr-label">Cap Rate</div>
+            <div class="cr-value">7–10%</div>
+            <div class="cr-profile">Highest yield</div>
+          </div>
+        </div>
+
+        <div class="rl-nbhd">
+          <div class="num">2</div>
+          <div class="body">
+            <h4>Emerging Suburban Corridors</h4>
+            <div class="meta"><b>Neighborhoods:</b> Morse Road / SR 161 (Northland, Gahanna, Westerville) · Hamilton Road Corridor · Lincoln Village · Reynoldsburg  |  <b>Best for:</b> Entry-level, 1–5-unit portfolios</div>
+            <p>First-ring suburbs offer the cleanest balance of affordability and rental demand. <b>Reynoldsburg deserves particular attention in 2026:</b> the city has seen notable year-over-year sales activity increases, and its affordable entry points combined with solid rental demand make it a sweet spot for investors building a Columbus portfolio.</p>
+          </div>
+          <div class="cap">
+            <div class="cr-label">Cap Rate</div>
+            <div class="cr-value">6–8%</div>
+            <div class="cr-profile">Balanced</div>
+          </div>
+        </div>
+
+        <div class="rl-nbhd">
+          <div class="num">3</div>
+          <div class="body">
+            <h4>Southern Growth Areas</h4>
+            <div class="meta"><b>Neighborhoods:</b> Grove City · Canal Winchester · Lancaster · Groveport · Teays Valley School District  |  <b>Best for:</b> Tenant stability, long lease terms</div>
+            <p>Columbus's southern suburbs continue to offer strong fundamentals for investors prioritizing tenant stability. Larger lots, lower property taxes than north-side suburbs, and school districts that attract family renters who stay for multiple lease terms. Proximity to Honda's large Marysville manufacturing complex, area data-center operations, and Anduril's new Arsenal-1 drone plant near Rickenbacker all add to workforce housing demand.</p>
+          </div>
+          <div class="cap">
+            <div class="cr-label">Cap Rate</div>
+            <div class="cr-value">5–7%</div>
+            <div class="cr-profile">Stable</div>
+          </div>
+        </div>
+
+        <div class="rl-nbhd">
+          <div class="num">4</div>
+          <div class="body">
+            <h4>Affluent Suburbs · Appreciation Plays</h4>
+            <div class="meta"><b>Neighborhoods:</b> Dublin · Powell · New Albany · Upper Arlington · Lewis Center (Olentangy Schools)  |  <b>Best for:</b> Long-horizon, appreciation + premium tenants</div>
+            <p>For investors focused on long-term appreciation and premium tenants, the traditional Columbus prestige suburbs remain best-in-class. Dublin's median home price sits around <b>$615,000.</b> Cash flow is thin ,  higher entry prices and higher property taxes compress initial yields ,  but lease renewal rates are the highest in the metro, vacancy is minimal, and appreciation has been steady for decades.</p>
+          </div>
+          <div class="cap">
+            <div class="cr-label">Cap Rate</div>
+            <div class="cr-value">4–6%</div>
+            <div class="cr-profile">Appreciation</div>
+          </div>
+        </div>
+
+        <div class="rl-nbhd">
+          <div class="num">5</div>
+          <div class="body">
+            <h4>Employer-Driven Growth Plays</h4>
+            <div class="meta"><b>Neighborhoods:</b> Marysville (Honda manufacturing) · Sunbury (Delaware County) · Johnstown (adjacent to Intel site)  |  <b>Best for:</b> Patient capital, 5–10 year horizons</div>
+            <p>One change from last year's report: <b>the Licking County story has shifted.</b> With Intel's production start pushed to 2030–2031, the short-term speculation window on New Albany / Johnstown agricultural land has closed. Land that jumped 10x in value between 2022 and 2024 is now priced for patient capital rather than quick flips. Investors still drawn to employer-growth plays should look at Marysville, Sunbury, and Johnstown ,  but on multi-year horizons rather than quarterly cycles.</p>
+          </div>
+          <div class="cap">
+            <div class="cr-label">Strategy</div>
+            <div class="cr-value" style="font-size:15px;">Variable</div>
+            <div class="cr-profile">5–10 yr horizon</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ECONOMIC & EMPLOYMENT DRIVERS -->
+      <section class="rl-section" id="rl-economy">
+        <div class="rl-eyebrow">Section 05</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Economic & Employment Drivers</h2>
+        <span class="rl-rule"></span>
+        <p>The fundamentals supporting Columbus rental demand remain firmly intact, even with the Intel timeline shift.</p>
+
+        <div class="rl-chart-grid2">
+          <div class="rl-chart paper">
+            <div class="rl-chart-title">Population Growth</div>
+            <div class="rl-chart-subtitle">Columbus adds ~20,000 residents annually</div>
+            <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzEwIDE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgICA8bGluZSB4MT0iMzAiIHkxPSIxMTAiIHgyPSIzMDAiIHkyPSIxMTAiIHN0cm9rZT0iI2RkZGRkZCIvPgogICAgICAgICAgICAgIDxkZWZzPgogICAgICAgICAgICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJwb3BHcmFkIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgICAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxMjMxNDMiIHN0b3Atb3BhY2l0eT0iMC4yNSIvPgogICAgICAgICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxMjMxNDMiIHN0b3Atb3BhY2l0eT0iMC4wMiIvPgogICAgICAgICAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICAgICAgICA8L2RlZnM+CiAgICAgICAgICAgICAgPHBvbHlnb24gcG9pbnRzPSI0MCw5MCA4NSw4MCAxMzAsNjggMTc1LDU1IDIyMCw0MiAyNjUsMzAgMjY1LDExMCA0MCwxMTAiIGZpbGw9InVybCgjcG9wR3JhZCkiLz4KICAgICAgICAgICAgICA8cG9seWxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTIzMTQzIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgICAgICAgICAgICAgIHBvaW50cz0iNDAsOTAgODUsODAgMTMwLDY4IDE3NSw1NSAyMjAsNDIgMjY1LDMwIi8+CiAgICAgICAgICAgICAgPGcgZmlsbD0iIzEyMzE0MyI+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjkwIiByPSIzIi8+PGNpcmNsZSBjeD0iODUiIGN5PSI4MCIgcj0iMyIvPjxjaXJjbGUgY3g9IjEzMCIgY3k9IjY4IiByPSIzIi8+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxNzUiIGN5PSI1NSIgcj0iMyIvPjxjaXJjbGUgY3g9IjIyMCIgY3k9IjQyIiByPSIzIi8+PGNpcmNsZSBjeD0iMjY1IiBjeT0iMzAiIHI9IjQiLz4KICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgPHRleHQgeD0iMjY1IiB5PSIyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iIzU5MDcwZSI+Mi4yNE08L3RleHQ+CiAgICAgICAgICAgICAgPGcgZm9udC1mYW1pbHk9Ik9wZW4gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjOWE5YTlhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgICAgICAgICAgICAgIDx0ZXh0IHg9IjQwIiB5PSIxMjgiPicyMTwvdGV4dD48dGV4dCB4PSI4NSIgeT0iMTI4Ij4nMjI8L3RleHQ+PHRleHQgeD0iMTMwIiB5PSIxMjgiPicyMzwvdGV4dD4KICAgICAgICAgICAgICAgIDx0ZXh0IHg9IjE3NSIgeT0iMTI4Ij4nMjQ8L3RleHQ+PHRleHQgeD0iMjIwIiB5PSIxMjgiPicyNTwvdGV4dD48dGV4dCB4PSIyNjUiIHk9IjEyOCI+JzI2PC90ZXh0PgogICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9zdmc+" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 310.0 / 150.0;" />
+            <div class="rl-chart-caption">Central Ohio population growth has outpaced the Ohio state average for over a decade. The metro added roughly 21,000 residents in the past year to about 2.24 million, over half from international migration.</div>
+          </div>
+
+          <div class="rl-chart paper">
+            <div class="rl-chart-title">Diversified Metro Economy</div>
+            <div class="rl-chart-subtitle">Columbus's recession-resistant employer mix</div>
+            <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzEwIDE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MCw3NSkiPgogICAgICAgICAgICAgICAgPGNpcmNsZSByPSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTkwNzBlIiBzdHJva2Utd2lkdGg9IjIyIiBzdHJva2UtZGFzaGFycmF5PSI4Ny45NiAzMTQiIHRyYW5zZm9ybT0icm90YXRlKC05MCkiLz4KICAgICAgICAgICAgICAgIDxjaXJjbGUgcj0iNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E2MDUzMCIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWRhc2hhcnJheT0iNjkuMTEgMzE0IiBzdHJva2UtZGFzaG9mZnNldD0iLTg3Ljk2IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTApIi8+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIHI9IjUwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxMjMxNDMiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1kYXNoYXJyYXk9IjU2LjU1IDMxNCIgc3Ryb2tlLWRhc2hvZmZzZXQ9Ii0xNTcuMDciIHRyYW5zZm9ybT0icm90YXRlKC05MCkiLz4KICAgICAgICAgICAgICAgIDxjaXJjbGUgcj0iNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJhNWI3YSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWRhc2hhcnJheT0iNTAuMjYgMzE0IiBzdHJva2UtZGFzaG9mZnNldD0iLTIxMy42MiIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwKSIvPgogICAgICAgICAgICAgICAgPGNpcmNsZSByPSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg4MDFjIiBzdHJva2Utd2lkdGg9IjIyIiBzdHJva2UtZGFzaGFycmF5PSI1MC4yNiAzMTQiIHN0cm9rZS1kYXNob2Zmc2V0PSItMjYzLjg4IiB0cmFuc2Zvcm09InJvdGF0ZSgtOTApIi8+CiAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgIDxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiMzMzMiPgogICAgICAgICAgICAgICAgPHJlY3QgeD0iMTYwIiB5PSIxNSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjNTkwNzBlIi8+PHRleHQgeD0iMTc0IiB5PSIyNCIgZm9udC13ZWlnaHQ9IjcwMCI+SGVhbHRoY2FyZTwvdGV4dD4KICAgICAgICAgICAgICAgIDxyZWN0IHg9IjE2MCIgeT0iMzQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2E2MDUzMCIvPjx0ZXh0IHg9IjE3NCIgeT0iNDMiIGZvbnQtd2VpZ2h0PSI3MDAiPkZpbmFuY2lhbCBTZXJ2aWNlczwvdGV4dD4KICAgICAgICAgICAgICAgIDxyZWN0IHg9IjE2MCIgeT0iNTMiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzEyMzE0MyIvPjx0ZXh0IHg9IjE3NCIgeT0iNjIiIGZvbnQtd2VpZ2h0PSI3MDAiPkVkdWNhdGlvbjwvdGV4dD4KICAgICAgICAgICAgICAgIDxyZWN0IHg9IjE2MCIgeT0iNzIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgZmlsbD0iIzJhNWI3YSIvPjx0ZXh0IHg9IjE3NCIgeT0iODEiIGZvbnQtd2VpZ2h0PSI3MDAiPkdvdmVybm1lbnQ8L3RleHQ+CiAgICAgICAgICAgICAgICA8cmVjdCB4PSIxNjAiIHk9IjkxIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNiODgwMWMiLz48dGV4dCB4PSIxNzQiIHk9IjEwMCIgZm9udC13ZWlnaHQ9IjcwMCI+VGVjaG5vbG9neTwvdGV4dD4KICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDwvc3ZnPg==" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 310.0 / 150.0;" />
+            <div class="rl-chart-caption">Illustrative sector mix ,  five distinct employer pillars, no single-employer dependency.</div>
+          </div>
+        </div>
+
+        <div class="rl-emp-grid">
+          <div class="rl-emp-card"><h5>Healthcare</h5><p>OhioHealth · Nationwide Children's · OSU Wexner Medical Center</p></div>
+          <div class="rl-emp-card"><h5>Financial Services</h5><p>JPMorgan Chase · Nationwide Insurance · Huntington Bank</p></div>
+          <div class="rl-emp-card"><h5>Education & Government</h5><p>The Ohio State University (largest metro employer) · Ohio state agencies</p></div>
+          <div class="rl-emp-card"><h5>Technology & Manufacturing</h5><p>Google · Meta · AWS data centers · Honda (Marysville) · Anduril Industries</p></div>
+        </div>
+
+        <h3 style="font-size:20px; color:#59070e; margin-top:24px;">Intel · Patience, Not Panic</h3>
+        <p>Intel's roughly $20 billion first-phase semiconductor project in New Albany remains set for a 2030–2031 production start, down from the original 2025 target. Construction continues: through 2025, contractor Bechtel logged more than 9.4 million work hours on site, with active hiring into 2026. Once operational, the first two fabs are projected to create about 3,000 permanent Intel jobs plus roughly 7,000 construction jobs and thousands of ancillary positions.</p>
+
+        <div class="rl-dark-quote">Columbus doesn't depend on any single employer. That's why it's been one of the most recession-resistant rental markets in the country.</div>
+
+        <!-- Employer map (replace with the overlay PNG you placed in the PDF) -->
+        <div style="margin-top:24px;">
+          <img loading="eager" data-no-lazy="1" data-skip-lazy="true" class="no-lazy skip-lazy" src="https://rlpmg.com/wp-content/uploads/2026/04/Map-ImageArtboard-1RL-scaled.png" alt="Central Ohio employer map" style="width:100%; height:auto; border:1px solid #dddddd;" />
+        </div>
+      </section>
+
+      <!-- REGULATORY UPDATES -->
+      <section class="rl-section alt" id="rl-regulatory">
+        <div class="rl-eyebrow">Section 06</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Regulatory Updates Landlords Need to Know</h2>
+        <span class="rl-rule"></span>
+        <p>Four major regulatory shifts are reshaping the Columbus rental landscape in 2026. Investors who stay current on these changes protect profitability and avoid costly compliance issues.</p>
+
+        <div class="rl-callout">
+          <b>Disclaimer.</b> The information in this section is current as of July 2026 and is informational only. This is not legal advice. Consult a qualified Ohio attorney for specific situations.
+        </div>
+
+        <div class="rl-reg">
+          <h3><span class="reg-num">01 ·</span> Columbus Rental Registry · Passed April 2026</h3>
+          <p>The biggest regulatory change of 2026. Columbus City Council passed the residential rental registry ordinance on <b>April 20, 2026</b> by an 8-1 vote, creating Columbus City Code Chapter 4515 and administered by the Department of Building & Zoning Services. Each residential rental dwelling unit within the City of Columbus must now be registered annually, with owners providing:</p>
+          <ul>
+            <li>Name, address, email, and telephone number of the owner (or ownership entity)</li>
+            <li>Number of rental dwelling units and average rent</li>
+            <li>A local operator and named emergency contact</li>
+            <li>An annual affidavit affirming that critical building systems comply with local housing, building, health, and fire codes</li>
+            <li>Any inspection documentation from the past year</li>
+          </ul>
+          <p>An annual registration fee of $15 per unit applies, capped at $1,500 per property. Rather than proactive individual-unit inspections (which faced constitutional concerns), the ordinance pairs annual registration with routine inspections of common areas and critical building systems roughly each three years; individual-unit inspections are triggered only when a property is placed in "conditional" status. Operating without valid registration carries a civil penalty of about $2 per unit per day. Implementation details ,  the registration portal, first filing deadline, and enforcement start date ,  are still being finalized by Building & Zoning Services as of mid-2026.</p>
+        </div>
+
+        <div class="rl-reg">
+          <h3><span class="reg-num">02 ·</span> Franklin County 2026 Triennial Update</h3>
+          <p>Three years after the 2023 Sexennial Reappraisal drove residential values up 41% on average (with some school districts seeing 60%+ increases), the 2026 Triennial Update landed in June 2026. Tentative updated values were mailed and posted online in June, showing an average residential increase of about 9% ,  far milder than the 2023 jump. Informal review sessions run July through September 2026. <b>Final values are set in December 2026 and take effect for Tax Year 2026 bills paid in 2027.</b></p>
+          <p>Unlike the 2023 sexennial, which was a full reappraisal, the triennial update uses mass appraisal methods based on sales from the past three years. Investors who acquired properties post-2023 should pay particular attention to the new valuations and file Board of Revision complaints by <b>March 31, 2027</b> if values appear overstated.</p>
+        </div>
+
+        <div class="rl-reg">
+          <h3><span class="reg-num">03 ·</span> Source-of-Income Protection</h3>
+          <p>Columbus's source-of-income discrimination ordinance (in effect since 2024) prohibits landlords from refusing to rent to applicants based on a legal source of income ,  most notably Housing Choice Vouchers (Section 8). Screening criteria must apply consistently across all applicants regardless of income source. Investors who have not updated their screening protocols since 2023 should review them against current Columbus requirements.</p>
+        </div>
+
+        <div class="rl-reg">
+          <h3><span class="reg-num">04 ·</span> Security Deposits & Short-Term Rentals</h3>
+          <p>New Columbus tenants have the right to pay security deposits in installments over three or six months, which affects initial cash flow planning. Short-term rental operators continue to face increased scrutiny: a City of Columbus STR permit is required, lodging excise taxes apply (combined rates commonly fall between 9% and 15%), and several suburbs including Upper Arlington and Westerville have significantly limited or banned Airbnb operations.</p>
+        </div>
+
+        <h3 style="font-size:22px; color:#123143; margin-top:32px;">2026 Compliance Quick Checklist</h3>
+        <div class="rl-checklist">
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Register each rental unit on the Columbus Rental Registry (new, 2026)</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Provide annual affidavit of code compliance with registry submission</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Review your June 2026 triennial assessment notice (~9% average residential increase)</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>File Board of Revision complaints by March 31, 2027 if values appear overstated</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Update screening criteria to comply with source-of-income ordinance</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Apply screening criteria consistently across all applicants regardless of income source</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Offer security deposit installment option (3 or 6 months) to new tenants</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>If operating STR: verify City of Columbus permit, BCI background check, lodging tax compliance</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Review lease agreements against 2026 Columbus ordinances and Ohio Revised Code Chapter 5321</div>
+          <div class="rl-checklist-row"><div class="rl-checkbox"></div>Document quarterly property inspections (supports registry compliance affidavits)</div>
+        </div>
+      </section>
+
+      <!-- INVESTMENT OUTLOOK -->
+      <section class="rl-section" id="rl-outlook">
+        <div class="rl-eyebrow">Section 07</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">2026 Investment Outlook</h2>
+        <span class="rl-rule"></span>
+        <p>Columbus enters 2026 as one of the most stable real estate markets in the Midwest. Home values are projected to rise 2% to 5% through the year, driven by steady population growth, low construction starts (limiting new supply), and continued in-migration from higher-cost metros. MMG Real Estate Advisors projects Columbus rent growth to approach 4% in 2026, continuing to outperform the national average.</p>
+
+        <div class="rl-chart">
+          <div class="rl-chart-title">Mortgage Rate Trend · 30-Year Fixed</div>
+          <div class="rl-chart-subtitle">NAR Chief Economist Lawrence Yun · 2026 forecast</div>
+          <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNjgwIDE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgc3Ryb2tlPSIjZWVlZWVlIj4KPGxpbmUgeDE9IjUwIiB5MT0iMzAiIHgyPSI2NTAiIHkyPSIzMCIvPgo8bGluZSB4MT0iNTAiIHkxPSI3NSIgeDI9IjY1MCIgeTI9Ijc1Ii8+CjxsaW5lIHgxPSI1MCIgeTE9IjEyMCIgeDI9IjY1MCIgeTI9IjEyMCIvPgo8L2c+CjxnIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5YTlhOWEiIHRleHQtYW5jaG9yPSJlbmQiPgo8dGV4dCB4PSI0NCIgeT0iMzQiPjcuNSU8L3RleHQ+PHRleHQgeD0iNDQiIHk9Ijc5Ij42LjUlPC90ZXh0Pjx0ZXh0IHg9IjQ0IiB5PSIxMjQiPjUuNSU8L3RleHQ+CjwvZz4KPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzEyMzE0MyIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHBvaW50cz0iOTAsNTkgMTcwLDYyIDI1MCw3MSAzMzAsNzMgNDEwLDczIDQ5MCw3NSIvPgo8cG9seWxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTYwNTMwIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBwb2ludHM9IjQ5MCw3NSA1NzAsNzcgNjQwLDgwIi8+CjxnIGZpbGw9IiMxMjMxNDMiPgo8Y2lyY2xlIGN4PSI5MCIgY3k9IjU5IiByPSIzLjUiLz48Y2lyY2xlIGN4PSIxNzAiIGN5PSI2MiIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iMjUwIiBjeT0iNzEiIHI9IjMuNSIvPjxjaXJjbGUgY3g9IjMzMCIgY3k9IjczIiByPSIzLjUiLz48Y2lyY2xlIGN4PSI0MTAiIGN5PSI3MyIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iNDkwIiBjeT0iNzUiIHI9IjMuNSIvPgo8L2c+CjxnIGZpbGw9IiNhNjA1MzAiPgo8Y2lyY2xlIGN4PSI1NzAiIGN5PSI3NyIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iNjQwIiBjeT0iODAiIHI9IjQuNSIvPgo8L2c+Cjx0ZXh0IHg9IjQ5MCIgeT0iNjYiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjMxNDMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjYuNSU8L3RleHQ+Cjx0ZXh0IHg9IjY0MCIgeT0iNzIiIGZvbnQtZmFtaWx5PSJPcGVuIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNhNjA1MzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPn42LjQlPC90ZXh0Pgo8ZyBmb250LWZhbWlseT0iT3BlbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjNTU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KPHRleHQgeD0iOTAiIHk9IjE0MiI+UTEgJzI1PC90ZXh0Pjx0ZXh0IHg9IjE3MCIgeT0iMTQyIj5RMiAnMjU8L3RleHQ+Cjx0ZXh0IHg9IjI1MCIgeT0iMTQyIj5RMyAnMjU8L3RleHQ+PHRleHQgeD0iMzMwIiB5PSIxNDIiPlE0ICcyNTwvdGV4dD4KPHRleHQgeD0iNDEwIiB5PSIxNDIiPlExICcyNjwvdGV4dD48dGV4dCB4PSI0OTAiIHk9IjE0MiI+UTIgJzI2PC90ZXh0Pgo8dGV4dCB4PSI1NzAiIHk9IjE0MiI+UTMgJzI2PC90ZXh0Pjx0ZXh0IHg9IjY0MCIgeT0iMTQyIj5RNCAnMjY8L3RleHQ+CjwvZz4KPC9zdmc+" alt="Chart" style="width:100%; height:auto; display:block; aspect-ratio: 680.0 / 160.0;" />
+          <div class="rl-chart-legend">
+            <span><span class="dot" style="background:#123143"></span>Actual</span>
+            <span><span class="dot" style="background:#a60530"></span>Forecast</span>
+          </div>
+          <div class="rl-chart-caption">Any meaningful decline below 6% would likely accelerate buying activity and push Columbus prices higher faster than the current forecast suggests.</div>
+        </div>
+
+        <h3 style="font-size:22px; color:#123143; margin-top:32px;">The 2026 Investor Playbook</h3>
+        <div class="rl-table-wrap">
+          <table class="rl-table rl-playbook">
+            <thead>
+              <tr><th style="width:22%">Strategy</th><th style="width:36%">Target Neighborhoods</th><th style="width:42%">Profile</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="strategy">Emerging cash-flow</td><td>Reynoldsburg · Whitehall · Eastmoor · Blacklick</td><td>Attractive entry points before prices fully reflect demand</td></tr>
+              <tr><td class="strategy">Workforce housing</td><td>Grove City · Groveport · Canal Winchester</td><td>Strong rents, reliable tenant demand, attractive yields</td></tr>
+              <tr><td class="strategy">Long-term appreciation</td><td>Marysville · Sunbury · Johnstown</td><td>Employer-driven growth on multi-year horizons</td></tr>
+              <tr><td class="strategy">Premium hold assets</td><td>Dublin · Powell · New Albany · Upper Arlington · Lewis Center</td><td>Low-volatility appreciation for decade-plus horizons</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rl-pullquote">2026 rewards disciplined acquisition. The days of paying 2022 prices and trusting momentum to bail you out are over.</div>
+        <p>With more inventory on the market than at any point in the past five years, 2026 presents genuine opportunities for strategic investors willing to underwrite carefully, negotiate thoughtfully, and hold for the long term. The key shift: buy on current cash flow and realistic appreciation projections, not on speculation about Intel timelines or employer announcements that may or may not materialize on schedule.</p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="rl-section alt" id="rl-faq">
+        <div class="rl-eyebrow">Section 08</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Frequently Asked Questions</h2>
+        <span class="rl-rule"></span>
+
+        <details class="rl-faq" open>
+          <summary>Is Columbus a good market for single-family rental investors in 2026?</summary>
+          <p>Yes, with the understanding that 2026 rewards disciplined acquisition rather than momentum-driven buying. Columbus continues to outperform the national average on rent growth and occupancy, median home prices are roughly 20% below the national median, and the metro's diversified economy provides recession resilience. Returns are more moderate than the 2021–2023 boom years but sustainable.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>How did Intel's delay affect the Columbus real estate market?</summary>
+          <p>The production start was pushed from 2025 to 2030–2031, which removed a near-term catalyst but did not change long-term fundamentals. Land speculation near New Albany and Johnstown has cooled significantly, but construction at the Intel site continues and the employment impact (3,000+ direct jobs once operational) remains on track on a longer timeline.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>What's the typical cap rate for Columbus single-family rentals in 2026?</summary>
+          <p>Value-tier neighborhoods (Whitehall, Eastmoor, Blacklick) typically generate 7% to 10% cap rates. First-ring suburbs (Reynoldsburg, Gahanna, Westerville) typically generate 6% to 8%. Premium suburbs (Dublin, Powell, New Albany) typically generate 4% to 6% and are purchased primarily for appreciation. National SFR cap rates rose to 7.4% in early 2026 per Arbor.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>Are property taxes in Columbus higher than the national average?</summary>
+          <p>Yes. Franklin County's effective property tax rate is approximately 1.67% of market value, ranked 252nd of 3,143 U.S. counties. The median property tax bill is around $2,592 annually on a home valued at the county median. Investors underwriting Columbus properties should account for property tax carrying costs meaningfully higher than Sun Belt markets.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>How will the 2026 Franklin County Triennial Update affect property taxes?</summary>
+          <p>The triennial update adjusts assessed values based on sales from the past three years. Assessment notices were mailed in June 2026 (about a 9% average residential increase), with informal review July through September and final values taking effect for Tax Year 2026 bills paid in 2027. Review new valuations carefully and file Board of Revision complaints by March 31, 2027 if values appear overstated.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>How quickly do single-family homes lease in Columbus in 2026?</summary>
+          <p>Well-priced single-family rentals in desirable Columbus submarkets lease in 14 to 21 days on average once rent-ready. Homes priced above market or in poor condition can sit 45+ days. RLPM tracks current days-on-market data in real time on its live KPI scorecard at rlpmg.com/key-performance-indicators.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>How much cash reserve should I have for a Columbus rental property?</summary>
+          <p>Most experienced Columbus investors target a reserve of roughly six months of rent per property to cover maintenance, turnover costs, and unexpected capital expenses. RLPM requires a maintenance reserve of $350 to $1,500 per unit depending on the service plan, which sits on top of the owner's broader liquidity cushion. Reserves matter most in the first year of ownership, when surprise repairs and initial turns tend to cluster.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>Should I accept Section 8 (Housing Choice Voucher) tenants in Columbus?</summary>
+          <p>Columbus's source-of-income protection ordinance (in effect since 2024) means landlords cannot refuse applicants solely because they use a Housing Choice Voucher. Voucher tenants must still meet consistent, non-discriminatory screening criteria. Many investors find that voucher tenants produce reliable, government-backed rent payments once properly screened, though the program adds inspection and paperwork requirements that benefit from professional management.</p>
+        </details>
+
+        <details class="rl-faq">
+          <summary>What's the difference between managing a Columbus property yourself versus hiring a PM company?</summary>
+          <p>Self-management can work for hands-on investors with one or two nearby properties, time to handle tenant calls, and familiarity with Ohio landlord-tenant law. Professional management becomes valuable at scale (3+ units), for out-of-state investors, for owners who want to reclaim their time, or when dealing with evictions, Fair Housing compliance, and the new rental registry. The real cost comparison isn't fees versus free; it's what your time is worth and what a missed lease-up week or bad tenant placement actually costs.</p>
+        </details>
+      </section>
+
+      <!-- CTA -->
+      <section class="rl-section" id="rl-cta">
+        <div class="rl-eyebrow">Section 09</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Ready to Invest in Columbus?</h2>
+        <span class="rl-rule"></span>
+
+        <div class="rl-cta-hero">
+          <img loading="eager" data-no-lazy="1" data-skip-lazy="true" class="no-lazy skip-lazy" src="https://rlpmg.com/wp-content/uploads/2026/04/hero-row-homes-scaled.jpg" alt="Columbus home" />
+          <div class="overlay">
+            <div>
+              <h2 style="color:#fff;">Serving Columbus investors since 2013.</h2>
+              <p>~750 units managed · 30+ neighborhoods · Gahanna-based team</p>
+            </div>
+          </div>
+        </div>
+
+        <p>Our clients include long-term investors, accidental landlords, first-time buyers, and out-of-state owners managing Columbus portfolios remotely. We specialize in single-family homes and small multifamily properties under 100 units across the Columbus metro.</p>
+
+        <h3 style="font-size:20px; color:#59070e;">What Makes RLPM Different</h3>
+        <ul>
+          <li><b>$0 Leasing Fees</b> across all three pricing plans. Most Columbus PM companies charge 50% to 100% of the first month's rent each time a tenant turns over. RLPM charges nothing.</li>
+          <li><b>Flat-Rate Pricing.</b> Three tiers (Passive $117/mo · Standard $137/mo · Premium $184/mo per unit) with transparent line-item fees.</li>
+          <li><b>Live KPI Scorecard.</b> Published publicly at rlpmg.com/key-performance-indicators ,  days on market, renewal rate, occupancy, and rent collection updated in real time.</li>
+          <li><b>In-House Maintenance.</b> $84/hr plus $15 trip charge, with quarterly property inspections included in each plan.</li>
+          <li><b>Local Depth.</b> Based in Gahanna, managing 750+ units across 30+ Columbus neighborhoods.</li>
+        </ul>
+
+        <div class="rl-cta-grid">
+          <div class="box">
+            <h3>Schedule a Consultation</h3>
+            <p>Discuss your property, your goals, and whether RLPM is the right fit for your portfolio.</p>
+            <a class="rl-cta-btn" href="/property-management-consultation/">Free Consultation →</a>
+          </div>
+          <div class="box">
+            <h3>Get a Rent Estimate</h3>
+            <p>Get a data-driven rent estimate based on current Columbus market conditions.</p>
+            <a class="rl-cta-btn" href="/free-rent-evaluation/">Free Rent Evaluation →</a>
+          </div>
+        </div>
+
+        <div class="rl-cta-contact">
+          <span class="phone">614.725.3059</span>  ·  info@rlpmg.com  ·  750 Cross Pointe Rd, STE B, Gahanna, OH 43230
+        </div>
+      </section>
+
+      <!-- METHODOLOGY & SOURCES -->
+      <section class="rl-section alt" id="rl-sources">
+        <div class="rl-eyebrow">Section 10</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">Methodology & Sources</h2>
+        <span class="rl-rule"></span>
+        <p>This report synthesizes publicly available market data, government-source statistics, and industry research current as of July 2026. All figures reflect the most recent data available at time of publication. Market conditions change; investors should verify current metrics before making acquisition decisions.</p>
+
+        <h3 style="font-size:18px; color:#59070e;">Primary Data Sources</h3>
+        <div class="rl-source"><b>Columbus REALTORS.</b> Monthly MLS data for Columbus and Central Ohio region including sales, median prices, inventory, and days on market.</div>
+        <div class="rl-source"><b>RentCafe / Yardi Matrix.</b> Columbus rental market trends including unit-level rent averages and year-over-year growth.</div>
+        <div class="rl-source"><b>Arbor Realty Trust · Q2 2026 SFR Report (via CRE Daily).</b> National single-family rental metrics: cap rates, occupancy, rent growth, and investor trends.</div>
+        <div class="rl-source"><b>MMG Real Estate Advisors.</b> Columbus multifamily market forecast, construction pipeline, and rent growth projections.</div>
+        <div class="rl-source"><b>Redfin.</b> Columbus city-proper median sale prices and market competitiveness data.</div>
+        <div class="rl-source"><b>Axios Columbus.</b> 2026 Columbus market updates including vacancy and rent trends.</div>
+        <div class="rl-source"><b>Franklin County Auditor.</b> Property assessment data, triennial update schedules, and Board of Revision procedures.</div>
+        <div class="rl-source"><b>Franklin County Law Library.</b> Columbus landlord-tenant ordinances and current regulatory framework.</div>
+        <div class="rl-source"><b>WOSU Public Media.</b> Columbus City Council coverage including April 2026 Rental Registry passage.</div>
+        <div class="rl-source"><b>Engineering News-Record · CNBC · Manufacturing Dive.</b> Intel New Albany semiconductor project timeline updates.</div>
+        <div class="rl-source"><b>RL Property Management Live KPI Scorecard.</b> Real-time performance metrics for RLPM-managed properties at rlpmg.com/key-performance-indicators.</div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="rl-section" id="rl-about" style="border-bottom:0;">
+        <div class="rl-eyebrow">Section 11</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);">About RL Property Management</h2>
+        <span class="rl-rule"></span>
+
+        <img loading="eager" data-no-lazy="1" data-skip-lazy="true" class="rl-about-logo no-lazy skip-lazy" src="https://rlpmg.com/wp-content/uploads/2026/04/logo-standard-dark-scaled.png" alt="RL Property Management" />
+
+        <p>RL Property Management Group (RLPM) is a Columbus, Ohio-based residential property management company founded in 2013. The firm manages approximately <b>750 single-family homes and small multifamily properties</b> across the Columbus metro area, with a team of 33 employees and a specialization in serving intentional, long-term investors.</p>
+        <p>RLPM is headquartered in Gahanna at 750 Cross Pointe Rd, STE B, and can be reached at <b>614.725.3059</b> or <b>info@rlpmg.com</b>.</p>
+
+        <div class="rl-emp-grid">
+          <div class="rl-emp-card"><h5>Founded</h5><p>2013 · Columbus, Ohio</p></div>
+          <div class="rl-emp-card"><h5>Portfolio</h5><p>~750 units · 30+ neighborhoods</p></div>
+          <div class="rl-emp-card"><h5>Team</h5><p>33 employees · In-house maintenance</p></div>
+          <div class="rl-emp-card"><h5>Specialty</h5><p>Single-family + small multifamily (<100 units)</p></div>
+        </div>
+
+        <h3 style="font-size:16px; color:#59070e; margin-top:28px;">Report Disclaimer</h3>
+        <p class="rl-small-disclaimer">This report is for informational purposes only and does not constitute investment, legal, tax, or financial advice. Real estate investments carry risk, including the potential loss of principal. Market data reflects conditions as of mid-2026 and is subject to change. Regulatory information is informational only; consult a qualified Ohio attorney for specific compliance questions. Past performance does not guarantee future results. Investors should conduct independent due diligence and consult qualified professionals before making any investment decisions.</p>
+        <p class="rl-small-disclaimer">© 2026 RL Property Management Group, Inc. All rights reserved. Licensed Ohio Real Estate Brokerage</p>
+      </section>
+
+    </main>
+  </div>
+</div>`} />
+  </AeoPage>
+</Base>
+
+<style is:inline set:html={migratedCss} />
