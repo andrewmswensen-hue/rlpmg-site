@@ -7,6 +7,7 @@ import { usd } from '../lib/format';
 import { webPageNode, faqNode } from '../lib/schema';
 
 const title = 'Columbus, Ohio Property Management | RL Property Management';
+const h1 = 'Property management in Columbus, Ohio';
 const description =
   'RL Property Management manages about 750 rental units across the Columbus, Ohio metro for a flat $117 to $184 per unit per month with a $0 leasing fee. Licensed Ohio brokerage since 2013.';
 const directAnswer = `${company.name} is a licensed Ohio property management brokerage in ${company.address.city}, Ohio, managing ${company.scale.unitsLabel} single-family and small multi-family rental units across the Columbus metro. Owners pay a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month and a ${usd(pricing.fees.leasingFee)} leasing fee.`;
@@ -26,7 +27,7 @@ const schema = [webPageNode({ path: '/', title, description }), faqNode('/', faq
 ---
 
 <Base {title} {description} path="/" {schema}>
-  <AeoPage {title} {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Staging build, Phase 1">
+  <AeoPage title={h1} {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Staging build, Phase 1">
     <h2>Is this the finished website?</h2>
     <p>
       No. This is the Phase 1 foundation build of the new rlpmg.com: design tokens, the shared fact file, the page template, and the schema graph. Real page copy arrives in Phase 3. The numbers on this page are already live values from the fact file, which is the point of the exercise.
