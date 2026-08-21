@@ -95,6 +95,15 @@ const guide = d.marketGuideSlug;
     )}
     <p class="text-sm text-navy-600">Local rules change. Information here is current as of August 2026 and is informational, not legal advice.</p>
 
+    {d.county.includes(',') || d.county.includes(' and ') ? (
+      <>
+        <h2>Does {d.name} sit in more than one county?</h2>
+        <p>
+          Yes. {d.name} spans {d.county}. That matters to an owner in three practical ways: property tax rates differ by county, an eviction is filed in the county where the property sits rather than where the mailing address points, and the school district serving a given street may not be the one the city name suggests. RL Property Management confirms the parcel's county and district at onboarding rather than assuming from the address.
+        </p>
+      </>
+    ) : null}
+
     <h2>How does RL Property Management handle a {d.name} rental?</h2>
     <p>
       The same way as the rest of its approximately 750 units: listed on {leasing.platforms.label}, screened against published criteria ({leasing.qualification.incomeMultiple}x income, no evictions in {leasing.qualification.noEvictionsWithinYears} years), rent collected with direct deposit to the owner, maintenance handled through a 24/7 line and {company.scale.maintenanceTechnicians} in-house technicians, and quarterly inspections. Portfolio-wide, median days on market was {kpis.metrics[0].value} and {kpis.metrics[6].value} percent of rent arrived by the 5th as of {kpis.asOfLabel}.

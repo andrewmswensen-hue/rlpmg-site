@@ -57,7 +57,7 @@ const cities = defineCollection({
     /** Override the URL path when it must match an existing slug (e.g. /property-management-canal-winchester/). */
     path: z.string().optional(),
     county: z.string(),
-    kind: z.enum(['city', 'village', 'neighborhood', 'township']).default('city'),
+    kind: z.enum(['city', 'village', 'neighborhood', 'township', 'unincorporated community']).default('city'),
     /** "within Columbus" for neighborhoods like Clintonville; distance for suburbs. */
     relationToColumbus: z.string(),
     distanceMilesFromDowntown: z.number().optional(),
@@ -66,7 +66,7 @@ const cities = defineCollection({
     zipCodes: z.array(z.string()).default([]),
     /** Every number here must carry a source and an asOf date. No source, no number. */
     rentContext: z
-      .array(z.object({ label: z.string(), value: z.string(), source: z.string(), asOf: z.string() }))
+      .array(z.object({ label: z.string(), value: z.string(), source: z.string(), sourceUrl: z.string().optional(), asOf: z.string() }))
       .default([]),
     sourceOfIncomeProtection: z.object({ applies: z.boolean(), note: z.string().optional() }),
     localRegulation: z.array(z.string()).default([]),
