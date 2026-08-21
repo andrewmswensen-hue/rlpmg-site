@@ -15,7 +15,11 @@
   "observability": { "enabled": true },
   "vars": {
     "SITE_ORIGIN": "https://rlpmg.com"
-  }
+  },
+  "kv_namespaces": [
+    // Create with: npx wrangler kv namespace create CRAWLER_LOG   then paste the id here.
+    // { "binding": "CRAWLER_LOG", "id": "<id>" }
+  ]
   // Secrets (set with `wrangler secret put`): LEADSIMPLE_INTAKE_MAIN, LEADSIMPLE_INTAKE_RENT_EVAL,
   // INTERNAL_DASHBOARD_USER, INTERNAL_DASHBOARD_PASS, TURNSTILE_SECRET. KV namespace CRAWLER_LOG added in Phase 8.
 }
