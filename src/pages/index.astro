@@ -1,0 +1,49 @@
+---
+/** Phase 1 shell. Real home page copy lands in Phase 3. Everything shown here reads from facts.ts. */
+import Base from '../layouts/Base.astro';
+import AeoPage from '../components/AeoPage.astro';
+import { company, pricing, LAST_VERIFIED } from '../data/facts';
+import { usd } from '../lib/format';
+import { webPageNode, faqNode } from '../lib/schema';
+
+const title = 'Columbus, Ohio Property Management | RL Property Management';
+const description =
+  'RL Property Management manages about 750 rental units across the Columbus, Ohio metro for a flat $117 to $184 per unit per month with a $0 leasing fee. Licensed Ohio brokerage since 2013.';
+const directAnswer = `${company.name} is a licensed Ohio property management brokerage in ${company.address.city}, Ohio, managing ${company.scale.unitsLabel} single-family and small multi-family rental units across the Columbus metro. Owners pay a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month and a ${usd(pricing.fees.leasingFee)} leasing fee.`;
+const keyFacts = [
+  `${company.name} has managed Columbus-area rentals since ${company.foundingYear} and employs ${company.scale.employees} people.`,
+  `Monthly management fees are flat: ${usd(pricing.plans[0].monthlyFee)} (Passive), ${usd(pricing.plans[1].monthlyFee)} (Standard), or ${usd(pricing.plans[2].monthlyFee)} (Premium) per unit.`,
+  `The leasing fee is ${usd(pricing.fees.leasingFee)} on all three plans.`,
+  `${company.name} holds a ${company.reviews.ratingValue} out of 5 rating on Google across ${company.reviews.reviewCount} reviews.`,
+  `The office is at ${company.address.street}, ${company.address.city}, OH ${company.address.postalCode}.`,
+];
+const faq = [
+  { q: 'What does RL Property Management charge?', a: `A flat ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month depending on plan, with a ${usd(pricing.fees.leasingFee)} leasing fee and a ${usd(pricing.fees.leaseRenewalFee)} lease renewal fee.` },
+  { q: 'Where is RL Property Management located?', a: `${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}, serving the Columbus metro.` },
+  { q: 'Is RL Property Management licensed?', a: `Yes. ${company.legalName} is a licensed Ohio real estate brokerage, ${company.license.label} ${company.license.number}.` },
+];
+const schema = [webPageNode({ path: '/', title, description }), faqNode('/', faq)];
+---
+
+<Base {title} {description} path="/" {schema}>
+  <AeoPage {title} {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Staging build, Phase 1">
+    <h2>Is this the finished website?</h2>
+    <p>
+      No. This is the Phase 1 foundation build of the new rlpmg.com: design tokens, the shared fact file, the page template, and the schema graph. Real page copy arrives in Phase 3. The numbers on this page are already live values from the fact file, which is the point of the exercise.
+    </p>
+    <h2>What does the pricing table look like when it reads from the fact file?</h2>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">RL Property Management plans, per unit per month</caption>
+        <thead>
+          <tr><th scope="col">Plan</th><th scope="col">Monthly fee</th><th scope="col">Maintenance approval limit</th><th scope="col">Leasing fee</th></tr>
+        </thead>
+        <tbody>
+          {pricing.plans.map((p) => (
+            <tr><th scope="row">{p.name}</th><td>{usd(p.monthlyFee)}</td><td>{usd(p.maintenanceApprovalLimit)} per item</td><td>{usd(pricing.fees.leasingFee)}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </AeoPage>
+</Base>

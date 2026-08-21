@@ -1,0 +1,58 @@
+---
+/** The three human jobs, one click deep on every page: what's for rent, what it costs, where's my portal. */
+import { company } from '../data/facts';
+import Logo from './Logo.astro';
+const current = Astro.url.pathname;
+const nav = [
+  { href: '/homes-for-rent/', label: 'Available Rentals' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/areas-we-serve/', label: 'Areas' },
+  { href: '/blog/', label: 'Blog' },
+];
+---
+
+<header class="border-b border-gray bg-paper">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4">
+    <a href="/" class="flex items-center gap-3" aria-label={`${company.name} home`}>
+      <Logo class="h-9 w-auto" />
+    </a>
+    <nav aria-label="Primary" class="hidden items-center gap-7 text-[0.95rem] font-medium md:flex">
+      {
+        nav.map((n) => (
+          <a
+            href={n.href}
+            aria-current={current === n.href ? 'page' : undefined}
+            class="text-navy-800 hover:text-accent-600 aria-[current=page]:text-brand-800 aria-[current=page]:underline aria-[current=page]:underline-offset-8"
+          >
+            {n.label}
+          </a>
+        ))
+      }
+      <details class="relative">
+        <summary class="cursor-pointer list-none text-navy-800 hover:text-accent-600">Portal Login</summary>
+        <ul class="absolute right-0 z-20 mt-2 w-56 border border-gray bg-paper p-2 shadow-lg">
+          <li><a class="block px-3 py-2 hover:bg-offwhite" href={company.portals.owner} rel="noopener">Owner portal</a></li>
+          <li><a class="block px-3 py-2 hover:bg-offwhite" href={company.portals.resident} rel="noopener">Resident portal</a></li>
+          <li><a class="block px-3 py-2 hover:bg-offwhite" href={company.portals.maintenanceRequest} rel="noopener">Maintenance request</a></li>
+        </ul>
+      </details>
+      <a
+        href="/free-rent-evaluation/"
+        class="bg-brand-800 px-4 py-2 font-semibold text-white hover:bg-accent-600 focus-visible:outline-offset-4"
+        >Get a Rent Evaluation</a
+      >
+    </nav>
+    <details class="md:hidden">
+      <summary class="cursor-pointer list-none border border-gray px-3 py-2 text-sm font-medium">Menu</summary>
+      <nav aria-label="Mobile" class="absolute left-0 right-0 z-20 border-b border-gray bg-paper px-5 py-4">
+        <ul class="flex flex-col gap-3 text-base font-medium">
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href={company.portals.owner}>Owner portal</a></li>
+          <li><a href={company.portals.resident}>Resident portal</a></li>
+          <li><a href={company.portals.maintenanceRequest}>Maintenance request</a></li>
+          <li><a href="/free-rent-evaluation/" class="font-semibold text-brand-800">Get a Rent Evaluation</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "rlpmg-site",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Run the Worker first only for API routes, the internal dashboard, and retired URLs that need true 301s.
+    "run_worker_first": ["/api/*", "/internal/*"]
+  },
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "SITE_ORIGIN": "https://rlpmg.com"
+  }
+  // Secrets (set with `wrangler secret put`): LEADSIMPLE_INTAKE_MAIN, LEADSIMPLE_INTAKE_RENT_EVAL,
+  // INTERNAL_DASHBOARD_USER, INTERNAL_DASHBOARD_PASS, TURNSTILE_SECRET. KV namespace CRAWLER_LOG added in Phase 8.
+}

@@ -1,0 +1,87 @@
+---
+/**
+ * Base layout. Owns the <head>, header (the three human jobs), footer (NAP + license + sitemap), and JSON-LD.
+ * Every page passes a `schema` graph; this layout appends the site-wide Organization/WebSite nodes on the home page only.
+ */
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { company } from '../data/facts';
+import { graph, organizationNode, brokerNode, websiteNode } from '../lib/schema';
+
+interface Props {
+  title: string; // <title>, max 60 chars
+  description: string; // 150 to 160 chars
+  path: string; // e.g. /pricing/
+  schema?: unknown[]; // page-specific JSON-LD nodes
+  noindex?: boolean;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  /** Set false on pages that have no Markdown twin (tools dashboards, legal). */
+  markdownTwin?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  schema = [],
+  noindex = false,
+  ogImage = '/images/og-default.png',
+  type = 'website',
+  markdownTwin = true,
+  bodyClass = '',
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site).href;
+const isHome = path === '/';
+const nodes = isHome ? [organizationNode(true), brokerNode(), websiteNode(), ...schema] : schema;
+const jsonld = JSON.stringify(graph(nodes));
+const mdPath = path === '/' ? '/index.md' : path.replace(/\/$/, '') + '.md';
+if (import.meta.env.DEV && title.length > 60) console.warn(`[title > 60] ${path}: ${title}`);
+if (import.meta.env.DEV && (description.length < 120 || description.length > 160))
+  console.warn(`[description ${description.length} chars] ${path}`);
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {markdownTwin && <link rel="alternate" type="text/markdown" href={mdPath} title={`${title} (Markdown)`} />}
+    <link rel="alternate" type="application/rss+xml" title="RL Property Management blog" href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={company.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+    <meta name="theme-color" content="#59070e" />
+    <script type="application/ld+json" set:html={jsonld} />
+    <slot name="head" />
+  </head>
+  <body class:list={['min-h-screen flex flex-col bg-paper text-ink', bodyClass]}>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-paper focus:px-4 focus:py-2 focus:outline focus:outline-2 focus:outline-accent-600"
+      >Skip to content</a
+    >
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
