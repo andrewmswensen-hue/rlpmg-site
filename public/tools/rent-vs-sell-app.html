@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rent vs. Sell Calculator | RL Property Management</title>
+<meta name="description" content="Should you rent out your Columbus home or sell it? Compare projected wealth from renting versus selling, with real mortgage amortization, depreciation, and capital gains tax.">
+<link rel="stylesheet" href="https://use.typekit.net/xcs0gpq.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;800&display=swap">
+<style>
+/* ============================================================================
+   RL Property Management — Rent vs. Sell Calculator
+   Brand tokens are HARDCODED (not CSS custom properties) on purpose:
+   rlpmg.com's WordPress editor strips custom properties from pasted HTML.
+     Maroon  #59070e   Crimson #a60530   Navy   #123143
+     Silver  #dddddd   Paper   #f2f2f2   Success #2f7d4f
+   Everything is scoped under #rvs so it cannot leak into the host page.
+   ========================================================================= */
+
+#rvs *, #rvs *::before, #rvs *::after { box-sizing: border-box; }
+#rvs {
+  font-family: 'futura-pt','Jost','Futura','Century Gothic','Trebuchet MS',sans-serif;
+  font-weight: 500;
+  color: #000;
+  background: #f2f2f2;
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  padding: 40px 20px 64px;
+}
+#rvs h1, #rvs h2, #rvs h3, #rvs h4, #rvs p, #rvs ul, #rvs figure { margin: 0; }
+#rvs ul { padding: 0; list-style: none; }
+#rvs button { font: inherit; color: inherit; }
+
+/* ---------- shell ---------- */
+#rvs .rvs-wrap { max-width: 1240px; margin: 0 auto; }
+
+#rvs .rvs-masthead { text-align: center; margin-bottom: 40px; }
+#rvs .rvs-logo { width: 200px; height: auto; margin: 0 auto 24px; display: block; }
+#rvs .rvs-eyebrow {
+  font-weight: 600; font-size: 12px; letter-spacing: .18em;
+  text-transform: uppercase; color: #a60530; margin-bottom: 10px;
+}
+#rvs .rvs-rule { width: 48px; height: 3px; background: #a60530; border: 0; margin: 0 0 20px; }
+#rvs .rvs-masthead .rvs-rule { margin-left: auto; margin-right: auto; }
+#rvs h1 {
+  font-weight: 800; font-size: 44px; line-height: 1.05; letter-spacing: .02em;
+  text-transform: uppercase; color: #59070e;
+}
+#rvs .rvs-sub { color: #555; margin-top: 14px; font-size: 17px; max-width: 60ch;
+  margin-left: auto; margin-right: auto; }
+
+#rvs .rvs-grid { display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: start; }
+/* Grid items default to min-width:auto and refuse to shrink below their
+   content, which lets the wide table blow out the page on phones.
+   min-width:0 lets the table scroll inside its own box instead. */
+#rvs .rvs-grid > * { min-width: 0; }
+#rvs .rvs-stack { min-width: 0; }
+
+/* ---------- cards ---------- */
+#rvs .rvs-card {
+  background: #fff; border: 1px solid #dddddd; border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(18,49,67,.06), 0 2px 8px rgba(18,49,67,.05);
+}
+#rvs .rvs-card-pad { padding: 26px; }
+#rvs .rvs-card-head {
+  padding: 18px 26px; border-bottom: 1px solid #dddddd; background: #f2f2f2;
+  font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #123143;
+}
+
+/* ---------- verdict ---------- */
+#rvs .rvs-verdict { background: #59070e; color: #fff; padding: 32px; border-radius: 2px; }
+#rvs .rvs-verdict .rvs-eyebrow { color: #ffb3c4; }
+#rvs .rvs-verdict .rvs-rule { background: #a60530; }
+#rvs .rvs-verdict h2 {
+  font-weight: 800; font-size: 30px; line-height: 1.15; letter-spacing: .01em; text-transform: uppercase;
+}
+#rvs .rvs-verdict-num { display: block; font-size: 54px; line-height: 1; margin: 6px 0 2px; }
+#rvs .rvs-verdict-note { margin-top: 16px; color: #e8cdd3; font-size: 15px; max-width: 62ch; }
+
+/* ---------- stat strip ---------- */
+#rvs .rvs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: #dddddd;
+  border: 1px solid #dddddd; border-radius: 2px; overflow: hidden; }
+#rvs .rvs-stat { background: #fff; padding: 18px 16px; }
+#rvs .rvs-stat-label {
+  font-weight: 600; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: #555; margin-bottom: 6px;
+}
+#rvs .rvs-stat-val { font-weight: 800; font-size: 24px; letter-spacing: .01em; color: #123143; }
+#rvs .rvs-stat-val.pos { color: #2f7d4f; }
+#rvs .rvs-stat-val.neg { color: #a60530; }
+#rvs .rvs-stat-sub { font-size: 12px; color: #9a9a9a; margin-top: 4px; }
+
+/* ---------- chart ---------- */
+#rvs .rvs-chart { width: 100%; height: auto; display: block; overflow: visible; }
+#rvs .rvs-legend { display: flex; gap: 26px; justify-content: center; flex-wrap: wrap;
+  margin-top: 14px; font-size: 14px; }
+#rvs .rvs-legend span { display: inline-flex; align-items: center; gap: 8px; }
+#rvs .rvs-swatch { width: 18px; height: 3px; display: inline-block; }
+
+/* ---------- inputs ---------- */
+#rvs .rvs-field { margin-bottom: 20px; }
+#rvs .rvs-label {
+  display: flex; align-items: center; gap: 6px; justify-content: space-between;
+  font-weight: 600; font-size: 13px; letter-spacing: .04em; color: #222; margin-bottom: 7px;
+}
+#rvs .rvs-label-text { display: inline-flex; align-items: center; gap: 6px; }
+#rvs .rvs-inputrow { display: flex; align-items: stretch; gap: 8px; }
+#rvs .rvs-affix { position: relative; flex: 1; }
+#rvs .rvs-affix > span {
+  position: absolute; top: 50%; transform: translateY(-50%); color: #9a9a9a;
+  font-size: 15px; pointer-events: none;
+}
+#rvs .rvs-affix.pre > span { left: 11px; }
+#rvs .rvs-affix.post > span { right: 11px; }
+#rvs input[type=text], #rvs input[type=number], #rvs select {
+  width: 100%; font: inherit; font-size: 15px; font-weight: 500; color: #000;
+  background: #fff; border: 1px solid #dddddd; border-radius: 4px;
+  padding: 10px 12px; height: 42px; appearance: none; -webkit-appearance: none;
+}
+#rvs .rvs-affix.pre input { padding-left: 26px; }
+#rvs .rvs-affix.post input { padding-right: 28px; }
+#rvs input:focus, #rvs select:focus, #rvs button:focus-visible, #rvs summary:focus-visible {
+  outline: 2px solid #a60530; outline-offset: 2px; border-color: #a60530;
+}
+#rvs select { background-image: none; cursor: pointer; }
+#rvs .rvs-unit-toggle {
+  width: 42px; flex: 0 0 42px; border: 1px solid #dddddd; background: #f2f2f2;
+  border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 15px; color: #123143;
+  transition: background .12s cubic-bezier(.2,0,0,1), color .12s;
+}
+#rvs .rvs-unit-toggle:hover { background: #a60530; border-color: #a60530; color: #fff; }
+#rvs .rvs-hint { font-size: 12px; color: #9a9a9a; margin-top: 5px; }
+#rvs .rvs-hint strong { color: #555; font-weight: 600; }
+
+/* range slider */
+#rvs input[type=range] { -webkit-appearance: none; appearance: none; width: 100%;
+  background: transparent; height: 22px; margin: 0; cursor: pointer; }
+#rvs input[type=range]::-webkit-slider-runnable-track { height: 3px; background: #dddddd; border-radius: 2px; }
+#rvs input[type=range]::-moz-range-track { height: 3px; background: #dddddd; border-radius: 2px; }
+#rvs input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 17px; height: 17px; border-radius: 50%;
+  background: #a60530; border: 2px solid #fff; box-shadow: 0 0 0 1px #a60530; margin-top: -7px; }
+#rvs input[type=range]::-moz-range-thumb {
+  width: 17px; height: 17px; border-radius: 50%; background: #a60530;
+  border: 2px solid #fff; box-shadow: 0 0 0 1px #a60530; }
+
+/* checkbox */
+#rvs .rvs-check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+#rvs .rvs-check input { width: 17px; height: 17px; margin: 2px 0 0; accent-color: #a60530; flex: 0 0 auto; }
+#rvs .rvs-check-body { font-size: 14px; }
+#rvs .rvs-check-body b { display: block; font-weight: 600; font-size: 13px; letter-spacing: .04em; }
+#rvs .rvs-check-body em { font-style: normal; color: #9a9a9a; font-size: 12px; }
+
+/* info tooltip */
+#rvs .rvs-info {
+  width: 15px; height: 15px; flex: 0 0 15px; border-radius: 50%; border: 1px solid #9a9a9a;
+  background: none; color: #555; font-size: 10px; font-weight: 600; line-height: 1;
+  cursor: help; padding: 0; position: relative; display: inline-flex;
+  align-items: center; justify-content: center;
+}
+#rvs .rvs-info:hover { border-color: #a60530; color: #a60530; }
+#rvs .rvs-info .rvs-tip {
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  width: 240px; background: #123143; color: #fff; font-size: 12.5px; font-weight: 500;
+  line-height: 1.45; letter-spacing: 0; text-align: left; padding: 10px 12px; border-radius: 2px;
+  z-index: 40; box-shadow: 0 6px 20px rgba(18,49,67,.25); cursor: auto;
+}
+#rvs .rvs-info:hover .rvs-tip, #rvs .rvs-info:focus .rvs-tip { display: block; }
+
+/* section / disclosure */
+#rvs .rvs-section-label {
+  font-weight: 600; font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: #123143; margin: 30px 0 4px; padding-top: 22px; border-top: 1px solid #dddddd;
+}
+#rvs .rvs-section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+#rvs details { border-top: 1px solid #dddddd; margin-top: 24px; padding-top: 4px; }
+#rvs summary {
+  cursor: pointer; list-style: none; padding: 16px 0;
+  font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #123143;
+  display: flex; justify-content: space-between; align-items: center;
+}
+#rvs summary::-webkit-details-marker { display: none; }
+#rvs summary::after { content: '+'; font-size: 18px; color: #a60530; font-weight: 500; }
+#rvs details[open] > summary::after { content: '\2212'; }
+
+/* ---------- table ---------- */
+#rvs .rvs-tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+#rvs table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+#rvs thead th {
+  background: #123143; color: #fff; font-weight: 600; font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; text-align: right; padding: 11px 12px; position: sticky; top: 0;
+}
+#rvs thead th:first-child { text-align: left; }
+#rvs tbody td { padding: 9px 12px; text-align: right; border-bottom: 1px solid #f2f2f2; font-variant-numeric: tabular-nums; }
+#rvs tbody td:first-child { text-align: left; font-weight: 600; }
+#rvs tbody tr:nth-child(even) { background: #fafafa; }
+#rvs tbody tr.is-selected { background: #f5dde3; }
+#rvs tbody tr.is-selected td { border-bottom-color: #e8cdd3; }
+#rvs td.pos { color: #2f7d4f; font-weight: 600; }
+#rvs td.neg { color: #a60530; font-weight: 600; }
+#rvs .rvs-col-hl { background: rgba(18,49,67,.03); }
+
+/* ---------- CTA ---------- */
+#rvs .rvs-cta { background: #123143; color: #fff; padding: 34px; border-radius: 2px; margin-top: 28px; }
+#rvs .rvs-cta .rvs-eyebrow { color: #8fb3c7; }
+#rvs .rvs-cta .rvs-rule { background: #a60530; }
+#rvs .rvs-cta h3 { font-weight: 800; font-size: 26px; line-height: 1.15; text-transform: uppercase; letter-spacing: .01em; }
+#rvs .rvs-cta p { color: #cfdde5; margin-top: 12px; max-width: 62ch; font-size: 15.5px; }
+#rvs .rvs-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+#rvs .rvs-btn {
+  display: inline-block; padding: 13px 26px; border-radius: 4px; text-decoration: none;
+  font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background .12s cubic-bezier(.2,0,0,1), color .12s, border-color .12s;
+}
+#rvs .rvs-btn-primary { background: #a60530; color: #fff; }
+#rvs .rvs-btn-primary:hover { background: #8a0427; }
+#rvs .rvs-btn-primary:active { background: #3e050a; }
+#rvs .rvs-btn-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+#rvs .rvs-btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+#rvs .rvs-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+#rvs .rvs-btn-quiet {
+  background: #fff; color: #123143; border-color: #dddddd;
+}
+#rvs .rvs-btn-quiet:hover { border-color: #a60530; color: #a60530; }
+
+#rvs .rvs-note {
+  font-size: 12.5px; color: #555; background: #f2f2f2; border: 1px solid #dddddd;
+  border-radius: 2px; padding: 16px 18px; margin-top: 24px; line-height: 1.6;
+}
+#rvs .rvs-note b { color: #59070e; font-weight: 600; }
+#rvs .rvs-note ul { margin-top: 8px; }
+#rvs .rvs-note li { padding-left: 14px; position: relative; margin-top: 4px; }
+#rvs .rvs-note li::before { content: '\2022'; position: absolute; left: 0; color: #a60530; }
+#rvs .rvs-stack > * + * { margin-top: 28px; }
+#rvs .rvs-flag {
+  display: inline-block; font-weight: 600; font-size: 10.5px; letter-spacing: .12em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+  background: #f5dde3; color: #a60530; margin-bottom: 12px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  #rvs { padding: 28px 16px 48px; }
+  #rvs .rvs-grid { grid-template-columns: 1fr; }
+  #rvs h1 { font-size: 32px; }
+  #rvs .rvs-verdict { padding: 24px; }
+  #rvs .rvs-verdict h2 { font-size: 22px; }
+  #rvs .rvs-verdict-num { font-size: 40px; }
+  #rvs .rvs-stats { grid-template-columns: repeat(2,1fr); }
+  #rvs .rvs-card-pad { padding: 20px; }
+  #rvs .rvs-inputs-card { order: 2; }
+  #rvs .rvs-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
+  #rvs .rvs-toolbar .rvs-btn { text-align: center; padding: 13px 10px; }
+  #rvs .rvs-toolbar .rvs-btn:first-child { grid-column: 1 / -1; }
+  #rvs .rvs-cta-actions .rvs-btn { flex: 1 1 100%; text-align: center; }
+}
+@media (max-width: 460px) {
+  #rvs .rvs-stats { grid-template-columns: 1fr; }
+  #rvs h1 { font-size: 26px; }
+  #rvs .rvs-verdict-num { font-size: 34px; }
+}
+
+/* ---------- print / save-as-PDF ---------- */
+@media print {
+  #rvs { background: #fff; padding: 0; font-size: 11px; }
+  #rvs .rvs-grid { grid-template-columns: 1fr; gap: 16px; }
+  #rvs .rvs-card { box-shadow: none; break-inside: avoid; }
+  #rvs .rvs-toolbar, #rvs .rvs-unit-toggle, #rvs .rvs-info,
+  #rvs .rvs-cta-actions, #rvs input[type=range] { display: none !important; }
+  #rvs details { display: block; }
+  #rvs details > summary { display: none; }
+  #rvs h1 { font-size: 24px; }
+  #rvs .rvs-verdict, #rvs .rvs-cta { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #rvs thead th { position: static; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #rvs table { font-size: 9px; white-space: normal; }
+  #rvs .rvs-tablewrap { overflow: visible; }
+}
+</style>
+</head>
+<body>
+<div id="rvs">
+<div class="rvs-wrap">
+
+  <header class="rvs-masthead">
+    <img class="rvs-logo" src="data:image/png;base64,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" alt="RL Property Management">
+    <div class="rvs-eyebrow">Columbus, Ohio &middot; Owner Tools</div>
+    <hr class="rvs-rule">
+    <h1>Rent vs. Sell Calculator</h1>
+    <p class="rvs-sub">You're moving, and the house is paid down. Do you sell it, or keep it and
+      rent it out? This compares the two side by side over time, after taxes and after
+      the cost of selling.</p>
+  </header>
+
+  <div class="rvs-grid">
+
+    <!-- ============ INPUTS ============ -->
+    <section class="rvs-card rvs-inputs-card">
+      <div class="rvs-card-head">Your Property</div>
+      <div class="rvs-card-pad">
+
+        <div class="rvs-section-label">The basics</div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="homeValue"><span class="rvs-label-text">Home value today
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">What the house would sell for today. Zillow or Redfin gets you close; a broker price opinion is better.</span></button>
+          </span></label>
+          <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="homeValue"></div>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="pricePaid"><span class="rvs-label-text">Price you paid
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Your original purchase price. This sets your cost basis, which drives capital gains tax and depreciation.</span></button>
+          </span></label>
+          <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="pricePaid"></div>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="mortgageBalance"><span class="rvs-label-text">Mortgage balance today
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">What you still owe right now, from your latest statement. Enter 0 if the house is paid off.</span></button>
+          </span></label>
+          <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="mortgageBalance"></div>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="interestRate"><span class="rvs-label-text">Interest rate</span></label>
+          <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="interestRate"></div>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="remainingTermYears"><span class="rvs-label-text">Years left on the loan
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">How many years of payments remain. A 30-year loan taken out 8 years ago has 22 left.</span></button>
+          </span></label>
+          <div class="rvs-affix post"><span>yrs</span><input type="text" inputmode="decimal" id="remainingTermYears"></div>
+          <p class="rvs-hint">Your principal &amp; interest payment: <strong id="pmtHint">&mdash;</strong>
+            <br>Taxes and insurance are counted separately below, so leave escrow out of this.</p>
+        </div>
+
+        <div class="rvs-section-label">Renting it out</div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="monthlyRent"><span class="rvs-label-text">Monthly rent you'd get
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Market rent for the house as-is. We're happy to give you a free rent estimate for any Columbus-area address.</span></button>
+          </span></label>
+          <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="monthlyRent"></div>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="propertyTaxRate"><span class="rvs-label-text">Property taxes
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Franklin County effective rates typically run 1.4% to 2.2% of market value. Toggle to enter a flat monthly dollar amount instead.</span></button>
+          </span></label>
+          <div class="rvs-inputrow">
+            <div class="rvs-affix post" id="taxPctWrap"><span>%</span><input type="text" inputmode="decimal" id="propertyTaxRate"></div>
+            <div class="rvs-affix pre" id="taxDolWrap" style="display:none"><span>$</span><input type="text" inputmode="numeric" id="propertyTaxMonthly"></div>
+            <button type="button" class="rvs-unit-toggle" id="taxToggle" title="Switch between percent and dollars">$</button>
+          </div>
+          <p class="rvs-hint" id="taxHint">&mdash;</p>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="insuranceMonthly"><span class="rvs-label-text">Insurance, per month
+            <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Your current homeowners premium. A landlord (DP-3) policy usually costs more, so we add a markup you can adjust under Assumptions.</span></button>
+          </span></label>
+          <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="insuranceMonthly"></div>
+          <p class="rvs-hint" id="insHint">&mdash;</p>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="yearsToHold"><span class="rvs-label-text">Years to hold before selling</span>
+            <span style="font-weight:800;color:#a60530" id="yearsOut">10</span></label>
+          <input type="range" id="yearsToHold" min="1" max="30" step="1">
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-check">
+            <input type="checkbox" id="isPrimaryResidence">
+            <span class="rvs-check-body">
+              <b>This is my primary residence</b>
+              <em>Lived in 2 of the last 5 years. Unlocks the capital gains exclusion &mdash; but only if you sell within 3 years of moving out.</em>
+            </span>
+          </label>
+        </div>
+
+        <div class="rvs-field">
+          <label class="rvs-label" for="marriedFilingJointly"><span class="rvs-label-text">Tax filing status</span></label>
+          <select id="marriedFilingJointly">
+            <option value="1">Married filing jointly ($500k exclusion)</option>
+            <option value="0">Single ($250k exclusion)</option>
+          </select>
+        </div>
+
+        <!-- ============ ADVANCED ============ -->
+        <details id="advanced">
+          <summary>Assumptions you can change</summary>
+
+          <div class="rvs-section-label">Market</div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="appreciationRate"><span class="rvs-label-text">Home appreciation, per year</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="appreciationRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="rentGrowth"><span class="rvs-label-text">Rent growth, per year</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="rentGrowth"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="expenseInflation"><span class="rvs-label-text">Expense inflation, per year
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Applied to insurance, HOA dues, and flat-dollar property taxes.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="expenseInflation"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="reinvestmentRate"><span class="rvs-label-text">Return if you invest the proceeds
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">After-tax return you'd earn on the cash from selling. The same rate is applied to rental cash flow, so both sides are compared fairly.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="reinvestmentRate"></div>
+          </div>
+
+          <div class="rvs-section-label">Operating costs</div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="vacancyRate"><span class="rvs-label-text">Vacancy
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Share of the year the house sits empty between tenants. 5% to 8% is typical for a well-run Columbus single-family rental.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="vacancyRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="pmRate"><span class="rvs-label-text">Property management fee
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of collected rent. Set this to 0 if you plan to manage the house yourself &mdash; but budget your own time.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="pmRate"></div>
+            <p class="rvs-hint" id="pmHint">&mdash;</p>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="leasingRate"><span class="rvs-label-text">Leasing &amp; turnover allowance
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of annual rent set aside for placing each new tenant and turning the unit. 4% is roughly one month's rent every two years.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="leasingRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="maintenanceRate"><span class="rvs-label-text">Maintenance, per year
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of home value per year for routine repairs. 1% is the common rule of thumb; older houses run higher.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="maintenanceRate"></div>
+            <p class="rvs-hint" id="maintHint">&mdash;</p>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="capexRate"><span class="rvs-label-text">Capital reserve, per year
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Roof, furnace, water heater, and other big-ticket replacements, averaged per year. These are capital improvements, so they are not deducted as expenses &mdash; they add to your cost basis and lower the gain when you sell.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="capexRate"></div>
+            <p class="rvs-hint" id="capexHint">&mdash;</p>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="landlordInsBump"><span class="rvs-label-text">Landlord insurance markup</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="landlordInsBump"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="hoaMonthly"><span class="rvs-label-text">HOA dues, per month</span></label>
+            <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="hoaMonthly"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="makeReadyCosts"><span class="rvs-label-text">Cost to get it rent-ready
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Paint, carpet, cleaning, and deferred repairs before the first tenant moves in. Spent up front, out of your pocket.</span></button>
+            </span></label>
+            <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="makeReadyCosts"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="capitalImprovements"><span class="rvs-label-text">Capital improvements you'll make
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Improvements that add to your cost basis, like a new roof or kitchen. Different from repairs, which are deducted as they happen.</span></button>
+            </span></label>
+            <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="capitalImprovements"></div>
+          </div>
+
+          <div class="rvs-section-label">Selling</div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="realtorCommission"><span class="rvs-label-text">Agent commission</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="realtorCommission"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="closingCosts"><span class="rvs-label-text">Closing costs &amp; concessions</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="closingCosts"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="refurbToSell"><span class="rvs-label-text">Cost to prep it for sale</span></label>
+            <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="refurbToSell"></div>
+          </div>
+
+          <div class="rvs-section-label">Taxes</div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="incomeTaxRate"><span class="rvs-label-text">Your income tax rate
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Combined federal, Ohio, and local marginal rate. Applied to rental profit after depreciation.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="incomeTaxRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="capGainsRate"><span class="rvs-label-text">Capital gains rate</span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="capGainsRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="recaptureRate"><span class="rvs-label-text">Depreciation recapture rate
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Every dollar of depreciation you claim gets taxed back when you sell, capped at 25% federally. This is not optional &mdash; the IRS assumes you took it.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="recaptureRate"></div>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="landPct"><span class="rvs-label-text">Land share of purchase price
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Land cannot be depreciated, only the building. Your county auditor's land-to-improvement split is the usual source. 20% is a common default.</span></button>
+            </span></label>
+            <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="landPct"></div>
+            <p class="rvs-hint" id="depHint">&mdash;</p>
+          </div>
+          <div class="rvs-field">
+            <label class="rvs-label" for="yearsLivedIn"><span class="rvs-label-text">Years you've lived here</span></label>
+            <div class="rvs-affix post"><span>yrs</span><input type="text" inputmode="decimal" id="yearsLivedIn"></div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <div class="rvs-stack">
+
+      <div class="rvs-toolbar">
+        <button type="button" class="rvs-btn rvs-btn-quiet" id="btnPrint">Print / Save as PDF</button>
+        <button type="button" class="rvs-btn rvs-btn-quiet" id="btnShare">Copy shareable link</button>
+        <button type="button" class="rvs-btn rvs-btn-quiet" id="btnReset">Reset</button>
+      </div>
+
+      <section class="rvs-verdict">
+        <div class="rvs-eyebrow">The bottom line</div>
+        <hr class="rvs-rule">
+        <h2 id="verdictText">&mdash;</h2>
+        <p class="rvs-verdict-note" id="verdictNote"></p>
+      </section>
+
+      <div class="rvs-stats">
+        <div class="rvs-stat">
+          <div class="rvs-stat-label">Cash flow, month 1</div>
+          <div class="rvs-stat-val" id="statCF">&mdash;</div>
+          <div class="rvs-stat-sub">after the mortgage &amp; all expenses</div>
+        </div>
+        <div class="rvs-stat">
+          <div class="rvs-stat-label">Cash in your pocket if you sell today</div>
+          <div class="rvs-stat-val" id="statSellNow">&mdash;</div>
+          <div class="rvs-stat-sub" id="statSellNowSub">&mdash;</div>
+        </div>
+        <div class="rvs-stat">
+          <div class="rvs-stat-label">Out of pocket to start renting</div>
+          <div class="rvs-stat-val" id="statUpfront">&mdash;</div>
+          <div class="rvs-stat-sub">make-ready &amp; improvements</div>
+        </div>
+        <div class="rvs-stat">
+          <div class="rvs-stat-label">Renting pulls ahead in</div>
+          <div class="rvs-stat-val" id="statBreakEven">&mdash;</div>
+          <div class="rvs-stat-sub" id="statBreakEvenSub">&mdash;</div>
+        </div>
+      </div>
+
+      <section class="rvs-card">
+        <div class="rvs-card-head">Projected wealth, after tax and after selling costs</div>
+        <div class="rvs-card-pad">
+          <svg class="rvs-chart" id="chart" viewBox="0 0 760 340" role="img" aria-labelledby="chartTitle">
+            <title id="chartTitle">Projected wealth from renting versus selling now</title>
+          </svg>
+          <div class="rvs-legend">
+            <span><i class="rvs-swatch" style="background:#a60530"></i> Rent it out, then sell</span>
+            <span><i class="rvs-swatch" style="background:#123143"></i> Sell now, invest the proceeds</span>
+          </div>
+          <div class="rvs-note" id="chartNote"></div>
+        </div>
+      </section>
+
+      <section class="rvs-card">
+        <div class="rvs-card-head">Year by year</div>
+        <div class="rvs-tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Rent collected</th>
+                <th>Mortgage</th>
+                <th>Operating costs</th>
+                <th>Cash flow</th>
+                <th>Home value</th>
+                <th>Equity</th>
+                <th class="rvs-col-hl">Wealth if you rent</th>
+                <th class="rvs-col-hl">Wealth if you sell now</th>
+                <th class="rvs-col-hl">Difference</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="rvs-card-pad">
+          <details>
+            <summary>How to read this table</summary>
+            <div class="rvs-note" style="margin-top:0">
+              <ul>
+                <li><b>Rent collected</b> &mdash; gross rent less vacancy.</li>
+                <li><b>Mortgage</b> &mdash; principal and interest only. It stops the year the loan is paid off.</li>
+                <li><b>Operating costs</b> &mdash; taxes, insurance, HOA, management, leasing, maintenance, and the capital reserve.</li>
+                <li><b>Cash flow</b> &mdash; what actually lands in your account that year, after income tax on the rental profit.</li>
+                <li><b>Wealth if you rent</b> &mdash; what you'd walk away with if you rented through that year and <em>then</em> sold: sale price, less selling costs, less the loan payoff, less capital gains and depreciation recapture tax, plus every dollar of cash flow you banked along the way.</li>
+                <li><b>Wealth if you sell now</b> &mdash; today's net proceeds invested at your assumed return through that year.</li>
+              </ul>
+              <p style="margin-top:10px">Both columns are measured the same way: cash in hand, after tax, after the cost of selling. That makes them directly comparable in any year, not just the last one.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="rvs-cta">
+        <div class="rvs-eyebrow">Talk to a real person</div>
+        <hr class="rvs-rule">
+        <h3>Not sure what your house would actually rent for?</h3>
+        <p>We manage about 745 homes across Franklin County and the surrounding suburbs. Send us the
+          address and we'll give you a rent estimate and a straight answer on what it would take to
+          turn it into a rental. No charge, and no obligation to hire us.</p>
+        <div class="rvs-cta-actions">
+          <a class="rvs-btn rvs-btn-primary" href="https://rlpmg.com/free-rent-evaluation/">Get a free rent estimate</a>
+          <a class="rvs-btn rvs-btn-ghost" href="https://rlpmg.com/columbus-property-management/#pricing">See what we charge</a>
+        </div>
+      </section>
+
+      <div class="rvs-note">
+        <b>How this calculator works, and where it stops.</b>
+        It amortizes your actual loan balance month by month, applies straight-line depreciation over
+        27.5 years on the building portion of your basis, carries suspended passive losses forward and
+        releases them at sale, expires the Section 121 exclusion three years after you move out, and
+        taxes depreciation recapture separately from capital gains. Both scenarios are compared on the
+        same footing: after tax, after the cost of selling, with idle cash on both sides earning the
+        same return.
+        <ul>
+          <li>It does not model a 1031 exchange, cost segregation, the net investment income tax, AMT, or the qualified business income deduction.</li>
+          <li>Passive loss rules can defer deductions in ways that depend on your income; this model releases them at sale.</li>
+          <li>Appreciation, rent growth, and investment returns are assumptions, not forecasts. Change them and watch the answer move.</li>
+        </ul>
+        <p style="margin-top:10px">This is an estimate for planning, not tax or investment advice.
+        Run the numbers by your CPA before you decide. RL Property Management is a licensed Ohio
+        real estate brokerage.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+/* ===================== ENGINE-START =====================
+   Rent vs. Sell — calculation engine.
+   Pure functions, no DOM. Every number the page shows comes from here.
+   ======================================================== */
+var RVS = (function () {
+  'use strict';
+
+  /* Level monthly payment (principal + interest) that retires `balance`
+     over `months` at `annualRatePct`. */
+  function pmt(balance, annualRatePct, months) {
+    if (balance <= 0 || months <= 0) return 0;
+    var r = annualRatePct / 100 / 12;
+    if (r === 0) return balance / months;
+    return balance * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1);
+  }
+
+  /* Month-by-month amortization starting from TODAY'S balance.
+     Returns index 0..years, each {balance, interest, principal, paid}.
+     Payments stop the month the loan hits zero. */
+  function amortize(balance, annualRatePct, termMonths, years) {
+    var r = annualRatePct / 100 / 12;
+    var payment = pmt(balance, annualRatePct, termMonths);
+    var bal = balance;
+    var out = [{ balance: bal, interest: 0, principal: 0, paid: 0 }];
+    for (var y = 1; y <= years; y++) {
+      var interest = 0, principal = 0, paid = 0;
+      for (var m = 0; m < 12; m++) {
+        if (bal <= 0.005) { bal = 0; continue; }
+        var i = bal * r;
+        var p = payment - i;
+        var thisPay = payment;
+        if (p >= bal) { p = bal; thisPay = bal + i; }   /* payoff month */
+        bal -= p;
+        interest += i; principal += p; paid += thisPay;
+      }
+      out.push({ balance: Math.max(0, bal), interest: interest, principal: principal, paid: paid });
+    }
+    return out;
+  }
+
+  function model(x) {
+    var N = Math.max(1, Math.round(x.yearsToHold));
+    var g = x.appreciationRate / 100;
+    var infl = x.expenseInflation / 100;
+    var reinv = x.reinvestmentRate / 100;
+    var rentG = x.rentGrowth / 100;
+    var cap121 = x.marriedFilingJointly ? 500000 : 250000;
+    var sellPct = (x.realtorCommission + x.closingCosts) / 100;
+
+    var termMonths = Math.max(0, Math.round(x.remainingTermYears * 12));
+    var payment = pmt(x.mortgageBalance, x.interestRate, termMonths);
+    var loan = amortize(x.mortgageBalance, x.interestRate, termMonths, N);
+
+    /* Depreciable basis on conversion to a rental = LESSER of adjusted cost
+       basis or fair market value at conversion, minus the land portion.
+       (IRS Pub 527.) Residential rental life = 27.5 years. */
+    var conversionBasis = Math.min(x.pricePaid + x.capitalImprovements, x.homeValue);
+    var buildingBasis = Math.max(0, conversionBasis * (1 - x.landPct / 100));
+    var annualDep = buildingBasis / 27.5;
+
+    /* ---------------- SELL NOW (today) ---------------- */
+    var snCosts = x.homeValue * sellPct + x.refurbToSell;
+    var snBasis = x.pricePaid + x.capitalImprovements;
+    var snGain = x.homeValue - snCosts - snBasis;
+    var snEligible = x.isPrimaryResidence && x.yearsLivedIn >= 2;
+    var snExcl = snEligible ? Math.min(cap121, Math.max(0, snGain)) : 0;
+    var snTax = Math.max(0, snGain - snExcl) * (x.capGainsRate / 100);
+    var sellNowNet = x.homeValue - snCosts - x.mortgageBalance - snTax;
+
+    /* ---------------- RENT IT OUT ---------------- */
+    var cumCash = -(x.makeReadyCosts + x.capitalImprovements);
+    var accumCapex = 0;   /* capital reserve actually spent -> adds to basis */
+    var accumDep = 0;
+    var suspended = 0;      /* passive losses carried forward, released at sale */
+    var rows = [];
+    var breakEven = null;
+
+    for (var t = 1; t <= N; t++) {
+      var valEnd = x.homeValue * Math.pow(1 + g, t);
+      var valAvg = x.homeValue * Math.pow(1 + g, t - 0.5);
+      var infF = Math.pow(1 + infl, t - 1);
+      var L = loan[t];
+
+      var grossRent = x.monthlyRent * 12 * Math.pow(1 + rentG, t - 1);
+      var collected = grossRent * (1 - x.vacancyRate / 100);
+
+      var propTax = (x.propertyTaxMode === 'percent')
+        ? valAvg * (x.propertyTaxRate / 100)
+        : x.propertyTaxMonthly * 12 * infF;
+      var insurance = x.insuranceMonthly * 12 * (1 + x.landlordInsBump / 100) * infF;
+      var hoa = x.hoaMonthly * 12 * infF;
+      var mgmt = collected * (x.pmRate / 100);
+      var leasing = grossRent * (x.leasingRate / 100);
+      var maint = valAvg * (x.maintenanceRate / 100);
+      var capex = valAvg * (x.capexRate / 100);
+      var opex = propTax + insurance + hoa + mgmt + leasing + maint + capex;
+
+      var cashBeforeTax = collected - L.paid - opex;
+
+      /* Depreciation, capped at the 27.5-year life */
+      var dep = Math.max(0, Math.min(annualDep, buildingBasis - accumDep));
+      accumDep += dep;
+
+      /* Taxable rental income. The CapEx reserve is a savings set-aside,
+         not a deductible expense, so it is excluded here on purpose. */
+      var taxable = collected - L.interest - propTax - insurance - hoa
+                    - mgmt - leasing - maint - dep;
+      var tax = 0;
+      if (taxable > 0) {
+        var used = Math.min(suspended, taxable);
+        suspended -= used;
+        tax = (taxable - used) * (x.incomeTaxRate / 100);
+      } else {
+        suspended += -taxable;
+      }
+
+      var netCF = cashBeforeTax - tax;
+      cumCash = cumCash * (1 + reinv) + netCF;
+      accumCapex += capex;
+
+      /* ----- If you sold at the END of this year ----- */
+      var sellCosts = valEnd * sellPct + x.refurbToSell;
+      var adjBasis = x.pricePaid + x.capitalImprovements + accumCapex - accumDep;
+      var totalGain = valEnd - sellCosts - adjBasis;
+
+      /* Section 121 needs 2 of the 5 years before the sale as your home.
+         After 3 full years as a rental the exclusion is gone. */
+      var livedInWindow = Math.min(x.yearsLivedIn, Math.max(0, 5 - t));
+      var eligible121 = x.isPrimaryResidence && livedInWindow >= 2;
+
+      var recapture = Math.min(accumDep, Math.max(0, totalGain));
+      var apprGain = Math.max(0, totalGain - recapture);
+      var excl = eligible121 ? Math.min(cap121, apprGain) : 0;
+      apprGain -= excl;
+
+      var recapTax = recapture * (x.recaptureRate / 100);
+      var cgTax = apprGain * (x.capGainsRate / 100);
+      var suspBenefit = suspended * (x.incomeTaxRate / 100);
+
+      var netProceeds = valEnd - sellCosts - L.balance - recapTax - cgTax + suspBenefit;
+      var wealthRent = netProceeds + cumCash;
+      var wealthSell = sellNowNet * Math.pow(1 + reinv, t);
+
+      if (breakEven === null && wealthRent >= wealthSell) breakEven = t;
+
+      rows.push({
+        year: t,
+        houseValue: valEnd,
+        mortgageBalance: L.balance,
+        equity: valEnd - L.balance,
+        grossRent: grossRent,
+        collectedRent: collected,
+        mortgagePaid: L.paid,
+        mortgageInterest: L.interest,
+        opex: opex,
+        breakdown: {
+          propertyTax: propTax, insurance: insurance, hoa: hoa,
+          management: mgmt, leasing: leasing, maintenance: maint, capex: capex
+        },
+        depreciation: dep,
+        accumDep: accumDep,
+        accumCapex: accumCapex,
+        adjustedBasis: adjBasis,
+        taxOnRent: tax,
+        cashBeforeTax: cashBeforeTax,
+        netCashFlow: netCF,
+        cumulativeCash: cumCash,
+        sellingCosts: sellCosts,
+        capGainsTax: cgTax,
+        recaptureTax: recapTax,
+        exclusionUsed: excl,
+        netProceeds: netProceeds,
+        wealthRent: wealthRent,
+        wealthSell: wealthSell,
+        difference: wealthRent - wealthSell
+      });
+    }
+
+    var y1 = rows[0];
+    var last = rows[rows.length - 1];
+
+    return {
+      rows: rows,
+      payment: payment,
+      annualDep: annualDep,
+      buildingBasis: buildingBasis,
+      sellNow: {
+        price: x.homeValue, costs: snCosts, mortgage: x.mortgageBalance,
+        gain: snGain, exclusion: snExcl, tax: snTax, net: sellNowNet
+      },
+      summary: {
+        years: N,
+        difference: last.difference,
+        favors: last.difference >= 0 ? 'rent' : 'sell',
+        breakEvenYear: breakEven,
+        monthlyCashFlowY1: y1.cashBeforeTax / 12,
+        monthlyCashFlowY1AfterTax: y1.netCashFlow / 12,
+        upfrontCash: x.makeReadyCosts + x.capitalImprovements,
+        wealthRent: last.wealthRent,
+        wealthSell: last.wealthSell
+      }
+    };
+  }
+
+  return { pmt: pmt, amortize: amortize, model: model };
+})();
+/* ===================== ENGINE-END ===================== */
+
+/* ---------------------------------------------------------------------------
+   UI layer. Reads the form, calls RVS.model(), paints the page.
+   No frameworks, no build step, no dependencies.
+   ------------------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  /* Starting scenario: a representative Franklin County single-family home.
+     Median-ish value, a loan taken out a few years ago, market rent for the
+     house as-is. Deliberately NOT tuned to make renting look good — at these
+     numbers renting wins on wealth but still costs about  a month to carry,
+     which is the honest tradeoff most owners are actually weighing. */
+  var DEFAULTS = {
+    homeValue: 285000, pricePaid: 205000, capitalImprovements: 0,
+    mortgageBalance: 150000, interestRate: 4.5, remainingTermYears: 24,
+    monthlyRent: 2050, rentGrowth: 3, vacancyRate: 6,
+    propertyTaxMode: 'percent', propertyTaxRate: 1.7, propertyTaxMonthly: 404,
+    insuranceMonthly: 105, landlordInsBump: 20, hoaMonthly: 0,
+    pmRate: 8, leasingRate: 4, maintenanceRate: 1, capexRate: 0.5,
+    appreciationRate: 3.5, expenseInflation: 3, yearsToHold: 10,
+    isPrimaryResidence: true, yearsLivedIn: 5, marriedFilingJointly: true,
+    makeReadyCosts: 3500, refurbToSell: 0,
+    realtorCommission: 6, closingCosts: 3,
+    incomeTaxRate: 24, capGainsRate: 15, recaptureRate: 25,
+    landPct: 20, reinvestmentRate: 6
+  };
+
+  /* Fields the URL hash round-trips, in a fixed order. */
+  var KEYS = Object.keys(DEFAULTS).filter(function (k) { return k !== 'propertyTaxMode'; });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var state = Object.assign({}, DEFAULTS);
+  var selectedYear = null;
+
+  /* ---------------- formatting ---------------- */
+  var fmt0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  function money(n) { return fmt0.format(Math.round(n)); }
+  function moneySigned(n) { return (n < 0 ? '−' : '') + fmt0.format(Math.abs(Math.round(n))); }
+  function num(n) { return Math.round(n).toLocaleString('en-US'); }
+  function parseNum(v) {
+    var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ''));
+    return isFinite(n) ? n : 0;
+  }
+
+  /* ---------------- form wiring ---------------- */
+  var TEXT_FIELDS = ['homeValue','pricePaid','mortgageBalance','interestRate','remainingTermYears',
+    'monthlyRent','propertyTaxRate','propertyTaxMonthly','insuranceMonthly','appreciationRate',
+    'rentGrowth','expenseInflation','reinvestmentRate','vacancyRate','pmRate','leasingRate',
+    'maintenanceRate','capexRate','landlordInsBump','hoaMonthly','makeReadyCosts',
+    'capitalImprovements','realtorCommission','closingCosts','refurbToSell','incomeTaxRate',
+    'capGainsRate','recaptureRate','landPct','yearsLivedIn'];
+
+  var MONEY_FIELDS = ['homeValue','pricePaid','mortgageBalance','monthlyRent','propertyTaxMonthly',
+    'insuranceMonthly','hoaMonthly','makeReadyCosts','capitalImprovements','refurbToSell'];
+
+  function writeForm() {
+    TEXT_FIELDS.forEach(function (k) {
+      var el = $(k); if (!el) return;
+      if (document.activeElement === el) return;          /* don't fight the user's cursor */
+      el.value = MONEY_FIELDS.indexOf(k) > -1 ? num(state[k]) : String(state[k]);
+    });
+    $('yearsToHold').value = state.yearsToHold;
+    $('yearsOut').textContent = state.yearsToHold;
+    $('isPrimaryResidence').checked = !!state.isPrimaryResidence;
+    $('marriedFilingJointly').value = state.marriedFilingJointly ? '1' : '0';
+    $('taxPctWrap').style.display = state.propertyTaxMode === 'percent' ? '' : 'none';
+    $('taxDolWrap').style.display = state.propertyTaxMode === 'percent' ? 'none' : '';
+    $('taxToggle').textContent = state.propertyTaxMode === 'percent' ? '$' : '%';
+  }
+
+  function readForm() {
+    TEXT_FIELDS.forEach(function (k) { var el = $(k); if (el) state[k] = parseNum(el.value); });
+    state.yearsToHold = parseInt($('yearsToHold').value, 10) || 1;
+    state.isPrimaryResidence = $('isPrimaryResidence').checked;
+    state.marriedFilingJointly = $('marriedFilingJointly').value === '1';
+  }
+
+  /* ---------------- URL sharing ---------------- */
+  function toHash() {
+    var parts = KEYS.map(function (k) {
+      var v = state[k];
+      return typeof v === 'boolean' ? (v ? 1 : 0) : v;
+    });
+    parts.push(state.propertyTaxMode === 'percent' ? 'p' : 'd');
+    return parts.join(',');
+  }
+  function fromHash(h) {
+    var parts = h.replace(/^#/, '').split(',');
+    if (parts.length < KEYS.length) return false;
+    KEYS.forEach(function (k, i) {
+      state[k] = typeof DEFAULTS[k] === 'boolean' ? parts[i] === '1' : parseNum(parts[i]);
+    });
+    state.propertyTaxMode = parts[KEYS.length] === 'd' ? 'dollar' : 'percent';
+    return true;
+  }
+
+  /* ---------------- chart ---------------- */
+  var W = 760, H = 340, M = { t: 16, r: 18, b: 34, l: 68 };
+
+  function drawChart(rows) {
+    var svg = $('chart');
+    while (svg.childNodes.length > 1) svg.removeChild(svg.lastChild);   /* keep <title> */
+    var iw = W - M.l - M.r, ih = H - M.t - M.b;
+
+    var all = [];
+    rows.forEach(function (r) { all.push(r.wealthRent, r.wealthSell); });
+    var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+    if (lo > 0) lo = Math.min(lo, 0) === 0 ? lo * 0.92 : lo;
+    var pad = (hi - lo) * 0.10 || 1000;
+    lo -= pad; hi += pad;
+
+    var n = rows.length;
+    var X = function (i) { return M.l + (n === 1 ? iw / 2 : (i / (n - 1)) * iw); };
+    var Y = function (v) { return M.t + ih - ((v - lo) / (hi - lo)) * ih; };
+
+    function el(tag, attrs, text) {
+      var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      if (text != null) e.textContent = text;
+      svg.appendChild(e); return e;
+    }
+
+    /* horizontal gridlines + y labels */
+    var TICKS = 5;
+    for (var i = 0; i <= TICKS; i++) {
+      var v = lo + (hi - lo) * (i / TICKS), y = Y(v);
+      el('line', { x1: M.l, y1: y, x2: W - M.r, y2: y, stroke: '#f2f2f2', 'stroke-width': 1 });
+      el('text', {
+        x: M.l - 10, y: y + 4, 'text-anchor': 'end', fill: '#9a9a9a',
+        'font-size': 11, 'font-family': 'inherit', 'font-weight': 500
+      }, (v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v / 1000)) + 'k');
+    }
+    /* zero line, when the range crosses it */
+    if (lo < 0 && hi > 0) el('line', { x1: M.l, y1: Y(0), x2: W - M.r, y2: Y(0), stroke: '#dddddd', 'stroke-width': 1 });
+
+    /* x axis labels */
+    var step = n <= 12 ? 1 : Math.ceil(n / 10);
+    rows.forEach(function (r, i) {
+      if (i % step !== 0 && i !== n - 1) return;
+      el('text', {
+        x: X(i), y: H - 10, 'text-anchor': 'middle', fill: '#9a9a9a',
+        'font-size': 11, 'font-family': 'inherit', 'font-weight': 500
+      }, r.year);
+    });
+    el('line', { x1: M.l, y1: M.t + ih, x2: W - M.r, y2: M.t + ih, stroke: '#dddddd', 'stroke-width': 1 });
+
+    function path(key, color) {
+      var d = rows.map(function (r, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(r[key]).toFixed(1); }).join(' ');
+      el('path', { d: d, fill: 'none', stroke: color, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+    }
+    path('wealthSell', '#123143');
+    path('wealthRent', '#a60530');
+
+    /* crossover marker */
+    for (var j = 1; j < n; j++) {
+      var a = rows[j - 1], b = rows[j];
+      if ((a.difference < 0) !== (b.difference < 0)) {
+        var f = Math.abs(a.difference) / (Math.abs(a.difference) + Math.abs(b.difference));
+        var cx = X(j - 1) + (X(j) - X(j - 1)) * f;
+        el('line', { x1: cx, y1: M.t, x2: cx, y2: M.t + ih, stroke: '#9a9a9a', 'stroke-width': 1, 'stroke-dasharray': '3 4' });
+        el('text', { x: cx, y: M.t - 3, 'text-anchor': 'middle', fill: '#555', 'font-size': 10.5,
+          'font-family': 'inherit', 'font-weight': 600, 'letter-spacing': '.1em' }, 'CROSSOVER');
+        break;
+      }
+    }
+
+    /* hover layer */
+    var hl = el('line', { x1: 0, y1: M.t, x2: 0, y2: M.t + ih, stroke: '#59070e', 'stroke-width': 1, opacity: 0 });
+    var dR = el('circle', { r: 5, fill: '#a60530', stroke: '#fff', 'stroke-width': 2, opacity: 0 });
+    var dS = el('circle', { r: 5, fill: '#123143', stroke: '#fff', 'stroke-width': 2, opacity: 0 });
+    var box = el('rect', { rx: 2, fill: '#123143', opacity: 0, width: 172, height: 74 });
+    var t1 = el('text', { fill: '#fff', 'font-size': 11, 'font-family': 'inherit', 'font-weight': 600, 'letter-spacing': '.1em', opacity: 0 });
+    var t2 = el('text', { fill: '#ffb3c4', 'font-size': 12.5, 'font-family': 'inherit', 'font-weight': 500, opacity: 0 });
+    var t3 = el('text', { fill: '#8fb3c7', 'font-size': 12.5, 'font-family': 'inherit', 'font-weight': 500, opacity: 0 });
+    var t4 = el('text', { fill: '#fff', 'font-size': 12.5, 'font-family': 'inherit', 'font-weight': 600, opacity: 0 });
+    var hits = [hl, dR, dS, box, t1, t2, t3, t4];
+
+    var overlay = el('rect', { x: M.l, y: M.t, width: iw, height: ih, fill: 'transparent', style: 'cursor:crosshair' });
+
+    function show(i) {
+      var r = rows[i], x = X(i);
+      hl.setAttribute('x1', x); hl.setAttribute('x2', x);
+      dR.setAttribute('cx', x); dR.setAttribute('cy', Y(r.wealthRent));
+      dS.setAttribute('cx', x); dS.setAttribute('cy', Y(r.wealthSell));
+      var bx = Math.min(Math.max(x - 86, M.l), W - M.r - 172);
+      var by = Math.max(M.t + 6, Math.min(Y(r.wealthRent), Y(r.wealthSell)) - 84);
+      box.setAttribute('x', bx); box.setAttribute('y', by);
+      t1.setAttribute('x', bx + 12); t1.setAttribute('y', by + 19); t1.textContent = 'YEAR ' + r.year;
+      t2.setAttribute('x', bx + 12); t2.setAttribute('y', by + 37); t2.textContent = 'Rent  ' + money(r.wealthRent);
+      t3.setAttribute('x', bx + 12); t3.setAttribute('y', by + 53); t3.textContent = 'Sell  ' + money(r.wealthSell);
+      t4.setAttribute('x', bx + 12); t4.setAttribute('y', by + 68);
+      t4.textContent = (r.difference >= 0 ? 'Renting +' : 'Selling +') + money(Math.abs(r.difference));
+      hits.forEach(function (e) { e.setAttribute('opacity', 1); });
+      selectedYear = r.year; markRow();
+    }
+    function hide() { hits.forEach(function (e) { e.setAttribute('opacity', 0); }); selectedYear = null; markRow(); }
+
+    function locate(evt) {
+      var pt = svg.createSVGPoint();
+      var src = evt.touches ? evt.touches[0] : evt;
+      pt.x = src.clientX; pt.y = src.clientY;
+      var loc = pt.matrixTransform(svg.getScreenCTM().inverse());
+      var i = n === 1 ? 0 : Math.round(((loc.x - M.l) / iw) * (n - 1));
+      return Math.max(0, Math.min(n - 1, i));
+    }
+    overlay.addEventListener('mousemove', function (e) { show(locate(e)); });
+    overlay.addEventListener('mouseleave', hide);
+    overlay.addEventListener('touchstart', function (e) { show(locate(e)); e.preventDefault(); }, { passive: false });
+    overlay.addEventListener('touchmove', function (e) { show(locate(e)); e.preventDefault(); }, { passive: false });
+  }
+
+  function markRow() {
+    var trs = $('tbody').children;
+    for (var i = 0; i < trs.length; i++) {
+      trs[i].className = (selectedYear && +trs[i].dataset.year === selectedYear) ? 'is-selected' : '';
+    }
+  }
+
+  /* ---------------- render ---------------- */
+  function render() {
+    /* Degenerate inputs would produce a confident-looking nonsense answer.
+       Say what is missing instead. */
+    if (!(state.homeValue > 0)) {
+      $('verdictText').innerHTML = 'Enter what your home is worth today';
+      $('verdictNote').textContent =
+        'Everything else on this page is calculated from that number, so we need it first.';
+      ['statCF','statSellNow','statUpfront','statBreakEven'].forEach(function (k) {
+        $(k).textContent = '—'; $(k).className = 'rvs-stat-val';
+      });
+      $('statSellNowSub').textContent = '—';
+      $('statBreakEvenSub').textContent = '—';
+      $('tbody').innerHTML = '';
+      $('chartNote').textContent = '';
+      var svg = $('chart');
+      while (svg.childNodes.length > 1) svg.removeChild(svg.lastChild);
+      return;
+    }
+
+    var R = RVS.model(state);
+    var s = R.summary, rows = R.rows, last = rows[rows.length - 1];
+
+    /* --- verdict --- */
+    var favorsRent = s.difference >= 0;
+    $('verdictText').innerHTML =
+      (favorsRent ? 'Renting it out comes out ahead by' : 'Selling now comes out ahead by') +
+      '<span class="rvs-verdict-num">' + money(Math.abs(s.difference)) + '</span>' +
+      'over ' + s.years + (s.years === 1 ? ' year' : ' years');
+
+    var note = favorsRent
+      ? 'That is the projected difference in your net worth after ' + s.years + ' years, ' +
+        'assuming you sell the house at the end and pay every tax and closing cost along the way.'
+      : 'Selling today and investing the proceeds at ' + state.reinvestmentRate + '% projects ahead of ' +
+        'renting for ' + s.years + ' years and then selling.';
+    if (favorsRent && s.monthlyCashFlowY1 < 0) {
+      note += ' Note that renting still costs you ' + money(Math.abs(s.monthlyCashFlowY1)) +
+              ' a month out of pocket in year one — the gain here is equity and appreciation, not income.';
+    }
+    $('verdictNote').textContent = note;
+
+    /* --- stat strip --- */
+    var cf = $('statCF');
+    cf.textContent = moneySigned(s.monthlyCashFlowY1) + '/mo';
+    cf.className = 'rvs-stat-val ' + (s.monthlyCashFlowY1 >= 0 ? 'pos' : 'neg');
+
+    $('statSellNow').textContent = money(R.sellNow.net);
+    $('statSellNowSub').textContent = 'after ' + money(R.sellNow.costs) + ' selling costs' +
+      (R.sellNow.tax > 0 ? ' and ' + money(R.sellNow.tax) + ' capital gains tax' :
+       (R.sellNow.exclusion > 0 ? ', no capital gains tax owed' : ''));
+
+    $('statUpfront').textContent = money(s.upfrontCash);
+
+    var be = $('statBreakEven');
+    if (s.breakEvenYear === 1) {
+      be.textContent = 'Year 1'; be.className = 'rvs-stat-val pos';
+      $('statBreakEvenSub').textContent = 'renting is ahead from the start';
+    } else if (s.breakEvenYear) {
+      be.textContent = 'Year ' + s.breakEvenYear; be.className = 'rvs-stat-val pos';
+      $('statBreakEvenSub').textContent = 'when renting overtakes selling';
+    } else {
+      be.textContent = 'Not within ' + s.years + ' yrs'; be.className = 'rvs-stat-val neg';
+      $('statBreakEvenSub').textContent = 'selling stays ahead the whole time';
+    }
+
+    /* --- hints under the inputs --- */
+    $('pmtHint').textContent = state.mortgageBalance > 0 ? money(R.payment) + '/mo' : 'none, the house is paid off';
+    var yTax = state.propertyTaxMode === 'percent'
+      ? state.homeValue * (state.propertyTaxRate / 100) : state.propertyTaxMonthly * 12;
+    $('taxHint').innerHTML = '<strong>' + money(yTax / 12) + '/mo</strong> — ' + money(yTax) + ' a year';
+    $('insHint').innerHTML = 'As a rental, with the ' + state.landlordInsBump + '% landlord markup: <strong>' +
+      money(state.insuranceMonthly * (1 + state.landlordInsBump / 100)) + '/mo</strong>';
+    $('pmHint').innerHTML = 'About <strong>' + money(state.monthlyRent * state.pmRate / 100) + '/mo</strong> at today’s rent';
+    $('maintHint').innerHTML = 'About <strong>' + money(state.homeValue * state.maintenanceRate / 100 / 12) + '/mo</strong>';
+    $('capexHint').innerHTML = 'About <strong>' + money(state.homeValue * state.capexRate / 100 / 12) + '/mo</strong> toward big-ticket replacements';
+    $('depHint').innerHTML = 'Depreciable building basis <strong>' + money(R.buildingBasis) +
+      '</strong> → <strong>' + money(R.annualDep) + '/yr</strong> deduction';
+
+    /* --- chart caption --- */
+    var cn = 'Both lines are cash in hand after tax and after the cost of selling, so you can compare them in any year.';
+    var cliff = rows.findIndex(function (r, i) { return i > 0 && rows[i - 1].exclusionUsed > 0 && r.exclusionUsed === 0; });
+    if (cliff > 0) {
+      cn += ' <b>The step down in year ' + rows[cliff].year + ' is real:</b> the capital gains exclusion on a ' +
+            'primary residence requires living there 2 of the 5 years before the sale, so it runs out three ' +
+            'years after you move out. Selling before then, or holding well past it, both beat selling right at the edge.';
+    }
+    $('chartNote').innerHTML = cn;
+
+    drawChart(rows);
+
+    /* --- table --- */
+    var html = '';
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      html += '<tr data-year="' + r.year + '">' +
+        '<td>' + r.year + '</td>' +
+        '<td>' + money(r.collectedRent) + '</td>' +
+        '<td>' + (r.mortgagePaid > 0 ? '−' + money(r.mortgagePaid) : '—') + '</td>' +
+        '<td>−' + money(r.opex) + '</td>' +
+        '<td class="' + (r.netCashFlow >= 0 ? 'pos' : 'neg') + '">' + moneySigned(r.netCashFlow) + '</td>' +
+        '<td>' + money(r.houseValue) + '</td>' +
+        '<td>' + money(r.equity) + '</td>' +
+        '<td class="rvs-col-hl">' + money(r.wealthRent) + '</td>' +
+        '<td class="rvs-col-hl">' + money(r.wealthSell) + '</td>' +
+        '<td class="rvs-col-hl ' + (r.difference >= 0 ? 'pos' : 'neg') + '">' + moneySigned(r.difference) + '</td>' +
+        '</tr>';
+    }
+    $('tbody').innerHTML = html;
+    markRow();
+
+    /* keep the address bar shareable without spamming history */
+    if (history.replaceState) history.replaceState(null, '', '#' + toHash());
+
+    if (typeof postHeight === 'function') postHeight();
+  }
+
+  function update() { readForm(); render(); }
+
+  /* ---------------- events ---------------- */
+  TEXT_FIELDS.forEach(function (k) {
+    var el = $(k); if (!el) return;
+    el.addEventListener('input', update);
+    el.addEventListener('blur', function () { writeForm(); });
+  });
+  $('yearsToHold').addEventListener('input', function () {
+    $('yearsOut').textContent = $('yearsToHold').value; update();
+  });
+  $('isPrimaryResidence').addEventListener('change', update);
+  $('marriedFilingJointly').addEventListener('change', update);
+
+  $('taxToggle').addEventListener('click', function () {
+    readForm();
+    if (state.propertyTaxMode === 'percent') {
+      state.propertyTaxMode = 'dollar';
+      state.propertyTaxMonthly = Math.round(state.homeValue * (state.propertyTaxRate / 100) / 12);
+    } else {
+      state.propertyTaxMode = 'percent';
+      if (state.homeValue > 0) {
+        state.propertyTaxRate = Math.round((state.propertyTaxMonthly * 12 / state.homeValue) * 1000) / 10;
+      }
+    }
+    writeForm(); render();
+  });
+
+  $('btnPrint').addEventListener('click', function () {
+    var d = $('advanced'), was = d.open; d.open = true;
+    window.print();
+    setTimeout(function () { d.open = was; }, 400);
+  });
+
+  $('btnShare').addEventListener('click', function (e) {
+    var url = location.origin + location.pathname + location.search + '#' + toHash();
+    var btn = e.currentTarget, original = 'Copy shareable link';
+    function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = original; }, 2000); }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(function () { done('Link copied'); }, function () { done('Press ⌘C to copy'); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done('Link copied'); }
+      catch (err) { done('Copy from the address bar'); }
+      document.body.removeChild(ta);
+    }
+  });
+
+  $('btnReset').addEventListener('click', function () {
+    state = Object.assign({}, DEFAULTS);
+    writeForm(); render();
+  });
+
+  /* ---------------- iframe auto-height ----------------
+     When embedded, tell the parent page how tall we are so the iframe can
+     grow instead of scrolling internally. Desktop needs ~2,900px but a phone
+     needs ~5,100px, so a fixed height cannot serve both. Only an integer is
+     ever posted. If the parent page ignores it, nothing breaks. */
+  var lastH = 0;
+  function postHeight() {
+    if (window.parent === window) return;
+    var h = Math.ceil(document.documentElement.scrollHeight);
+    if (Math.abs(h - lastH) < 2) return;
+    lastH = h;
+    try { window.parent.postMessage({ rvsHeight: h }, '*'); } catch (e) { /* ignore */ }
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  document.getElementById('advanced').addEventListener('toggle', postHeight);
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+
+  /* ---------------- boot ---------------- */
+  if (location.hash.length > 3) { try { fromHash(location.hash); } catch (e) { /* fall back to defaults */ } }
+  writeForm();
+  render();
+})();
+
+</script>
+</body>
+</html>

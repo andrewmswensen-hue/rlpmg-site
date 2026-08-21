@@ -1,0 +1,52 @@
+---
+/** Existing slug preserved. The calculator itself is the self-contained file at /tools/rent-vs-sell-app.html (same origin). */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, kpis, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/rent-vs-sell-calculator/';
+const title = 'Rent vs. Sell Calculator for Columbus, Ohio Homes | RLPM';
+const description = 'Free rent vs. sell calculator from RL Property Management: compares selling a Columbus, Ohio home today against renting it out for 1 to 30 years, after taxes, selling costs, mortgage payoff, and management fees.';
+const directAnswer = `RL Property Management's rent vs. sell calculator compares two outcomes for a Columbus, Ohio home: the net proceeds of selling today (value minus selling costs, mortgage payoff, and capital gains tax after the primary-residence exclusion where it applies) against the wealth built by renting it out for a chosen number of years (yearly cash flow after vacancy, expenses, management fees, and mortgage, plus equity and appreciation, less taxes at the eventual sale). The tool is free, runs in the browser, and collects no email.`;
+const keyFacts = [
+  'The calculator models both paths year by year for 1 to 30 years and reports which produces more wealth at the chosen horizon.',
+  'Selling today is modeled as: home value, minus agent commission and closing costs, minus mortgage balance, minus capital gains tax after the $250,000 or $500,000 primary-residence exclusion when the owner qualifies (lived in the home 2 of the last 5 years).',
+  'Renting is modeled with rent growth, expense inflation, occupancy, maintenance and capital reserves, a property management fee, mortgage amortization, and depreciation over 27.5 years, then a sale at the horizon with selling costs and taxes.',
+  `Management fees in the model can be set to RL Property Management's flat ${usd(pricing.plans[1].monthlyFee)} per month or any percentage; RLPM's portfolio averaged $${kpis.metrics[4].value.toLocaleString('en-US')} rent and ${kpis.metrics[3].value} percent occupancy as of ${kpis.asOfLabel}.`,
+  'Results are estimates for planning, not tax advice. A CPA should confirm the tax treatment for a specific situation.',
+];
+const faq = [
+  { q: 'What inputs does the rent vs. sell calculator need?', a: 'Current home value, purchase price, mortgage balance, interest rate and remaining term, property taxes, insurance, HOA, expected rent, appreciation rate, holding period, and whether the home is a primary residence. Advanced fields cover make-ready costs, maintenance percent, capital reserves, selling-prep costs, management fee, occupancy, tax rates, selling costs, reinvestment rate, and rent growth.' },
+  { q: 'Does the calculator account for taxes?', a: 'Yes. It applies the primary-residence capital gains exclusion when the owner qualifies, models depreciation on the rental, and applies capital gains and depreciation recapture at the eventual sale using the rates entered.' },
+  { q: 'Does it account for the mortgage?', a: 'Yes. It amortizes the current balance month by month from today at the entered rate and term, so principal paydown counts toward equity and payments stop when the loan is retired.' },
+  { q: 'Is the calculator specific to Columbus, Ohio?', a: 'The math is general; the defaults and examples reflect Columbus conditions. Enter local property tax and insurance for an accurate result.' },
+  { q: 'Is my data stored?', a: 'No. The calculator runs in the browser and sends nothing to a server.' },
+  { q: 'What should I do with the result?', a: 'Use it to decide whether a rent evaluation is worth requesting. RL Property Management provides a free rent estimate for a specific address, which replaces the guessed rent in the model with a real one.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Rent vs. sell calculator', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'RL Property Management rent vs. sell calculator', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Should you rent or sell your Columbus home?" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/free-rent-evaluation/', label: 'Get a real rent estimate for the model' }, { href: '/pricing/', label: 'What management costs' }, { href: '/tools/', label: 'All calculators' }, { href: '/self-management-calculator/', label: 'Cost of self-managing' }]}>
+    <h2>How does the rent vs. sell calculator work?</h2>
+    <p>The calculator computes two numbers for the holding period chosen. The sell-now figure is today's value, less agent commission and closing costs, less the mortgage balance, less capital gains tax after the primary-residence exclusion where the owner qualifies. The rent figure is the sum of after-tax cash flow each year (reinvested at the rate entered), plus equity at the horizon from appreciation and mortgage paydown, less selling costs and taxes at that later sale. The larger number wins, and the chart shows the year the two lines cross.</p>
+    <h2>What assumptions drive the result?</h2>
+    <p>Five inputs move the answer most: appreciation rate, rent relative to the mortgage payment, holding period, whether the primary-residence exclusion applies (it is lost after three years as a rental), and the reinvestment rate applied to the sell-now proceeds. The defaults are a starting point; replacing the rent guess with a <a href="/free-rent-evaluation/">free rent evaluation</a> from RL Property Management is the single biggest accuracy improvement.</p>
+    <h2>Run the calculator</h2>
+    <div class="not-prose my-6 border border-gray" data-md-skip>
+      <iframe title="Rent vs. sell calculator" src="/tools/rent-vs-sell-app.html" width="100%" height="1700" loading="lazy" style="border:0"></iframe>
+      <p class="p-3 text-sm">If the calculator does not display, <a href="/tools/rent-vs-sell-app.html" class="underline">open it in its own tab</a>.</p>
+    </div>
+    <h2>What does management cost if you rent?</h2>
+    <p>RL Property Management charges a flat {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit per month with a {usd(pricing.fees.leasingFee)} leasing fee, as of {pricing.effectiveLabel}. Enter the plan fee as a monthly dollar amount in the calculator's management-fee field for a like-for-like comparison with a percentage-based manager. The <a href="/pricing/">pricing page</a> has the full schedule.</p>
+    <p class="text-sm text-navy-600">Estimates only; not tax, legal, or investment advice. Confirm tax treatment with a CPA.</p>
+  </AeoPage>
+</Base>

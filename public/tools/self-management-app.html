@@ -1,0 +1,766 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Self-Management Calculator | RL Property Management</title><meta name="robots" content="noindex"><style>body{margin:0;font-family:"Jost Variable",Jost,system-ui,sans-serif;color:#1a1a1a}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  .rlpm-calc { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8f9fb; color: #123143; line-height: 1.6; }
+  .rlpm-calc *, .rlpm-calc *::before, .rlpm-calc *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .rlpm-calc .hero {
+    background: linear-gradient(135deg, #0e2233 0%, #123143 50%, #1a4a63 100%);
+    color: white;
+    padding: 48px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rlpm-calc .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #f8f9fb;
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .rlpm-calc .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    color: white;
+  }
+
+  .rlpm-calc .hero p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+    color: white;
+  }
+
+  .rlpm-calc .container {
+    max-width: 960px;
+    margin: -16px auto 40px;
+    padding: 0 20px;
+  }
+
+  .rlpm-calc .property-info {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .rlpm-calc .property-info h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #123143;
+  }
+
+  .rlpm-calc .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .rlpm-calc .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rlpm-calc .input-group label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .rlpm-calc .input-group input, .rlpm-calc .input-group select {
+    padding: 12px 14px;
+    border: 2px solid #e8e8ee;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background: #fafafa;
+  }
+
+  .rlpm-calc .input-group input:focus, .rlpm-calc .input-group select:focus {
+    outline: none;
+    border-color: #a60530;
+    background: white;
+  }
+
+  .rlpm-calc .cost-section {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .rlpm-calc .cost-section:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+  }
+
+  .rlpm-calc .cost-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .rlpm-calc .cost-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .rlpm-calc .cost-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .rlpm-calc .cost-header-text h3 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .rlpm-calc .cost-header-text p {
+    font-size: 0.82rem;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .rlpm-calc .cost-amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #a60530;
+    white-space: nowrap;
+  }
+
+  .rlpm-calc .cost-amount.zero {
+    color: #bbb;
+  }
+
+  .rlpm-calc .cost-body {
+    padding: 0 28px 24px;
+    display: none;
+  }
+
+  .rlpm-calc .cost-body.open {
+    display: block;
+  }
+
+  .rlpm-calc .cost-body .input-group {
+    margin-bottom: 16px;
+  }
+
+  .rlpm-calc .cost-body .input-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .rlpm-calc .cost-body .input-row.two-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rlpm-calc .slider-group {
+    margin-bottom: 16px;
+  }
+
+  .rlpm-calc .slider-group label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .rlpm-calc .slider-group label span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #123143;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .rlpm-calc input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #e8e8ee;
+    outline: none;
+  }
+
+  .rlpm-calc input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #a60530;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(166,5,48,0.3);
+  }
+
+  .rlpm-calc .hint {
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .rlpm-calc .results-panel {
+    background: linear-gradient(135deg, #0e2233 0%, #1a4a63 100%);
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-top: 32px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(18,49,67,0.3);
+  }
+
+  .rlpm-calc .results-panel h2 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+  }
+
+  .rlpm-calc .results-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+  }
+
+  .rlpm-calc .result-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .rlpm-calc .result-card .result-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+    color: white;
+  }
+
+  .rlpm-calc .result-card .result-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .rlpm-calc .result-card .result-sub {
+    font-size: 0.82rem;
+    opacity: 0.6;
+    margin-top: 2px;
+    color: white;
+  }
+
+  .rlpm-calc .result-highlight {
+    border: 2px solid rgba(166,5,48,0.6);
+    background: rgba(166,5,48,0.15);
+  }
+
+  .rlpm-calc .result-highlight .result-value {
+    color: #ff6b6b;
+  }
+
+  .rlpm-calc .result-savings {
+    border: 2px solid rgba(46,204,113,0.6);
+    background: rgba(46,204,113,0.15);
+  }
+
+  .rlpm-calc .result-savings .result-value {
+    color: #2ecc71;
+  }
+
+  .rlpm-calc .comparison {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .rlpm-calc .comparison h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+    opacity: 0.8;
+    color: white;
+  }
+
+  .rlpm-calc .bar-container {
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .rlpm-calc .bar-fill-self {
+    height: 100%;
+    background: linear-gradient(90deg, #a60530, #59070e);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: white;
+    transition: width 0.5s ease;
+    min-width: 80px;
+  }
+
+  .rlpm-calc .bar-fill-pm {
+    height: 100%;
+    background: linear-gradient(90deg, #1a6b4a, #14573c);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: white;
+    transition: width 0.5s ease;
+    min-width: 80px;
+  }
+
+  .rlpm-calc .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    opacity: 0.6;
+    color: white;
+  }
+
+  .rlpm-calc .cta {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .rlpm-calc .cta p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-bottom: 14px;
+    color: white;
+  }
+
+  .rlpm-calc .cta-button {
+    display: inline-block;
+    padding: 14px 36px;
+    background: white;
+    color: #59070e;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .rlpm-calc .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+
+  .rlpm-calc .chevron {
+    transition: transform 0.2s;
+    font-size: 1.2rem;
+    color: #bbb;
+  }
+
+  .rlpm-calc .chevron.open {
+    transform: rotate(180deg);
+  }
+
+  .rlpm-calc .bg-software { background: #eef2ff; color: #4f46e5; }
+  .rlpm-calc .bg-legal { background: #fef2f2; color: #dc2626; }
+  .rlpm-calc .bg-time { background: #fefce8; color: #ca8a04; }
+  .rlpm-calc .bg-vacancy { background: #fff7ed; color: #ea580c; }
+  .rlpm-calc .bg-maintenance { background: #f0fdf4; color: #16a34a; }
+  .rlpm-calc .bg-accounting { background: #f5f3ff; color: #7c3aed; }
+  .rlpm-calc .bg-insurance { background: #ecfeff; color: #0891b2; }
+  .rlpm-calc .bg-education { background: #fdf2f8; color: #db2777; }
+  .rlpm-calc .bg-staff { background: #f1f5f9; color: #475569; }
+  .rlpm-calc .bg-marketing { background: #fef9ee; color: #b45309; }
+
+  .rlpm-calc .calc-footnote {
+    max-width: 960px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+  }
+
+  .rlpm-calc .calc-footnote p {
+    font-size: 0.78rem;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .rlpm-calc .hero h1 { font-size: 1.5rem; }
+    .rlpm-calc .property-grid { grid-template-columns: 1fr; }
+    .rlpm-calc .results-row { grid-template-columns: 1fr 1fr; }
+    .rlpm-calc .results-panel { padding: 24px 20px; }
+    .rlpm-calc .result-card .result-value { font-size: 1.4rem; }
+    .rlpm-calc .cost-header { padding: 16px 20px; }
+    .rlpm-calc .cost-body { padding: 0 20px 20px; }
+  }
+</style></head><body><div class="rlpm-calc">
+
+<div class="hero">
+  <h1>The True Cost of Self-Management</h1>
+  <p>Think self-managing is saving you money? Plug in your numbers and see what it's really costing you.</p>
+</div>
+
+<div class="container">
+
+  <div class="property-info">
+    <h2>Your Property Details</h2>
+    <div class="property-grid">
+      <div class="input-group">
+        <label>How Many Doors Do You Own?</label>
+        <input type="number" id="doors" value="10" min="1" max="500" oninput="calculate()">
+      </div>
+      <div class="input-group">
+        <label>Avg Monthly Rent per Door</label>
+        <input type="number" id="avgRent" value="1600" min="0" step="50" oninput="calculate()">
+      </div>
+      <input type="hidden" id="pmFlatRate" value="150">
+    </div>
+  </div>
+
+  <div id="categories"></div>
+
+  <div class="results-panel" id="results">
+    <h2>Annual Cost Summary</h2>
+    <div class="results-row">
+      <div class="result-card result-highlight">
+        <div class="result-label">True Cost of Self-Managing</div>
+        <div class="result-value" id="totalSelfManage">$0</div>
+        <div class="result-sub" id="perDoorSelf">$0 / door / mo</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Approx. RL Property Management All-in Cost*</div>
+        <div class="result-value" id="totalPmFee">$0</div>
+        <div class="result-sub" id="perDoorPm">$0 / door / mo</div>
+      </div>
+      <div class="result-card result-savings">
+        <div class="result-label" id="diffLabel">You're Overspending By</div>
+        <div class="result-value" id="totalDiff">$0</div>
+        <div class="result-sub" id="diffSub">per year vs. hiring a PM</div>
+      </div>
+    </div>
+    <div class="comparison">
+      <h3>Self-Managing vs. RL Property Management</h3>
+      <div class="bar-container">
+        <div class="bar-fill-self" id="barSelf" style="width:60%">Self-Managing</div>
+      </div>
+      <div class="bar-container" style="margin-top:8px;">
+        <div class="bar-fill-pm" id="barPm" style="width:40%">PM Fee</div>
+      </div>
+      <div class="bar-labels">
+        <span>$0</span>
+        <span id="barMax">$50,000</span>
+      </div>
+    </div>
+    <div class="cta">
+      <p>See how RL Property Management can save you time and money.</p>
+      <a href="https://rlpmg.com/property-management-consultation/" class="cta-button" id="ctaBtn">Schedule a Consultation</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="calc-footnote">
+  <p>*RL Property Management's estimated cost of $150/door/month includes the Standard plan management fee plus average maintenance costs (quarterly inspections at $60-$100 each, in-house repairs at $84/hr + $15 trip charge, and a 15% project management fee on third-party vendor work). Actual maintenance costs vary by property age, condition, and needs. No leasing fees. Visit <a href="https://rlpmg.com/owner-faqs/" style="color:#a60530;">our FAQ</a> for full pricing details.</p> 
+</div>
+
+</div>
+
+<script>
+const categories = [
+  {
+    id: 'software',
+    icon: '💻',
+    colorClass: 'bg-software',
+    title: 'Property Management Software',
+    subtitle: 'Appfolio, Buildium, Rent Manager, etc.',
+    fields: [
+      { id: 'softwareCostPerDoor', label: 'Monthly cost per door', type: 'currency', default: 2.00, min: 0, max: 10, step: 0.25, hint: 'Appfolio ~$1.40-$3/door, Buildium ~$1-$2.50/door' },
+      { id: 'softwareBase', label: 'Monthly base/minimum fee', type: 'currency', default: 250, min: 0, max: 1000, step: 10, hint: 'Many platforms have a monthly minimum ($250-$400)' }
+    ],
+    calc: (v, doors) => ((v.softwareCostPerDoor * doors) + v.softwareBase) * 12
+  },
+  {
+    id: 'legal',
+    icon: '⚖️',
+    colorClass: 'bg-legal',
+    title: 'Legal Exposure & Costs',
+    subtitle: 'Evictions, fair housing, lease disputes, attorney retainers',
+    rowClass: 'two-col',
+    fields: [
+      { id: 'evictionCost', label: 'Avg cost per eviction', type: 'currency', default: 2500, min: 0, max: 15000, step: 100, hint: 'Attorney fees, court costs, lost rent — $2,500-$5,000 in Ohio' },
+      { id: 'evictionsPerYear', label: 'Evictions per year', type: 'number', default: 0, min: 0, max: 20, step: 1, hint: 'Industry avg ~3.5% of units — most small portfolios see 0-1/yr' },
+      { id: 'legalRetainer', label: 'Annual legal retainer', type: 'currency', default: 1000, min: 0, max: 10000, step: 100, hint: 'Lease reviews, compliance questions, dispute consults' },
+      { id: 'fairHousingRisk', label: 'Fair housing reserve', type: 'currency', default: 500, min: 0, max: 10000, step: 100, hint: 'Even one complaint can cost $5k-$50k. This is the annualized reserve.' }
+    ],
+    calc: (v) => (v.evictionCost * v.evictionsPerYear) + v.legalRetainer + v.fairHousingRisk
+  },
+  {
+    id: 'time',
+    icon: '⏱️',
+    colorClass: 'bg-time',
+    title: 'Time & Opportunity Cost',
+    subtitle: 'What your time is actually worth',
+    fields: [
+      { id: 'hoursPerDoor', label: 'Hours per door per month', type: 'slider', default: 5, min: 1, max: 15, step: 0.5, hint: 'Industry average: 4-8 hrs/door/month for active management' },
+      { id: 'hourlyRate', label: 'What\'s your time worth per hour?', type: 'currency', default: 50, min: 15, max: 500, step: 5, hint: 'What could you earn, or what is your time worth?' }
+    ],
+    calc: (v, doors) => v.hoursPerDoor * doors * v.hourlyRate * 12
+  },
+  {
+    id: 'vacancy',
+    icon: '🏚️',
+    colorClass: 'bg-vacancy',
+    title: 'Vacancy Loss',
+    subtitle: 'How many total days did your units sit empty last year?',
+    fields: [
+      { id: 'totalVacantDays', label: 'Total vacant days last year (across all units)', type: 'number', default: 25, min: 0, max: 365, step: 1, hint: 'Add up all the days any of your units were sitting empty — Columbus avg is ~23 days per turnover' }
+    ],
+    calc: (v, doors, avgRent) => {
+      const dailyRent = avgRent / 30;
+      return v.totalVacantDays * dailyRent * 0.50;
+    }
+  },
+  {
+    id: 'maintenance',
+    icon: '🔧',
+    colorClass: 'bg-maintenance',
+    title: 'Maintenance & Repairs',
+    subtitle: 'What you\'re spending on vendors, repairs, and upkeep',
+    fields: [
+      { id: 'annualMaintenance', label: 'What do you spend on maintenance per year?', type: 'currency', default: 12000, min: 0, max: 100000, step: 500, hint: 'Total across all doors — HVAC, plumbing, electrical, handyman, landscaping, etc.' }
+    ],
+    calc: (v) => v.annualMaintenance * 0.20
+  },
+  {
+    id: 'accounting',
+    icon: '📊',
+    colorClass: 'bg-accounting',
+    title: 'Accounting & Bookkeeping',
+    subtitle: 'Tracking income, expenses, 1099s, tax prep',
+    fields: [
+      { id: 'bookkeepingMonthly', label: 'Monthly bookkeeping cost', type: 'currency', default: 150, min: 0, max: 1000, step: 25, hint: 'Bookkeeper, software, or owner\'s time doing it themselves' },
+      { id: 'taxPrepExtra', label: 'Additional tax prep cost (annual)', type: 'currency', default: 500, min: 0, max: 5000, step: 50, hint: 'Extra CPA fees for rental property schedules' }
+    ],
+    calc: (v) => (v.bookkeepingMonthly * 12) + v.taxPrepExtra
+  },
+  {
+    id: 'insurance',
+    icon: '🛡️',
+    colorClass: 'bg-insurance',
+    title: 'Insurance Premiums',
+    subtitle: 'Higher premiums when you manage yourself',
+    fields: [
+      { id: 'extraInsurance', label: 'Annual extra insurance cost', type: 'currency', default: 1000, min: 0, max: 10000, step: 100, hint: 'You may pay more for liability/umbrella coverage without professional risk mitigation' }
+    ],
+    calc: (v) => v.extraInsurance
+  },
+  {
+    id: 'education',
+    icon: '📚',
+    colorClass: 'bg-education',
+    title: 'Education & Compliance',
+    subtitle: 'Staying current on laws, certifications, continuing ed',
+    fields: [
+      { id: 'educationAnnual', label: 'Annual education/training spend', type: 'currency', default: 500, min: 0, max: 5000, step: 50, hint: 'Courses, conferences, legal updates, association dues' },
+      { id: 'complianceCost', label: 'Compliance tools & services', type: 'currency', default: 300, min: 0, max: 3000, step: 50, hint: 'Lead paint, mold, habitability inspections, screening services' }
+    ],
+    calc: (v) => v.educationAnnual + v.complianceCost
+  },
+  {
+    id: 'marketing',
+    icon: '📣',
+    colorClass: 'bg-marketing',
+    title: 'Marketing & Vacancy Filling',
+    subtitle: 'Photography, listing fees, and advertising to fill your vacancies',
+    fields: [
+      { id: 'marketingPerTurnover', label: 'Marketing cost per turnover', type: 'currency', default: 250, min: 0, max: 2000, step: 25, hint: 'Professional photos ($150-$300), Zillow/listing fees (~$40-$100), signage, etc.' }
+    ],
+    calc: (v, doors) => {
+      const turnovers = Math.floor(doors * 0.30);
+      return v.marketingPerTurnover * turnovers;
+    }
+  },
+  {
+    id: 'staff',
+    icon: '👥',
+    colorClass: 'bg-staff',
+    title: 'Staff & Contractor Costs',
+    subtitle: 'Any help you\'ve hired — assistants, maintenance staff, VAs',
+    fields: [
+      { id: 'staffMonthly', label: 'Monthly staff/contractor costs', type: 'currency', default: 0, min: 0, max: 10000, step: 100, hint: 'Part-time assistant, maintenance person, virtual assistant, etc.' }
+    ],
+    calc: (v) => v.staffMonthly * 12
+  }
+];
+
+function renderCategories() {
+  const container = document.getElementById('categories');
+  container.innerHTML = categories.map(cat => `
+    <div class="cost-section" id="section-${cat.id}">
+      <div class="cost-header" onclick="toggleSection('${cat.id}')">
+        <div class="cost-header-left">
+          <div class="cost-icon ${cat.colorClass}">${cat.icon}</div>
+          <div class="cost-header-text">
+            <h3>${cat.title}</h3>
+            <p>${cat.subtitle}</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="cost-amount" id="amount-${cat.id}">$0</div>
+          <div class="chevron" id="chevron-${cat.id}">▼</div>
+        </div>
+      </div>
+      <div class="cost-body" id="body-${cat.id}">
+        <div class="cost-body input-row ${cat.rowClass || ''}">
+          ${cat.fields.map(f => renderField(f)).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderField(f) {
+  if (f.type === 'slider') {
+    return `
+      <div class="input-group" style="grid-column: 1 / -1;">
+        <div class="slider-group">
+          <label>${f.label} <span id="display-${f.id}">${f.default}</span></label>
+          <input type="range" id="${f.id}" value="${f.default}" min="${f.min}" max="${f.max}" step="${f.step}" oninput="document.getElementById('display-${f.id}').textContent=this.value; calculate()">
+        </div>
+        ${f.hint ? `<div class="hint">${f.hint}</div>` : ''}
+      </div>
+    `;
+  }
+  const prefix = f.type === 'currency' ? '$' : '';
+  return `
+    <div class="input-group">
+      <label>${f.label}</label>
+      <input type="number" id="${f.id}" value="${f.default}" min="${f.min}" max="${f.max}" step="${f.step}" oninput="calculate()">
+      ${f.hint ? `<div class="hint">${f.hint}</div>` : ''}
+    </div>
+  `;
+}
+
+function toggleSection(id) {
+  const body = document.getElementById('body-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  body.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  return parseFloat(el.value) || 0;
+}
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function calculate() {
+  const doors = getVal('doors');
+  const avgRent = getVal('avgRent');
+  const pmFlatRate = getVal('pmFlatRate');
+
+  let totalSelf = 0;
+
+  categories.forEach(cat => {
+    const vals = {};
+    cat.fields.forEach(f => {
+      vals[f.id] = getVal(f.id);
+    });
+    const cost = cat.calc(vals, doors, avgRent);
+    totalSelf += cost;
+
+    const amountEl = document.getElementById('amount-' + cat.id);
+    amountEl.textContent = fmt(cost) + '/yr';
+    amountEl.className = cost === 0 ? 'cost-amount zero' : 'cost-amount';
+  });
+
+  // Update marketing subtitle with computed turnovers
+  const turnovers = Math.floor(doors * 0.30);
+  const marketingSub = document.querySelector('#section-marketing .cost-header-text p');
+  if (marketingSub) marketingSub.textContent = 'Estimated ' + turnovers + ' turnover' + (turnovers !== 1 ? 's' : '') + '/yr based on ' + doors + ' doors — photography, listing fees, advertising';
+
+  const pmFeeAnnual = pmFlatRate * doors * 12;
+  const diff = totalSelf - pmFeeAnnual;
+
+  document.getElementById('totalSelfManage').textContent = fmt(totalSelf);
+  document.getElementById('perDoorSelf').textContent = fmt(totalSelf / doors / 12) + ' / door / mo';
+  document.getElementById('totalPmFee').textContent = fmt(pmFeeAnnual);
+  document.getElementById('perDoorPm').textContent = fmt(pmFeeAnnual / doors / 12) + ' / door / mo';
+
+  if (diff > 0) {
+    document.getElementById('diffLabel').textContent = "You're Overspending By";
+    document.getElementById('totalDiff').textContent = fmt(diff);
+    document.getElementById('totalDiff').style.color = '#2ecc71';
+    document.getElementById('diffSub').textContent = 'per year vs. hiring RL Property Management';
+  } else {
+    document.getElementById('diffLabel').textContent = 'PM Fee Exceeds By';
+    document.getElementById('totalDiff').textContent = fmt(Math.abs(diff));
+    document.getElementById('totalDiff').style.color = '#a60530';
+    document.getElementById('diffSub').textContent = 'but factor in peace of mind & risk reduction';
+  }
+
+  // Bars
+  const maxVal = Math.max(totalSelf, pmFeeAnnual) * 1.1;
+  const selfPct = Math.max(10, (totalSelf / maxVal) * 100);
+  const pmPct = Math.max(10, (pmFeeAnnual / maxVal) * 100);
+  document.getElementById('barSelf').style.width = selfPct + '%';
+  document.getElementById('barSelf').textContent = 'Self-Managing: ' + fmt(totalSelf);
+  document.getElementById('barPm').style.width = pmPct + '%';
+  document.getElementById('barPm').textContent = 'RLPM: ' + fmt(pmFeeAnnual);
+  document.getElementById('barMax').textContent = fmt(maxVal);
+}
+
+// Initialize
+renderCategories();
+// Open the first section by default
+toggleSection('software');
+calculate();
+</script></body></html>

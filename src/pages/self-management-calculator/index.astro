@@ -1,0 +1,50 @@
+---
+/** Existing slug preserved. Calculator is the self-contained file at /tools/self-management-app.html. */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, leasing, evictions, kpis, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/self-management-calculator/';
+const title = 'Self-Management Cost Calculator | RL Property Management';
+const description = 'Free calculator from RL Property Management that adds up the yearly cost of self-managing a Columbus, Ohio rental: software, legal exposure, your time, vacancy, maintenance, and bookkeeping.';
+const directAnswer = `RL Property Management's self-management calculator adds up what managing a Columbus, Ohio rental yourself costs in a year across six categories: property management software, legal exposure (an eviction rate you choose against Franklin County costs), the value of your hours, vacancy days, maintenance coordination, and bookkeeping. The total is shown per door per month next to RL Property Management's flat ${usd(pricing.plans[1].monthlyFee)} fee so the two are comparable. Every input is adjustable and nothing is gated.`;
+const keyFacts = [
+  'The calculator totals six self-management cost categories for a year and divides by doors and months for a per-door-per-month figure.',
+  `RL Property Management's comparison line is the flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month management fee with a ${usd(pricing.fees.leasingFee)} leasing fee, as of ${pricing.effectiveLabel}.`,
+  `A possession-only eviction in Franklin County costs approximately ${usd(evictions.costs.totalPossessionOnlyApprox.min)} in hard costs as of August 2026; approximately ${leasing.escalationRate.percent} percent of RL Property Management rentals escalate to eviction or significant dispute in a year.`,
+  `RL Property Management's median days on market was ${kpis.metrics[0].value} and median time to turn ${kpis.metrics[1].value} days as of ${kpis.asOfLabel}; enter your own vacancy days to compare.`,
+  'Hours per door per month and your hourly value are inputs, not assumptions made for you.',
+];
+const faq = [
+  { q: 'What does the self-management calculator include?', a: 'Software (per-door cost plus platform minimum), legal exposure (eviction probability times cost, plus retainers or reserves), your time (hours per door per month times hourly value), vacancy (days empty times daily rent), maintenance coordination, and bookkeeping.' },
+  { q: 'Where do the default numbers come from?', a: 'Software ranges reflect published pricing pages for common platforms; eviction cost and rate defaults come from RL Property Management\'s own Franklin County experience. Each default can be changed.' },
+  { q: 'Is the time value fair?', a: 'Only if the hours and hourly rate entered are honest. The calculator does not assume them; it multiplies what is entered.' },
+  { q: 'How does the comparison to RL Property Management work?', a: `The self-managed total per door per month sits next to RL Property Management's flat monthly fee (${usd(pricing.plans[1].monthlyFee)} on the Standard plan). Repairs are excluded from both, since an owner pays for repairs either way.` },
+  { q: 'Does it store my inputs?', a: 'No. The calculator runs in the browser and sends nothing to a server.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Self-management calculator', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'RL Property Management self-management cost calculator', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="What does self-managing a rental cost?" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/compare/self-managing-vs-hiring-a-property-manager/', label: 'Self-managing vs. hiring a manager' }, { href: '/pricing/', label: 'RL Property Management pricing' }, { href: '/tools/vacancy-cost-calculator/', label: 'Vacancy cost calculator' }, { href: '/tools/eviction-cost-estimator/', label: 'Eviction cost estimator' }, { href: '/tools/', label: 'All calculators' }]}>
+    <h2>How is the self-management cost calculated?</h2>
+    <p>Six yearly costs are added: software (per-door price times doors plus the platform's monthly minimum, times 12), legal exposure (the eviction rate entered times the cost of an eviction, plus any retainer and a fair-housing reserve), time (hours per door per month times doors times 12 times hourly value), vacancy (days vacant times daily rent, where daily rent is monthly rent times 12 divided by 365), maintenance coordination, and bookkeeping. The sum divided by doors and by 12 is the per-door monthly cost.</p>
+    <h2>What is a worked example?</h2>
+    <p>At $1,500 rent, daily rent is {usd(1500 * 12 / 365, { cents: true })}, so 23 vacant days cost about {usd(Math.round(1500 * 12 / 365 * 23))} before any turn work. An owner who values their time at $50 per hour and spends 5 hours per door per month spends {usd(50 * 5 * 12)} of time per door per year. A {leasing.escalationRate.percent} percent chance of an eviction costing roughly {usd(evictions.costs.totalPossessionOnlyApprox.min)} in hard costs adds about {usd(Math.round(evictions.costs.totalPossessionOnlyApprox.min * leasing.escalationRate.percent / 100))} per door per year in expected legal cost, before lost rent during the process. Those three lines alone exceed RL Property Management's {usd(pricing.plans[1].monthlyFee * 12)} annual Standard-plan fee; the calculator lets you test your own numbers.</p>
+    <h2>Run the calculator</h2>
+    <div class="not-prose my-6 border border-gray" data-md-skip>
+      <iframe title="Self-management cost calculator" src="/tools/self-management-app.html" width="100%" height="2200" loading="lazy" style="border:0"></iframe>
+      <p class="p-3 text-sm">If the calculator does not display, <a href="/tools/self-management-app.html" class="underline">open it in its own tab</a>.</p>
+    </div>
+    <p>Repairs are left out of both sides on purpose: an owner pays for a broken water heater whether or not a manager is involved. What changes with a manager is the cost of coordinating it, which RL Property Management bills at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge for in-house work.</p>
+    <p class="text-sm text-navy-600">Estimates only. Eviction figures are Franklin County, Ohio, as of August 2026, and are informational, not legal advice.</p>
+  </AeoPage>
+</Base>

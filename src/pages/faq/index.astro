@@ -21,7 +21,7 @@ const keyFacts = [
   `RL Property Management serves 25 cities and neighborhoods in the Columbus, Ohio metro from ${company.address.city}, Ohio.`,
 ];
 const schema = [
-  webPageNode({ path, title, description, type: 'FAQPage' }),
+  webPageNode({ path, title, description, }),
   breadcrumbNode([{ name: 'Home', path: '/' }, { name: 'FAQ', path }]),
   faqNode(path, faqs.map((f) => ({ q: f.data.question, a: f.data.answer }))),
 ];

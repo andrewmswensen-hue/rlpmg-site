@@ -33,7 +33,7 @@ const keyFacts = [
   'Rent is paid online for free through the resident portal; maintenance requests go through a 24/7 portal.',
 ];
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Residents', path: '/residents/' }, { name: 'Resident FAQ', path }];
-const schema = [webPageNode({ path, title, description, type: 'FAQPage', reviewedBy: false }), breadcrumbNode(crumbs), faqNode(path, faq)];
+const schema = [webPageNode({ path, title, description, reviewedBy: false }), breadcrumbNode(crumbs), faqNode(path, faq)];
 ---
 
 <Base {title} {description} {path} {schema}>
