@@ -1,0 +1,113 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AeoPage from '../../../components/AeoPage.astro';
+import Calc from '../../../components/Calc.astro';
+import { company, pricing, LAST_VERIFIED } from '../../../data/facts';
+import { usd } from '../../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../../lib/schema';
+import { CALC_RUNTIME } from '../../../lib/calc';
+
+const path = '/tools/property-management-cost-comparison/';
+const [passive, standard, premium] = pricing.plans;
+const f = pricing.fees;
+const ms = pricing.marketStandard;
+const title = 'Property Management Cost Comparison Tool | RLPM';
+const description = 'Compare a flat monthly management fee against a percentage-of-rent manager for a Columbus, Ohio rental. Enter rent, units, and the competing percentage to see both annual costs.';
+const exRlpm = standard.monthlyFee * 12 + f.annualAccountingAndTechnologyFee;
+const ex8 = 1500 * 12 * 0.08 + 1500;
+const ex10 = 1500 * 12 * 0.1 + 1500;
+const directAnswer = `This tool compares RL Property Management's flat per-unit fee against a percentage-of-rent manager. RL Property Management costs the plan fee times 12, plus a ${usd(f.annualAccountingAndTechnologyFee)} annual accounting and technology fee, plus ${usd(f.leaseRenewalFee)} per renewal, with a ${usd(f.leasingFee)} leasing fee. The market-standard model costs a percentage of collected rent plus one month's rent each time a unit is leased. On a $1,500 rental with one new lease, that is ${usd(exRlpm)} against ${usd(ex8)} to ${usd(ex10)}.`;
+const keyFacts = [
+  `RL Property Management's flat fee is ${usd(passive.monthlyFee)}, ${usd(standard.monthlyFee)}, or ${usd(premium.monthlyFee)} per unit per month with a ${usd(f.leasingFee)} leasing fee, as of ${pricing.effectiveLabel}.`,
+  `A typical Columbus manager charges ${ms.percentOfRentLow} to ${ms.percentOfRentHigh} percent of rent plus a leasing fee equal to one month's rent.`,
+  `On a $1,500 rental in a year with one new lease, RL Property Management's Standard plan costs ${usd(exRlpm)} against ${usd(ex8)} at 8 percent and ${usd(ex10)} at 10 percent.`,
+  `Because the flat fee does not move with rent, the gap widens as rent rises: at $2,800 rent the same comparison is ${usd(exRlpm)} against ${usd(2800 * 12 * 0.08 + 2800)} to ${usd(2800 * 12 * 0.1 + 2800)}.`,
+  'Owners with 5 to 9 units receive 10 percent off RL Property Management monthly fees; 10 or more units get custom pricing.',
+];
+const faq = [
+  { q: 'What is included in the RL Property Management figure?', a: `The monthly plan fee times 12, the ${usd(f.annualAccountingAndTechnologyFee)} annual accounting and technology fee, and ${usd(f.leaseRenewalFee)} for each lease renewal. The leasing fee is ${usd(f.leasingFee)}.` },
+  { q: 'What is included in the percentage figure?', a: "The percentage applied to 12 months of collected rent, plus a leasing fee of one month's rent each time the unit is leased to a new resident. No specific company is represented." },
+  { q: 'Are repairs included in either figure?', a: 'No. Repairs are billed at cost under both models, so they are left out to keep the comparison about management fees.' },
+  { q: 'At what rent does a flat fee win?', a: `Below roughly $900 a month in a year with a lease, a percentage manager can cost less. Above that, the flat fee costs less, and the difference grows with rent.` },
+  { q: 'Does the volume discount apply here?', a: 'Yes. Set units to 5 through 9 and the calculator applies the 10 percent discount to RL Property Management monthly fees.' },
+  { q: 'Is this a quote?', a: 'No. It is an illustration using published pricing as of 2026. The signed Property Management Agreement governs actual terms.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Cost comparison', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'Property management cost comparison', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+const rows = [1200, 1500, 1800, 2200, 2800];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Flat fee or percentage: what does management cost?" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'RL Property Management pricing' }, { href: '/compare/flat-fee-vs-percentage-property-management/', label: 'The full written comparison' }, { href: '/tools/', label: 'All calculators' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
+    <h2>How is each side calculated?</h2>
+    <p>RL Property Management: the plan fee times 12 months times the number of units, plus a {usd(f.annualAccountingAndTechnologyFee)} annual accounting and technology fee, plus {usd(f.leaseRenewalFee)} for each renewal, with no leasing fee. Market standard: the percentage applied to a year of collected rent, plus a leasing fee of one month's rent for each new lease signed that year. Repairs sit outside both figures because an owner pays them either way.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Annual management cost, one unit, one new lease in the year</caption>
+        <thead><tr><th scope="col">Monthly rent</th><th scope="col">RLPM Standard</th><th scope="col">8% + one month</th><th scope="col">10% + one month</th></tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <th scope="row">{usd(r)}</th>
+              <td class="font-semibold text-brand-800">{usd(exRlpm)}</td>
+              <td>{usd(r * 12 * 0.08 + r)}</td>
+              <td>{usd(r * 12 * 0.1 + r)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <Calc
+      id="cost"
+      heading="Compare your own numbers"
+      fields={[
+        { name: 'rent', label: 'Monthly rent per unit', value: 1500, min: 0, step: 25, prefix: '$' },
+        { name: 'units', label: 'Number of units', value: 1, min: 1, step: 1 },
+        { name: 'plan', label: 'RL Property Management plan', type: 'select', value: String(standard.monthlyFee), options: pricing.plans.map((p) => ({ value: String(p.monthlyFee), label: `${p.name}, ${usd(p.monthlyFee)} per unit per month` })) },
+        { name: 'leases', label: 'New leases this year', value: 1, min: 0, step: 1, hint: 'A renewal is not a new lease' },
+        { name: 'renewals', label: 'Renewals this year', value: 0, min: 0, step: 1, hint: `${usd(f.leaseRenewalFee)} each at RLPM` },
+        { name: 'pct', label: 'Competing manager percentage', value: 8, min: 0, max: 20, step: 0.5, suffix: '%' },
+        { name: 'leaseMonths', label: 'Their leasing fee, in months of rent', value: 1, min: 0, max: 2, step: 0.25 },
+      ]}
+      outputs={[
+        { name: 'diff', label: 'Difference per year', hero: true },
+        { name: 'rlpm', label: 'RL Property Management, per year' },
+        { name: 'market', label: 'Percentage manager, per year' },
+        { name: 'rlpmMo', label: 'RLPM, per month' },
+        { name: 'discount', label: 'Volume discount applied' },
+      ]}
+      note="Illustration using published 2026 pricing. Repairs excluded from both. Not a quote."
+    />
+
+    <h2>Why does the gap widen as rent rises?</h2>
+    <p>A percentage fee scales with rent; a flat fee does not. Raising rent from $1,500 to $2,800 raises a 10 percent manager's annual fee by {usd((2800 - 1500) * 12 * 0.1)} and raises RL Property Management's by nothing. The same logic runs the other way: on a very low rent, a percentage can cost less, which is why the crossover point is worth checking rather than assuming.</p>
+
+    <p>For the written version with two-year totals and crossover math, see <a href="/compare/flat-fee-vs-percentage-property-management/">flat fee vs. percentage management</a>.</p>
+  </AeoPage>
+</Base>
+
+<script is:inline set:html={`
+${CALC_RUNTIME}
+calcInit('cost', function (v, f) {
+  var units = Math.max(1, v.units);
+  var planFee = v.plan;
+  var disc = units >= 5 && units <= 9 ? 0.10 : 0;
+  var monthly = planFee * (1 - disc) * units;
+  var rlpm = monthly * 12 + ${f.annualAccountingAndTechnologyFee} + (v.renewals * ${f.leaseRenewalFee});
+  var market = (v.pct / 100) * v.rent * 12 * units + (v.leaseMonths * v.rent * v.leases);
+  var diff = market - rlpm;
+  return {
+    diff: (diff >= 0 ? f.money(diff) + ' lower with RLPM' : f.money(-diff) + ' higher with RLPM'),
+    rlpm: f.money(rlpm),
+    market: f.money(market),
+    rlpmMo: f.money(monthly),
+    discount: units >= 10 ? 'Custom pricing at 10+ units' : (disc ? '10 percent, 5 to 9 units' : 'None')
+  };
+});
+`} />

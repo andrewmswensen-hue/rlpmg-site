@@ -1,0 +1,93 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AeoPage from '../../../components/AeoPage.astro';
+import Calc from '../../../components/Calc.astro';
+import { company, pricing, LAST_VERIFIED } from '../../../data/facts';
+import { usd } from '../../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../../lib/schema';
+import { CALC_RUNTIME } from '../../../lib/calc';
+
+const path = '/tools/maintenance-reserve-calculator/';
+const [passive, standard, premium] = pricing.plans;
+const title = 'Maintenance Reserve Calculator for Rentals | RLPM';
+const description = 'Work out the maintenance reserve and cash reserve for a Columbus, Ohio rental. RL Property Management holds $350, $750, or $1,500 per unit by plan and recommends 6 months of rent in owner reserves.';
+const directAnswer = `RL Property Management holds a maintenance reserve per unit equal to the plan's approval limit: ${usd(premium.maintenanceReserve)} on Premium, ${usd(standard.maintenanceReserve)} on Standard, and ${usd(passive.maintenanceReserve)} on Passive. That reserve funds repairs without waiting on an owner transfer. Separately, RL Property Management recommends each owner hold ${pricing.reserves.recommendedOwnerReserve} in their own account per property for vacancy, turns, and capital items. This tool totals both.`;
+const keyFacts = [
+  `The required maintenance reserve held by RL Property Management is ${usd(passive.maintenanceReserve)} (Passive), ${usd(standard.maintenanceReserve)} (Standard), or ${usd(premium.maintenanceReserve)} (Premium) per unit.`,
+  `The reserve equals the plan's per-item maintenance approval limit, so RL Property Management can act on a repair up to that amount without a call.`,
+  `RL Property Management recommends owners hold ${pricing.reserves.recommendedOwnerReserve} per property in their own reserves, separate from the maintenance reserve.`,
+  'Reserve needs rise with building age and with deferred maintenance; the calculator takes an owner-set percentage of rent for capital planning rather than assuming an industry rule.',
+];
+const faq = [
+  { q: 'What is a maintenance reserve?', a: `Money held by RL Property Management on the owner's behalf so a repair can be started immediately. The amount matches the plan's approval limit: ${usd(passive.maintenanceReserve)}, ${usd(standard.maintenanceReserve)}, or ${usd(premium.maintenanceReserve)} per unit.` },
+  { q: 'Is the maintenance reserve a fee?', a: "No. It stays the owner's money and is returned when management ends, less any repairs it paid for." },
+  { q: 'How much should I hold in my own reserves?', a: `RL Property Management recommends ${pricing.reserves.recommendedOwnerReserve} per property, covering vacancy, a turn, and an unexpected capital item such as a furnace or roof.` },
+  { q: 'Should the reserve be a percentage of rent?', a: 'Many owners plan capital spending as a percentage of annual rent. The calculator accepts a percentage you choose rather than asserting an industry figure.' },
+  { q: 'Does the reserve change with the plan?', a: `Yes. Choosing Passive raises the reserve to ${usd(passive.maintenanceReserve)} because RL Property Management can approve larger repairs without contacting the owner; Premium lowers it to ${usd(premium.maintenanceReserve)}.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Maintenance reserve calculator', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'Maintenance reserve calculator', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="How much should a rental hold in reserve?" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'Plans and approval limits' }, { href: '/services/maintenance/', label: 'How maintenance is handled' }, { href: '/tools/vacancy-cost-calculator/', label: 'Vacancy cost calculator' }, { href: '/tools/', label: 'All calculators' }]}>
+    <h2>What reserve does RL Property Management require?</h2>
+    <p>One reserve per unit, equal to the plan's per-item maintenance approval limit. The logic is direct: RL Property Management can only approve a repair up to the limit without calling the owner, so it holds that much to pay for one. An owner who wants fewer calls picks Passive and holds {usd(passive.maintenanceReserve)}; an owner who wants to approve most spending picks Premium and holds {usd(premium.maintenanceReserve)}.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Maintenance reserve by plan</caption>
+        <thead><tr><th scope="col">Plan</th><th scope="col">Monthly fee</th><th scope="col">Approval limit per item</th><th scope="col">Reserve held per unit</th></tr></thead>
+        <tbody>
+          {pricing.plans.map((p) => (
+            <tr><th scope="row">{p.name}</th><td>{usd(p.monthlyFee)}</td><td>{usd(p.maintenanceApprovalLimit)}</td><td class="font-semibold text-brand-800">{usd(p.maintenanceReserve)}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <Calc
+      id="reserve"
+      heading="Calculate your reserves"
+      fields={[
+        { name: 'rent', label: 'Monthly rent per unit', value: 1500, min: 0, step: 25, prefix: '$' },
+        { name: 'units', label: 'Number of units', value: 1, min: 1, step: 1 },
+        { name: 'plan', label: 'RL Property Management plan', type: 'select', value: String(standard.maintenanceReserve), options: pricing.plans.map((p) => ({ value: String(p.maintenanceReserve), label: `${p.name}, ${usd(p.maintenanceReserve)} reserve per unit` })) },
+        { name: 'months', label: 'Months of rent to hold personally', value: 6, min: 0, max: 24, step: 1, hint: 'RL Property Management recommends 6' },
+        { name: 'capexPct', label: 'Your capital planning assumption', value: 0, min: 0, max: 25, step: 0.5, suffix: '%', hint: 'Percent of annual rent set aside yearly. Your assumption, not an RLPM figure.' },
+      ]}
+      outputs={[
+        { name: 'total', label: 'Total to have available', hero: true },
+        { name: 'held', label: 'Maintenance reserve held by RLPM' },
+        { name: 'owner', label: 'Your own cash reserve' },
+        { name: 'capex', label: 'Annual capital set-aside' },
+      ]}
+      note="The maintenance reserve stays the owner's money and is returned at the end of management, less repairs it paid for."
+    />
+
+    <h2>Why hold reserves at all?</h2>
+    <p>Because the three expensive events in a rental are unpredictable in timing but not in kind: a vacancy plus turn, a major system failure (furnace, water heater, roof, sewer line), and an eviction. A property with reserves absorbs any of them without an emergency decision. A property without them tends to defer the repair, which costs more later and lengthens the next vacancy.</p>
+
+    <p>To size a reserve against a real rent number rather than an estimate, request a <a href="/free-rent-evaluation/">free rent evaluation</a>.</p>
+  </AeoPage>
+</Base>
+
+<script is:inline set:html={`
+${CALC_RUNTIME}
+calcInit('reserve', function (v, f) {
+  var units = Math.max(1, v.units);
+  var held = v.plan * units;
+  var owner = v.rent * v.months * units;
+  var capex = v.rent * 12 * units * (v.capexPct / 100);
+  return {
+    total: f.money(held + owner),
+    held: f.money(held),
+    owner: f.money(owner),
+    capex: v.capexPct > 0 ? f.money(capex) + ' per year' : 'Not set'
+  };
+});
+`} />

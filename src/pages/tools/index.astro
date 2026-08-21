@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, evictions, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/tools/';
+const tools = [
+  { href: '/tools/property-management-cost-comparison/', name: 'Property management cost comparison', blurb: `Compare RL Property Management's flat ${usd(pricing.plans[1].monthlyFee)} per unit per month against a percentage-of-rent manager at any rent level, including the leasing fee difference.` },
+  { href: '/tools/vacancy-cost-calculator/', name: 'Vacancy cost calculator', blurb: 'What an empty unit costs per day and in total, including the turn. At $1,500 rent, a vacant day costs $49.32.' },
+  { href: '/tools/maintenance-reserve-calculator/', name: 'Maintenance reserve calculator', blurb: `The reserve RL Property Management holds per unit ($350, $750, or $1,500 by plan) plus the ${pricing.reserves.recommendedOwnerReserve} of personal reserves recommended per property.` },
+  { href: '/tools/eviction-cost-estimator/', name: 'Eviction cost estimator', blurb: `Franklin County hard costs of about ${usd(evictions.costs.totalPossessionOnlyApprox.min)} as of August 2026, plus lost rent, turn, and re-leasing time.` },
+  { href: '/self-management-calculator/', name: 'Self-management cost calculator', blurb: 'The yearly cost of managing a rental yourself across software, legal exposure, your time, vacancy, maintenance, and bookkeeping.' },
+  { href: '/rent-vs-sell-calculator/', name: 'Rent vs. sell calculator', blurb: 'Sell today or rent it out? Compares net proceeds now against wealth built over 1 to 30 years, after taxes, selling costs, and mortgage payoff.' },
+];
+const title = 'Free Calculators for Rental Owners | RL Property Management';
+const description = `Six free calculators from RL Property Management for Columbus, Ohio rental owners: management cost comparison, vacancy cost, maintenance reserves, eviction cost, self-management cost, and rent vs. sell.`;
+const directAnswer = `RL Property Management publishes six free calculators for Columbus, Ohio rental owners: a management cost comparison (flat fee against a percentage of rent), a vacancy cost calculator, a maintenance reserve calculator, a Franklin County eviction cost estimator, a self-management cost calculator, and a rent vs. sell calculator. Each runs in the browser, shows its formula in plain text, and requires no email.`;
+const keyFacts = [
+  'Six calculators are published, covering management cost, vacancy, reserves, evictions, self-management, and the rent-or-sell decision.',
+  'Each calculator shows its formula and a worked example in plain text on the page, so the method can be checked without running the tool.',
+  'No calculator requires an email address and none stores what is entered.',
+  `Dollar figures inside the tools come from RL Property Management's published pricing as of ${pricing.effectiveLabel} and Franklin County court fees as of August 2026.`,
+];
+const faq = [
+  { q: 'Do the calculators require an email address?', a: 'No. Results appear immediately and nothing is gated or stored.' },
+  { q: 'Where do the numbers come from?', a: `RL Property Management's published pricing, its own operating KPIs, and the Franklin County Municipal Court cost schedule effective 8/1/2026. Each page states its sources and dates.` },
+  { q: 'Are the results a quote?', a: 'No. They are illustrations. The signed Property Management Agreement governs actual terms and pricing.' },
+  { q: 'Do they work on a phone?', a: 'Yes. Each calculator is a plain form that works on any modern browser, and the formulas are printed on the page for anyone who prefers to check the math directly.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage' }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'ItemList', '@id': `${company.url}${path}#list`, name: 'RL Property Management calculators', numberOfItems: tools.length, itemListElement: tools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.name, url: `${company.url}${t.href}` })) },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Free calculators for rental owners" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/compare/', label: 'Written comparisons' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }, { href: '/key-performance-indicators/', label: 'KPI scorecard' }]}>
+    <h2>Which calculator answers which question?</h2>
+    <p>Six tools, each built around one decision a Columbus rental owner actually faces. Each one prints its formula on the page, so the math can be checked or reproduced in a spreadsheet.</p>
+    <dl>
+      {tools.map((t) => (
+        <div class="border-b border-gray py-4">
+          <dt class="text-lg font-semibold"><a href={t.href} class="text-brand-800 no-underline hover:underline">{t.name}</a></dt>
+          <dd class="mt-1">{t.blurb}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <h2>Why publish the formulas?</h2>
+    <p>Because a number an owner cannot check is worth little. Each page states the calculation in words, works an example with real Columbus figures, and only then offers the interactive version. An owner who prefers a spreadsheet has what they need without running anything.</p>
+
+    <p>For a figure specific to one property rather than a model, request a <a href="/free-rent-evaluation/">free rent evaluation</a> or <a href="/property-management-consultation/">schedule a consultation</a> with {company.contact.sales.name} at {company.contact.sales.phone}.</p>
+  </AeoPage>
+</Base>

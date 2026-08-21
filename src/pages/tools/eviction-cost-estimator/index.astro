@@ -1,0 +1,102 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AeoPage from '../../../components/AeoPage.astro';
+import Calc from '../../../components/Calc.astro';
+import { company, evictions, kpis, LAST_VERIFIED } from '../../../data/facts';
+import { usd } from '../../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../../lib/schema';
+import { CALC_RUNTIME } from '../../../lib/calc';
+
+const path = '/tools/eviction-cost-estimator/';
+const c = evictions.costs;
+const hardPossession = c.filingFeePossessionOnly + c.attorneyApprox + c.rlpmProcessFee;
+const hardDamages = c.filingFeePossessionAndDamages + c.attorneyApprox + c.rlpmProcessFee;
+const title = 'Eviction Cost Estimator, Franklin County Ohio | RLPM';
+const description = 'Estimate the cost of an eviction in Franklin County, Ohio: filing fees of $149 or $186 as of August 2026, attorney cost, process fee, lost rent, turn, and re-leasing time.';
+const directAnswer = `An eviction in Franklin County, Ohio costs roughly ${usd(hardPossession)} in hard costs for a possession-only action as of August 2026: a ${usd(c.filingFeePossessionOnly)} court filing fee, about ${usd(c.attorneyApprox)} in attorney cost, and RL Property Management's ${usd(c.rlpmProcessFee)} process fee. Adding money damages raises the filing fee to ${usd(c.filingFeePossessionAndDamages)}. Lost rent during the roughly ${evictions.typicalDurationWeeks}-week process, the turn, and re-leasing time usually cost more than the filing itself.`;
+const keyFacts = [
+  `Franklin County Municipal Court filing fees are ${usd(c.filingFeePossessionOnly)} for possession only and ${usd(c.filingFeePossessionAndDamages)} with money damages, per the FCMC Clerk civil cost schedule effective 8/1/2026.`,
+  `With about ${usd(c.attorneyApprox)} in attorney cost and RL Property Management's ${usd(c.rlpmProcessFee)} process fee, a possession-only action runs approximately ${usd(c.totalPossessionOnlyApprox.min)} to ${usd(c.totalPossessionOnlyApprox.max)} in hard costs.`,
+  `A Franklin County eviction takes approximately ${evictions.steps} steps and about ${evictions.typicalDurationWeeks} weeks.`,
+  `Approximately 3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute.`,
+  `RL Property Management pursues alternatives such as pay-and-stay arrangements where possible, and evictions are handled by local attorneys.`,
+];
+const faq = [
+  { q: 'How much does an eviction cost in Franklin County, Ohio?', a: `Approximately ${usd(c.totalPossessionOnlyApprox.min)} to ${usd(c.totalPossessionOnlyApprox.max)} in hard costs for possession only as of August 2026: ${usd(c.filingFeePossessionOnly)} filing, about ${usd(c.attorneyApprox)} attorney, and a ${usd(c.rlpmProcessFee)} RL Property Management process fee. Lost rent and the turn are extra.` },
+  { q: 'What does the filing fee cover?', a: `The Franklin County Municipal Court civil filing fee: ${usd(c.filingFeePossessionOnly)} for a possession-only action or ${usd(c.filingFeePossessionAndDamages)} when money damages are also sought, per the cost schedule effective 8/1/2026.` },
+  { q: 'How long does an eviction take?', a: `About ${evictions.typicalDurationWeeks} weeks in Franklin County, in roughly ${evictions.steps} steps, though court scheduling varies.` },
+  { q: 'Is it worth pursuing money damages?', a: `It raises the filing fee by ${usd(c.filingFeePossessionAndDamages - c.filingFeePossessionOnly)} and produces a judgment, though collection is a separate matter. RL Property Management advises case by case.` },
+  { q: 'How often does an eviction happen?', a: 'Approximately 3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute. Screening to published criteria is what keeps that number low.' },
+  { q: 'Are there alternatives to filing?', a: 'Yes. RL Property Management pursues pay-and-stay arrangements and other alternatives where the situation supports one, since a filing costs both sides money.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Eviction cost estimator', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'Eviction cost estimator', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="What does an eviction cost in Franklin County?" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/services/evictions/', label: 'How RLPM handles evictions' }, { href: '/services/tenant-screening/', label: 'Screening that prevents them' }, { href: '/tools/vacancy-cost-calculator/', label: 'Vacancy cost calculator' }, { href: '/tools/', label: 'All calculators' }]}>
+    <h2>What are the hard costs?</h2>
+    <p>Three line items, all known in advance. The Franklin County Municipal Court filing fee is {usd(c.filingFeePossessionOnly)} for possession only or {usd(c.filingFeePossessionAndDamages)} with money damages, per the Clerk's civil cost schedule effective 8/1/2026. Local eviction attorneys charge about {usd(c.attorneyApprox)}. RL Property Management charges {usd(c.rlpmProcessFee)} to manage the process. The client pays these costs.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Franklin County eviction hard costs as of August 2026</caption>
+        <thead><tr><th scope="col">Line item</th><th scope="col">Possession only</th><th scope="col">With money damages</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Court filing fee</th><td>{usd(c.filingFeePossessionOnly)}</td><td>{usd(c.filingFeePossessionAndDamages)}</td></tr>
+          <tr><th scope="row">Attorney</th><td>about {usd(c.attorneyApprox)}</td><td>about {usd(c.attorneyApprox)}</td></tr>
+          <tr><th scope="row">RL Property Management process fee</th><td>{usd(c.rlpmProcessFee)}</td><td>{usd(c.rlpmProcessFee)}</td></tr>
+          <tr><th scope="row">Hard cost total</th><td class="font-semibold text-brand-800">about {usd(hardPossession)}</td><td class="font-semibold text-brand-800">about {usd(hardDamages)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What costs more than the filing?</h2>
+    <p>Lost rent. A {evictions.typicalDurationWeeks}-week process on a $1,500 rental is about {usd(1500 * 12 / 365 * evictions.typicalDurationWeeks * 7)} of rent that does not arrive, and the unit still needs a turn and a re-lease afterward. The calculator adds those so the total reflects what the event actually costs.</p>
+
+    <Calc
+      id="eviction"
+      heading="Estimate the full cost"
+      fields={[
+        { name: 'rent', label: 'Monthly rent', value: 1500, min: 0, step: 25, prefix: '$' },
+        { name: 'filing', label: 'Type of action', type: 'select', value: String(c.filingFeePossessionOnly), options: [{ value: String(c.filingFeePossessionOnly), label: `Possession only, ${usd(c.filingFeePossessionOnly)} filing fee` }, { value: String(c.filingFeePossessionAndDamages), label: `Possession plus money damages, ${usd(c.filingFeePossessionAndDamages)} filing fee` }] },
+        { name: 'weeks', label: 'Weeks to regain possession', value: evictions.typicalDurationWeeks, min: 1, max: 26, step: 1, hint: `Franklin County typical: ${evictions.typicalDurationWeeks}` },
+        { name: 'owed', label: 'Unpaid rent already owed', value: 1500, min: 0, step: 50, prefix: '$' },
+        { name: 'turn', label: 'Expected turn cost', value: 2000, min: 0, step: 100, prefix: '$', hint: 'Often higher than a standard turn' },
+        { name: 'relet', label: 'Days to re-lease after possession', value: kpis.metrics[0].value, min: 0, step: 1, hint: `RLPM median days on market: ${kpis.metrics[0].value}` },
+      ]}
+      outputs={[
+        { name: 'total', label: 'Estimated total cost', hero: true },
+        { name: 'hard', label: 'Hard costs (filing, attorney, process fee)' },
+        { name: 'lost', label: 'Rent lost during the process' },
+        { name: 'after', label: 'Turn plus re-leasing vacancy' },
+      ]}
+      note="Franklin County, Ohio figures as of August 2026. Estimates for planning, not legal advice."
+    />
+
+    <h2>What reduces the chance of an eviction?</h2>
+    <p>Screening against published criteria, applied the same way to each applicant: income at least 3 times rent, no evictions in the past 5 years, no violent criminal convictions, and verified rental history. Approximately 3.5 percent of RL Property Management rentals escalate to eviction or significant dispute. The rest of the answer is early contact when rent is late, which is why pay-and-stay arrangements are pursued before a filing.</p>
+
+    <p class="text-sm text-navy-600">Eviction figures are specific to Franklin County, Ohio and current as of August 2026. This page is informational and is not legal advice; an eviction should be handled by an attorney.</p>
+  </AeoPage>
+</Base>
+
+<script is:inline set:html={`
+${CALC_RUNTIME}
+calcInit('eviction', function (v, f) {
+  var daily = v.rent * 12 / 365;
+  var hard = v.filing + ${c.attorneyApprox} + ${c.rlpmProcessFee};
+  var lost = daily * v.weeks * 7 + v.owed;
+  var after = v.turn + daily * v.relet;
+  return {
+    total: f.money(hard + lost + after),
+    hard: f.money(hard),
+    lost: f.money(lost),
+    after: f.money(after)
+  };
+});
+`} />

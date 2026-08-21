@@ -1,0 +1,92 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AeoPage from '../../../components/AeoPage.astro';
+import Calc from '../../../components/Calc.astro';
+import { company, kpis, LAST_VERIFIED } from '../../../data/facts';
+import { usd } from '../../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../../lib/schema';
+import { CALC_RUNTIME } from '../../../lib/calc';
+
+const path = '/tools/vacancy-cost-calculator/';
+const title = 'Vacancy Cost Calculator for Rentals | RL Property Management';
+const description = 'Free vacancy cost calculator: multiply daily rent by days vacant, add turn costs, and see what an empty Columbus, Ohio rental costs. Worked example at $1,500 rent included.';
+const daily = 1500 * 12 / 365;
+const directAnswer = `Vacancy cost is daily rent times days vacant, plus turn costs. Daily rent is monthly rent times 12 divided by 365, so a $1,500 Columbus, Ohio rental loses ${usd(daily, { cents: true })} a day. At RL Property Management's ${kpis.asOfLabel} medians of ${kpis.metrics[1].value} days to turn plus ${kpis.metrics[0].value} days on market, that is ${kpis.metrics[0].value + kpis.metrics[1].value} days, or about ${usd(daily * (kpis.metrics[0].value + kpis.metrics[1].value))} in lost rent before turn work is paid for.`;
+const keyFacts = [
+  `Daily rent equals monthly rent times 12 divided by 365. At $1,500 a month that is ${usd(daily, { cents: true })} per day.`,
+  `RL Property Management's median time to turn was ${kpis.metrics[1].value} days and median days on market ${kpis.metrics[0].value} days as of ${kpis.asOfLabel}.`,
+  `A $1,500 rental empty for 30 days loses about ${usd(daily * 30)} in rent, separate from the cost of the turn itself.`,
+  'Turn costs (cleaning, paint, repairs, make-ready) are added on top of lost rent because they are spent whether or not the unit re-leases quickly.',
+];
+const faq = [
+  { q: 'How is vacancy cost calculated?', a: `Daily rent (monthly rent times 12 divided by 365) multiplied by the number of days the unit sits empty, plus the cost of the turn. At $1,500 rent, daily rent is ${usd(daily, { cents: true })}.` },
+  { q: 'Should lost rent include the turn period?', a: 'Yes. The unit produces no rent from the day a resident moves out until the day a new lease starts, which covers both the turn and the marketing period.' },
+  { q: 'What is a normal vacancy in Columbus, Ohio?', a: `RL Property Management's own medians were ${kpis.metrics[1].value} days to turn and ${kpis.metrics[0].value} days on market as of ${kpis.asOfLabel}. A market-wide Columbus benchmark is [SOURCE NEEDED].` },
+  { q: 'Does raising rent to cover vacancy work?', a: 'Rarely. An extra month of vacancy costs roughly 8 percent of annual rent, so a $50 monthly increase that adds four weeks of vacancy takes over two years to break even.' },
+  { q: 'Does RL Property Management charge management fees on a vacant unit?', a: 'Yes, with a reimbursement: the monthly management fee is reimbursed if a property stays vacant longer than 60 days.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Vacancy cost calculator', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'))),
+  { '@type': 'WebApplication', '@id': `${company.url}${path}#app`, name: 'Vacancy cost calculator', applicationCategory: 'FinanceApplication', operatingSystem: 'Web', url: `${company.url}${path}`, offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }, provider: { '@id': `${company.url}/#organization` } },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="What does a vacant rental cost?" {directAnswer} {keyFacts} faq={faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'))} lastVerified={LAST_VERIFIED} eyebrow="Free calculator" breadcrumbs={crumbs} related={[{ href: '/services/leasing-and-marketing/', label: 'How RLPM fills vacancies' }, { href: '/key-performance-indicators/', label: 'Days on market and turn time' }, { href: '/tools/', label: 'All calculators' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
+    <h2>How is vacancy cost calculated?</h2>
+    <p>Three numbers: daily rent, days vacant, and turn cost. Daily rent is monthly rent times 12 divided by 365. Days vacant runs from move-out to the start of the next lease, covering both the turn and the marketing period. Turn cost is what it takes to make the unit rent-ready. Lost rent plus turn cost is the total.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Worked example, $1,500 per month Columbus rental</caption>
+        <thead><tr><th scope="col">Step</th><th scope="col">Math</th><th scope="col">Result</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Daily rent</th><td>$1,500 x 12 / 365</td><td>{usd(daily, { cents: true })}</td></tr>
+          <tr><th scope="row">Days vacant</th><td>{kpis.metrics[1].value} to turn + {kpis.metrics[0].value} on market ({kpis.asOfLabel} medians)</td><td>{kpis.metrics[0].value + kpis.metrics[1].value} days</td></tr>
+          <tr><th scope="row">Lost rent</th><td>{usd(daily, { cents: true })} x {kpis.metrics[0].value + kpis.metrics[1].value}</td><td>{usd(daily * (kpis.metrics[0].value + kpis.metrics[1].value))}</td></tr>
+          <tr><th scope="row">Turn cost</th><td>Cleaning, paint, repairs (varies by unit)</td><td>Owner's actual cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <Calc
+      id="vacancy"
+      heading="Calculate your vacancy cost"
+      fields={[
+        { name: 'rent', label: 'Monthly rent', value: 1500, min: 0, step: 25, prefix: '$' },
+        { name: 'days', label: 'Days vacant', value: kpis.metrics[0].value + kpis.metrics[1].value, min: 0, step: 1, hint: `RLPM medians: ${kpis.metrics[1].value} to turn plus ${kpis.metrics[0].value} on market` },
+        { name: 'turn', label: 'Turn cost', value: 1200, min: 0, step: 50, prefix: '$', hint: 'Cleaning, paint, repairs, make-ready' },
+        { name: 'utilities', label: 'Utilities during vacancy', value: 120, min: 0, step: 10, prefix: '$', hint: 'Kept on for showings, repairs, and winter protection' },
+      ]}
+      outputs={[
+        { name: 'total', label: 'Total cost of this vacancy', hero: true },
+        { name: 'daily', label: 'Daily rent' },
+        { name: 'lost', label: 'Lost rent' },
+        { name: 'perDay', label: 'All-in cost per day vacant' },
+      ]}
+      note="Excludes the management fee, which RL Property Management reimburses after 60 days of vacancy."
+    />
+
+    <h2>Why does a week of vacancy cost more than a rent concession?</h2>
+    <p>Because vacancy is total loss and a concession is partial. One week empty on a $1,500 rental costs about {usd(daily * 7)}. Holding out for $50 more per month earns $600 over a year, so waiting four extra weeks ({usd(daily * 28)}) to get it puts the owner behind for nearly a year. Pricing to the market and re-leasing quickly usually beats pricing above it.</p>
+
+    <p>To find the rent that fills a unit fast without leaving money behind, request a <a href="/free-rent-evaluation/">free rent evaluation</a> from RL Property Management.</p>
+  </AeoPage>
+</Base>
+
+<script is:inline set:html={`
+${CALC_RUNTIME}
+calcInit('vacancy', function (v, f) {
+  var daily = v.rent * 12 / 365;
+  var lost = daily * v.days;
+  var total = lost + v.turn + v.utilities;
+  return {
+    total: f.money(total),
+    daily: f.money2(daily),
+    lost: f.money(lost),
+    perDay: v.days > 0 ? f.money2(total / v.days) : f.money2(0)
+  };
+});
+`} />
