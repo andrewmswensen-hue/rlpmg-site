@@ -1,0 +1,113 @@
+---
+/**
+ * One page per city or neighborhood served, at the established /property-management-<slug>-ohio/ pattern
+ * (or the frontmatter `path` when an existing slug must be preserved, e.g. Canal Winchester).
+ */
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import AeoPage from '../components/AeoPage.astro';
+import { company, pricing, leasing, kpis } from '../data/facts';
+import { usd } from '../lib/format';
+import { cityPath } from '../lib/paths';
+import { webPageNode, breadcrumbNode, faqNode, localBusinessNode } from '../lib/schema';
+
+export async function getStaticPaths() {
+  const cities = await getCollection('cities');
+  return cities.map((entry) => ({
+    params: { city: cityPath(entry).replace(/^\/|\/$/g, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const path = cityPath(entry);
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Areas we serve', path: '/areas-we-serve/' },
+  { name: d.name, path },
+];
+const schema: unknown[] = [
+  webPageNode({ path, title: d.seoTitle ?? d.title, description: d.description, dateModified: d.lastVerified.toISOString().slice(0, 10) }),
+  breadcrumbNode(crumbs),
+  localBusinessNode({ path, name: d.name, geo: d.geo }),
+];
+if (d.faq?.length) schema.push(faqNode(path, d.faq));
+
+const guide = d.marketGuideSlug;
+---
+
+<Base title={d.seoTitle ?? d.title} description={d.description} {path} {schema}>
+  <AeoPage
+    title={d.title}
+    directAnswer={d.directAnswer}
+    keyFacts={d.keyFacts}
+    faq={d.faq}
+    related={d.related}
+    lastVerified={d.lastVerified}
+    reviewedBy={d.reviewedBy}
+    eyebrow={`${d.county} · ${d.relationToColumbus}`}
+    breadcrumbs={crumbs}
+  >
+    <Content />
+
+    <h2>What does property management cost in {d.name}?</h2>
+    <p>
+      The same as anywhere else RL Property Management operates: a flat {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit per month with a {usd(pricing.fees.leasingFee)} leasing fee, as of {pricing.effectiveLabel}. The fee does not change with the rent, so a higher-rent {d.name} property costs the same to manage as a lower-rent one. Full details are on the <a href="/pricing/">pricing page</a>.
+    </p>
+
+    {d.rentContext.length > 0 && (
+      <>
+        <h2>What do rentals in {d.name} rent for?</h2>
+        <p>Market figures for {d.name} as published by the sources below. These are area-wide figures; a specific property can sit well above or below them depending on condition, size, and location within {d.name}.</p>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">{d.name} rental market figures</caption>
+            <thead><tr><th scope="col">Measure</th><th scope="col">Figure</th><th scope="col">Source</th><th scope="col">As of</th></tr></thead>
+            <tbody>
+              {d.rentContext.map((r) => (
+                <tr><th scope="row">{r.label}</th><td class="font-semibold text-brand-800">{r.value}</td><td>{r.source}</td><td>{r.asOf}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+
+    <h2>Which schools and neighborhoods does {d.name} cover?</h2>
+    <p>
+      {d.name} is served by {d.schoolDistricts.length === 1 ? 'the ' + d.schoolDistricts[0] : d.schoolDistricts.join(', ')}.
+      {d.neighborhoods.length > 0 && <> Areas within and around {d.name} include {d.neighborhoods.join(', ')}.</>}
+      {d.zipCodes.length > 0 && <> ZIP codes: {d.zipCodes.join(', ')}.</>}
+    </p>
+
+    <h2>Are there rental rules specific to {d.name}?</h2>
+    <p>
+      {d.sourceOfIncomeProtection.applies
+        ? `${d.name} prohibits housing discrimination based on source of income, which means a rental owner may not refuse an applicant solely because they intend to pay with a housing voucher. ${d.sourceOfIncomeProtection.note ?? ''}`
+        : `No municipal source-of-income ordinance was found for ${d.name} as of August 2026, and Ohio has no statewide source-of-income protection. ${d.sourceOfIncomeProtection.note ?? ''}`}
+    </p>
+    {d.localRegulation.length > 0 && (
+      <ul>
+        {d.localRegulation.map((r) => <li>{r}</li>)}
+      </ul>
+    )}
+    <p class="text-sm text-navy-600">Local rules change. Information here is current as of August 2026 and is informational, not legal advice.</p>
+
+    <h2>How does RL Property Management handle a {d.name} rental?</h2>
+    <p>
+      The same way as the rest of its approximately 750 units: listed on {leasing.platforms.label}, screened against published criteria ({leasing.qualification.incomeMultiple}x income, no evictions in {leasing.qualification.noEvictionsWithinYears} years), rent collected with direct deposit to the owner, maintenance handled through a 24/7 line and {company.scale.maintenanceTechnicians} in-house technicians, and quarterly inspections. Portfolio-wide, median days on market was {kpis.metrics[0].value} and {kpis.metrics[6].value} percent of rent arrived by the 5th as of {kpis.asOfLabel}.
+    </p>
+
+    {guide && (
+      <p>
+        For a deeper look at this market, read the <a href={`/blog/${guide}/`}>{d.name} rental market guide</a>.
+      </p>
+    )}
+
+    <p>
+      To find out what a specific {d.name} property should rent for, request a <a href="/free-rent-evaluation/">free rent evaluation</a>, or call {company.contact.sales.name} at <a href={`tel:${company.contact.sales.phoneE164}`}>{company.contact.sales.phone}</a>.
+    </p>
+  </AeoPage>
+</Base>

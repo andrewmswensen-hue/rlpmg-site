@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, serviceArea, pricing, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { cityPath } from '../../lib/paths';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/areas-we-serve/';
+const cities = (await getCollection('cities')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const withPages = new Set(cities.map((c) => c.data.name));
+const soi = cities.filter((c) => c.data.sourceOfIncomeProtection.applies).map((c) => c.data.name);
+
+const title = 'Areas We Serve, Columbus Ohio Metro | RL Property Management';
+const description = `RL Property Management manages rentals in ${serviceArea.places.length} Columbus, Ohio metro cities and neighborhoods, from Dublin and Westerville to German Village and Clintonville. One page per area with local rent context.`;
+const directAnswer = `RL Property Management manages rental property in ${serviceArea.places.length} cities and neighborhoods across the Columbus, Ohio metro, working from one office at ${company.address.street}, ${company.address.city}. The service area covers Franklin County and parts of Delaware, Licking, Fairfield, Union, Madison, and Pickaway counties. Management costs the same flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month everywhere in the area.`;
+const keyFacts = [
+  `RL Property Management serves ${serviceArea.places.length} Columbus-area cities and neighborhoods as of August 2026.`,
+  `The flat management fee is the same in each area: ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month with a ${usd(pricing.fees.leasingFee)} leasing fee.`,
+  `Properties managed are those that do not require on-site staff, typically under 100 units.`,
+  `The office is at ${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}, in ${company.address.county}.`,
+];
+const faq = [
+  { q: 'Which cities does RL Property Management serve?', a: `${serviceArea.places.join(', ')}, across the Columbus, Ohio metro.` },
+  { q: 'Does the price change by city?', a: `No. The flat fee is ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month everywhere RL Property Management operates.` },
+  { q: 'What if my property is outside these areas?', a: `Call ${company.contact.sales.name} at ${company.contact.sales.phone}. Properties just outside the listed area are considered individually.` },
+  { q: 'How far from Columbus will RL Property Management manage?', a: 'The service area runs roughly 30 miles out from downtown Columbus, covering Delaware, Newark, Lancaster, London, and Marysville at the edges.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Areas we serve', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage' }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  {
+    '@type': 'ItemList',
+    '@id': `${company.url}${path}#areas`,
+    name: 'Areas served by RL Property Management',
+    numberOfItems: serviceArea.places.length,
+    itemListElement: serviceArea.places.map((name, i) => ({ '@type': 'ListItem', position: i + 1, name: `${name}, Ohio` })),
+  },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Areas RL Property Management serves" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/guides/', label: 'Neighborhood market guides' }, { href: '/what-we-manage/', label: 'What RL Property Management manages' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
+    <h2>Which places does RL Property Management manage rentals in?</h2>
+    <p>All {serviceArea.places.length} are listed below. Areas with their own page include local rent context, school districts, and any city-specific rental rules.</p>
+    {cities.length > 0 ? (
+      <ul class="not-prose grid gap-3 sm:grid-cols-2" style="list-style:none;padding-left:0">
+        {cities.map((c) => (
+          <li class="border-l-2 border-gray pl-3">
+            <a href={cityPath(c)} class="font-semibold text-brand-800 no-underline hover:underline">{c.data.name}, Ohio</a>
+            <span class="block text-sm text-navy-600">{c.data.county}{c.data.relationToColumbus ? `, ${c.data.relationToColumbus}` : ''}</span>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <ul class="columns-2">
+        {serviceArea.places.map((p) => <li>{p}, Ohio</li>)}
+      </ul>
+    )}
+    {cities.length > 0 && cities.length < serviceArea.places.length && (
+      <p class="text-sm text-navy-600">
+        Also served, with pages in progress: {serviceArea.places.filter((p) => !withPages.has(p)).join(', ')}.
+      </p>
+    )}
+
+    <h2>Does RL Property Management charge more in some areas?</h2>
+    <p>No. The flat fee is identical across the service area: {usd(pricing.plans[0].monthlyFee)} Passive, {usd(pricing.plans[1].monthlyFee)} Standard, or {usd(pricing.plans[2].monthlyFee)} Premium per unit per month, with a {usd(pricing.fees.leasingFee)} leasing fee. A percentage-based manager charges more in higher-rent suburbs such as Dublin, New Albany, and Upper Arlington; a flat fee does not.</p>
+
+    {soi.length > 0 && (
+      <>
+        <h2>Which Central Ohio cities protect source of income?</h2>
+        <p>Ohio has no statewide source-of-income protection, so it is set city by city. Based on RL Property Management's review as of August 2026, these places in the service area have a municipal ordinance: {soi.join(', ')}. Each city page states the ordinance and its source. This is informational, not legal advice.</p>
+      </>
+    )}
+
+    <h2>What if a property sits outside the service area?</h2>
+    <p>Call {company.contact.sales.name}, {company.contact.sales.title}, at <a href={`tel:${company.contact.sales.phoneE164}`}>{company.contact.sales.phone}</a>. Properties near the edge of the area are considered individually; the limit is practical, based on how quickly a maintenance technician and a showing agent can reach the property.</p>
+  </AeoPage>
+</Base>
