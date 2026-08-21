@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/sell-your-property-management-company/';
+const title = 'Sell Your Property Management Company or Contracts | RLPM';
+const description = 'RL Property Management buys property management companies and individual management contracts in the Columbus, Ohio metro. Confidential conversation with the CEO; owners and residents transition to a 33-person team.';
+const directAnswer = `RL Property Management acquires property management companies and individual management contracts in the Columbus, Ohio metro. Sellers range from a manager retiring with a few dozen doors to a company exiting the business. Conversations are confidential and held with ${company.brokerOfRecord.name}, ${company.brokerOfRecord.title}. Acquired owners and residents move onto RL Property Management's systems and its ${company.scale.employees}-person team, with the stated goal of growing to approximately 2,500 units.`;
+const keyFacts = [
+  'RL Property Management buys both whole property management companies and individual management contracts in Central Ohio.',
+  `Inquiries go directly to ${company.brokerOfRecord.name}, ${company.brokerOfRecord.title}, and are kept confidential.`,
+  'RL Property Management manages approximately 750 units as of August 2026 and has a stated goal of approximately 2,500.',
+  'Acquired properties are managed on the same published flat-fee plans and the same KPI scorecard as existing clients.',
+];
+const faq = [
+  { q: 'What size of company does RL Property Management buy?', a: 'From a handful of contracts to a full company, within the Columbus, Ohio metro. Portfolios of single-family and small multi-family rentals fit best.' },
+  { q: 'How is a deal structured?', a: '[SOURCE NEEDED]' },
+  { q: 'What happens to my clients?', a: 'They are introduced to RL Property Management, moved onto its systems, and managed under its published pricing and service standards. Their existing leases continue.' },
+  { q: 'Is the conversation confidential?', a: `Yes. Inquiries go to ${company.brokerOfRecord.name} directly and are not shared with staff until a deal is agreed.` },
+];
+const liveFaq = faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'));
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Sell your company', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, liveFaq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Sell your property management company or contracts" {directAnswer} {keyFacts} faq={liveFaq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/about/', label: 'About RL Property Management' }, { href: '/pricing/', label: 'Pricing your clients would pay' }, { href: '/key-performance-indicators/', label: 'KPI scorecard' }]}>
+    <h2>Why sell to RL Property Management?</h2>
+    <p>Because the clients land somewhere with published pricing, a published scorecard, in-house maintenance, and a team of {company.scale.employees} in {company.address.city}, Ohio. A seller's reputation with owners survives the handoff when the acquirer's standards are visible in advance. RL Property Management's <a href="/pricing/">pricing</a> and <a href="/key-performance-indicators/">KPIs</a> are public for that reason.</p>
+    <h2>Start a confidential conversation</h2>
+    <LeadForm id="acquisition" fields={[
+      { name: 'name', label: 'Your name', required: true, autocomplete: 'name' },
+      { name: 'company', label: 'Company name', required: true },
+      { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'doors', label: 'Approximate units under management', type: 'select', required: true, options: ['Under 25', '25 to 99', '100 to 249', '250 or more'] },
+      { name: 'timeline', label: 'Timeline', type: 'radio', options: ['Within 6 months', '6 to 12 months', 'Exploring'] },
+      { name: 'notes', label: 'Anything you want to share up front', type: 'textarea' },
+    ]} submitLabel="Send confidentially" />
+  </AeoPage>
+</Base>

@@ -1,0 +1,76 @@
+---
+/**
+ * Renders every entry in the `pages` content collection at its frontmatter `path`.
+ * Services, comparisons, how-it-works, what-we-manage, residents, tools prose, trust and legal pages all live there
+ * as MDX so copy can be edited without touching components.
+ */
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import AeoPage from '../components/AeoPage.astro';
+import { webPageNode, breadcrumbNode, faqNode, howToNode, pricingNodes } from '../lib/schema';
+import { company } from '../data/facts';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((entry) => ({
+    params: { path: entry.data.path.replace(/^\/|\/$/g, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const path = d.path;
+
+const SECTION_LABEL: Record<string, { name: string; path: string } | null> = {
+  owners: null,
+  services: { name: 'Services', path: '/columbus-property-management/' },
+  compare: { name: 'Compare', path: '/compare/' },
+  residents: { name: 'Residents', path: '/residents/' },
+  tools: { name: 'Tools', path: '/tools/' },
+  trust: null,
+  company: null,
+  legal: null,
+};
+const parent = SECTION_LABEL[d.section];
+const crumbs = [{ name: 'Home', path: '/' }, ...(parent && parent.path !== path ? [parent] : []), { name: d.title, path }];
+
+const schema: unknown[] = [
+  webPageNode({ path, title: d.seoTitle ?? d.title, description: d.description, type: d.schemaType === 'Service' || d.schemaType === 'HowTo' ? 'WebPage' : d.schemaType, dateModified: d.lastVerified.toISOString().slice(0, 10) }),
+  breadcrumbNode(crumbs),
+];
+if (d.faq?.length) schema.push(faqNode(path, d.faq));
+if (d.howToSteps?.length) schema.push(howToNode(path, d.title, d.howToSteps));
+if (d.schemaType === 'Service') {
+  schema.push({
+    '@type': 'Service',
+    '@id': `${company.url}${path}#service`,
+    name: d.title,
+    description: d.description,
+    serviceType: d.title,
+    provider: { '@id': `${company.url}/#organization` },
+    areaServed: { '@type': 'AdministrativeArea', name: 'Columbus, Ohio metropolitan area' },
+    ...(d.offer ? { offers: { '@type': 'Offer', price: d.offer.price, priceCurrency: 'USD', unitText: d.offer.unit } } : {}),
+  });
+}
+if (path === '/pricing/') schema.push(...pricingNodes(path));
+
+const eyebrow = parent?.name;
+---
+
+<Base title={d.seoTitle ?? d.title} description={d.description} {path} {schema} noindex={d.noindex}>
+  <AeoPage
+    title={d.title}
+    directAnswer={d.directAnswer}
+    keyFacts={d.keyFacts}
+    faq={d.faq}
+    related={d.related}
+    lastVerified={d.lastVerified}
+    reviewedBy={d.reviewedBy}
+    {eyebrow}
+    breadcrumbs={crumbs}
+  >
+    <Content />
+  </AeoPage>
+</Base>

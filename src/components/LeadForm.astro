@@ -1,0 +1,92 @@
+---
+/**
+ * Plain HTML form. Works with JavaScript disabled (standard POST to the Worker, which redirects to /thank-you/).
+ * A tiny inline script, when JS is available, fills hidden attribution fields (referrer, UTM, AI source, page).
+ * Phase 8 wires the Worker to LeadSimple; until then the endpoint returns 501.
+ */
+interface Field {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'radio';
+  required?: boolean;
+  options?: string[];
+  placeholder?: string;
+  autocomplete?: string;
+}
+interface Props {
+  id: string; // form key, e.g. rent-evaluation. Becomes /api/forms/<id>
+  heading?: string;
+  fields: Field[];
+  submitLabel?: string;
+  note?: string;
+}
+const { id, heading, fields, submitLabel = 'Send', note } = Astro.props;
+const action = `/api/forms/${id}`;
+const inputCls = 'mt-1 block w-full border border-gray bg-paper px-3 py-2 focus:border-navy-800';
+---
+
+<form method="post" action={action} class="not-prose max-w-xl border border-gray bg-offwhite p-6" data-lead-form={id}>
+  {heading && <h3 class="text-xl font-semibold text-navy-800">{heading}</h3>}
+  <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+  <input type="hidden" name="form" value={id} />
+  <input type="hidden" name="page" value="" />
+  <input type="hidden" name="referrer" value="" />
+  <input type="hidden" name="ai_source" value="" />
+  <input type="hidden" name="utm_source" value="" />
+  <input type="hidden" name="utm_medium" value="" />
+  <input type="hidden" name="utm_campaign" value="" />
+  <div class="mt-4 grid gap-4">
+    {fields.map((f) => (
+      <div>
+        {f.type === 'radio' ? (
+          <fieldset>
+            <legend class="text-sm font-medium">{f.label}{f.required && ' *'}</legend>
+            <div class="mt-1 flex flex-wrap gap-4">
+              {f.options?.map((o) => <label class="flex items-center gap-2 text-sm"><input type="radio" name={f.name} value={o} required={f.required} />{o}</label>)}
+            </div>
+          </fieldset>
+        ) : (
+          <label class="block text-sm font-medium">
+            {f.label}{f.required && ' *'}
+            {f.type === 'textarea' ? (
+              <textarea name={f.name} rows="4" required={f.required} placeholder={f.placeholder} class={inputCls} />
+            ) : f.type === 'select' ? (
+              <select name={f.name} required={f.required} class={inputCls}>
+                <option value="">Choose one</option>
+                {f.options?.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            ) : (
+              <input type={f.type ?? 'text'} name={f.name} required={f.required} placeholder={f.placeholder} autocomplete={f.autocomplete} class={inputCls} />
+            )}
+          </label>
+        )}
+      </div>
+    ))}
+  </div>
+  <button type="submit" class="mt-5 bg-brand-800 px-5 py-2.5 font-semibold text-white hover:bg-accent-600">{submitLabel}</button>
+  {note && <p class="mt-3 text-xs text-navy-600">{note}</p>}
+  <p class="mt-2 text-xs text-navy-600">By submitting, you agree to be contacted by RL Property Management about your request. See the <a href="/privacy-policy/" class="underline">privacy policy</a>.</p>
+</form>
+
+<script>
+  // Attribution only. The form submits without this script.
+  const AI = [
+    ['chatgpt.com', 'chatgpt'], ['chat.openai.com', 'chatgpt'], ['perplexity.ai', 'perplexity'], ['claude.ai', 'claude'],
+    ['copilot.microsoft.com', 'copilot'], ['bing.com/chat', 'copilot'], ['gemini.google.com', 'gemini'], ['you.com', 'you'],
+    ['duckduckgo.com', 'duckassist'], ['meta.ai', 'meta'],
+  ];
+  const ref = document.referrer || '';
+  const ai = AI.find(([h]) => ref.includes(h))?.[1] ?? (new URLSearchParams(location.search).get('utm_source') ?? '').toLowerCase().match(/chatgpt|perplexity|claude|copilot|gemini/)?.[0] ?? '';
+  try {
+    if (ai) sessionStorage.setItem('ai_source', ai);
+    if (ref && !sessionStorage.getItem('first_referrer')) sessionStorage.setItem('first_referrer', ref);
+  } catch {}
+  const qs = new URLSearchParams(location.search);
+  document.querySelectorAll<HTMLFormElement>('form[data-lead-form]').forEach((form) => {
+    const set = (n: string, v: string) => { const el = form.elements.namedItem(n) as HTMLInputElement | null; if (el && v) el.value = v; };
+    set('page', location.pathname);
+    set('referrer', sessionStorage.getItem('first_referrer') || ref);
+    set('ai_source', sessionStorage.getItem('ai_source') || ai);
+    for (const k of ['utm_source', 'utm_medium', 'utm_campaign']) set(k, qs.get(k) ?? '');
+  });
+</script>

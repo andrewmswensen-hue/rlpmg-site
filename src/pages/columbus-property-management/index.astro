@@ -1,0 +1,62 @@
+---
+/** Owner overview / services index. Keeps the existing slug (18 inbound links). */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, leasing, maintenance, evictions, kpis, serviceArea, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/columbus-property-management/';
+const title = 'Columbus, Ohio Property Management Services | RLPM';
+const description = `Full-service property management in Columbus, Ohio for a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month: leasing on 45+ platforms, screening, rent collection, 24/7 maintenance, inspections, evictions, reporting.`;
+const directAnswer = `RL Property Management provides full-service residential property management across the Columbus, Ohio metro for a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month and a ${usd(pricing.fees.leasingFee)} leasing fee. The service covers marketing on ${leasing.platforms.label}, screening to published criteria, rent collection with direct deposit, 24/7 maintenance with in-house technicians, quarterly inspections, eviction handling in Franklin County, and monthly owner statements, for approximately 750 units as of August 2026.`;
+const keyFacts = [
+  `RL Property Management manages approximately 750 units across ${serviceArea.places.length} Columbus-area cities and neighborhoods as of August 2026.`,
+  `Management costs a flat ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month; the leasing fee is ${usd(pricing.fees.leasingFee)}.`,
+  `Listings run on ${leasing.platforms.label} and lease in ${leasing.averageLeaseUpWeeks.min} to ${leasing.averageLeaseUpWeeks.max} weeks on average once rent-ready; median days on market was ${kpis.metrics[0].value} as of ${kpis.asOfLabel}.`,
+  `Applicants must show income of at least ${leasing.qualification.incomeMultiple} times rent, no evictions in ${leasing.qualification.noEvictionsWithinYears} years, and no violent criminal convictions.`,
+  `Maintenance runs through a 24/7 emergency line and ${company.scale.maintenanceTechnicians} in-house technicians at ${usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a ${usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge.`,
+  `${kpis.metrics[6].value} percent of rent was collected by the 5th and ${kpis.metrics[2].value} percent of residents renewed as of ${kpis.asOfLabel}.`,
+];
+const services = [
+  { href: '/services/leasing-and-marketing/', name: 'Leasing and marketing', blurb: `Listings on ${leasing.platforms.label}, self-guided and scheduled showings, lease signing. ${usd(pricing.fees.leasingFee)} leasing fee.` },
+  { href: '/services/tenant-screening/', name: 'Tenant screening', blurb: `Credit, criminal, rental history, and income verification against published minimums: ${leasing.qualification.incomeMultiple}x income, no evictions in ${leasing.qualification.noEvictionsWithinYears} years.` },
+  { href: '/services/rent-collection/', name: 'Rent collection', blurb: `Online payment, late-fee enforcement, and direct deposit of net income with a monthly statement. ${kpis.metrics[6].value} percent collected by the 5th as of ${kpis.asOfLabel}.` },
+  { href: '/services/maintenance/', name: 'Maintenance', blurb: `${maintenance.emergencyLine}. In-house technicians at ${usd(pricing.fees.inHouseMaintenance.hourlyRate)}/hr plus ${usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge; routine work done in ${maintenance.routineCompletionWeeks.min} to ${maintenance.routineCompletionWeeks.max} weeks.` },
+  { href: '/services/property-inspections/', name: 'Property inspections', blurb: `${maintenance.inspections.frequency} inspections covering detectors, appliances, resident responsibilities, and condition, plus move-in and move-out inspections.` },
+  { href: '/services/evictions/', name: 'Evictions', blurb: `Handled by local attorneys in ${evictions.county}: about ${evictions.steps} steps and ${evictions.typicalDurationWeeks} weeks, roughly ${usd(evictions.costs.totalPossessionOnlyApprox.min)} in hard costs as of August 2026.` },
+  { href: '/services/owner-reporting/', name: 'Owner reporting', blurb: 'Monthly statements by email, direct deposit, year-end documents, and a 24/7 owner portal.' },
+];
+const faq = [
+  { q: 'What does full-service property management include at RL Property Management?', a: `Marketing, showings, screening, lease signing, rent collection, maintenance coordination, quarterly inspections, eviction handling, and monthly reporting, all inside the flat monthly fee. Repairs are billed at cost plus published labor rates.` },
+  { q: 'How much does property management cost in Columbus, Ohio?', a: `RL Property Management charges ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month flat with no leasing fee. The market-standard alternative is 8 to 10 percent of rent plus one month's rent per lease.` },
+  { q: 'Does RL Property Management manage single-family homes?', a: 'Yes. Single-family homes, condos, townhomes, and multi-family buildings up to roughly 100 units are accepted.' },
+  { q: 'How long does it take to lease a property?', a: `${leasing.averageLeaseUpWeeks.min} to ${leasing.averageLeaseUpWeeks.max} weeks on average once the unit is rent-ready. No timeline is promised; placement quality comes first.` },
+  { q: 'Who handles repairs?', a: `${company.scale.maintenanceTechnicians} RL Property Management technicians handle most work; licensed vendors handle the rest under a 15 percent project management fee capped at $450.` },
+  { q: 'Where does RL Property Management operate?', a: `${serviceArea.places.length} cities and neighborhoods across the Columbus, Ohio metro, from an office in ${company.address.city}.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Services', path }];
+const schema = [
+  webPageNode({ path, title, description, type: 'CollectionPage' }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  { '@type': 'ItemList', '@id': `${company.url}${path}#services`, name: 'RL Property Management services', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: `${company.url}${s.href}` })) },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Property management services in Columbus, Ohio" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/what-we-manage/', label: 'What RL Property Management manages' }, { href: '/compare/', label: 'Comparisons' }, { href: '/key-performance-indicators/', label: 'KPI scorecard' }]}>
+    <h2>What services are included?</h2>
+    <p>Seven services make up RL Property Management's flat-fee management, and each has its own page with the specific numbers. Together they cover a rental from listing to move-out, and the same seven apply on the Passive, Standard, and Premium plans; the plans differ in approval limits and a few add-ons, not in which services are included.</p>
+    <ol>
+      {services.map((s) => <li><a href={s.href}><strong>{s.name}</strong></a>: {s.blurb}</li>)}
+    </ol>
+    <h2>What does it cost?</h2>
+    <p>A flat {usd(pricing.plans[0].monthlyFee)} (Passive), {usd(pricing.plans[1].monthlyFee)} (Standard), or {usd(pricing.plans[2].monthlyFee)} (Premium) per unit per month, a {usd(pricing.fees.leasingFee)} leasing fee, a {usd(pricing.fees.leaseRenewalFee)} renewal fee, and a {usd(pricing.fees.annualAccountingAndTechnologyFee)} annual accounting and technology fee. The <a href="/pricing/">pricing page</a> lists the rest, including repair rates and the comparison against percentage-based management.</p>
+    <h2>Which owners does this suit?</h2>
+    <p>Owners of single-family homes, condos, and multi-family buildings under roughly 100 units who want predictable fees and published results. RL Property Management declines campus rentals, rooms rented by the bedroom, home warranties, and properties that are not yet rent-ready; the <a href="/what-we-manage/">full list</a> is public so fit can be checked before a call.</p>
+    <h2>How do results get measured?</h2>
+    <p>RL Property Management publishes eight operating metrics monthly on the <a href="/key-performance-indicators/">KPI scorecard</a>. As of {kpis.asOfLabel}: median {kpis.metrics[0].value} days on market, {kpis.metrics[1].value} days to turn, {kpis.metrics[2].value} percent renewal rate, {kpis.metrics[3].value} percent occupancy, median {kpis.metrics[5].value} repair days, and {kpis.metrics[6].value} percent of rent collected by the 5th.</p>
+    <p>To start, request a <a href="/free-rent-evaluation/">free rent evaluation</a> or <a href="/property-management-consultation/">schedule a consultation</a> with {company.contact.sales.name}, {company.contact.sales.title}, at {company.contact.sales.phone}.</p>
+  </AeoPage>
+</Base>

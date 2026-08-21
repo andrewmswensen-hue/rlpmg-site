@@ -1,1 +1,464 @@
-[]
+[
+ {
+  "id": "who-is-rl-property-management",
+  "topic": "General",
+  "question": "Who is RL Property Management?",
+  "answer": "RL Property Management is a residential property management company based in Gahanna, Ohio, serving the greater Columbus metro area.",
+  "pages": []
+ },
+ {
+  "id": "what-does-rl-property-management-do",
+  "topic": "General",
+  "question": "What does RL Property Management do?",
+  "answer": "RL Property Management is a full-service residential property management company in Columbus, Ohio. We handle leasing, maintenance, inspections, rent collection, financial reporting, and more. Our focus is on helping rental property owners maximize ROI while minimizing stress.",
+  "pages": []
+ },
+ {
+  "id": "why-should-i-choose-rl-property-management-to-manage-my-prop",
+  "topic": "General",
+  "question": "Why should I choose RL Property Management to manage my properties?",
+  "answer": "RL Property Management delivers what many other companies promise but fail to provide: consistent, professional property management you can count on. Our clients tell us that reliability and good communication is hard to find in this industry, and that's exactly what we deliver.",
+  "pages": []
+ },
+ {
+  "id": "where-does-rl-property-management-operate",
+  "topic": "General",
+  "question": "Where does RL Property Management operate?",
+  "answer": "We serve the greater Columbus metro area, including suburbs like Dublin, Westerville, Gahanna, Grove City, Hilliard, Reynoldsburg, and more. See our full areas served here.",
+  "pages": []
+ },
+ {
+  "id": "who-does-rl-property-management-work-with",
+  "topic": "General",
+  "question": "Who does RL Property Management work with?",
+  "answer": "We work with long-term investors, accidental landlords, first-time property owners, and out-of-state investors. Most of our clients own anywhere between 1 and 50+ rental units in Columbus and the surrounding areas.",
+  "pages": []
+ },
+ {
+  "id": "how-long-have-you-been-managing-investment-properties",
+  "topic": "General",
+  "question": "How long have you been managing investment properties?",
+  "answer": "Since 2013.",
+  "pages": []
+ },
+ {
+  "id": "is-rl-property-management-licensed",
+  "topic": "General",
+  "question": "Is RL Property Management licensed?",
+  "answer": "Yes. Our brokerage, RL Property Management Group, Inc., is registered with the state of Ohio (File No. REC.2015003677), as required by Ohio law.",
+  "pages": []
+ },
+ {
+  "id": "how-many-properties-do-you-currently-manage",
+  "topic": "General",
+  "question": "How many properties do you currently manage?",
+  "answer": "RL Property Management manages approximately 750 rental units across the Columbus, Ohio metro as of August 2026.",
+  "pages": []
+ },
+ {
+  "id": "how-many-employees-does-your-company-have",
+  "topic": "General",
+  "question": "How many employees does your company have?",
+  "answer": "We have a total of 33 employees, including 8 full-time maintenance technicians.",
+  "pages": []
+ },
+ {
+  "id": "do-you-personally-own-investment-properties",
+  "topic": "General",
+  "question": "Do you personally own investment properties?",
+  "answer": "Yes. Our executive team owns several single-family and multi-family properties in Central Ohio, totaling around 12 units.\n\nSee how we determine cash flow for our properties.",
+  "pages": []
+ },
+ {
+  "id": "do-you-manage-homeowner-or-condo-associations-hoas-coas",
+  "topic": "General",
+  "question": "Do you manage homeowner or condo associations (HOAs/COAs)?",
+  "answer": "No, RL Property Management does not manage HOAs or condominium associations. However, if you own a rental property that happens to be located within an HOA or COA, and the community allows rentals, we're happy to manage the property itself.",
+  "pages": []
+ },
+ {
+  "id": "do-you-use-digital-signatures-for-documents",
+  "topic": "General",
+  "question": "Do you use digital signatures for documents?",
+  "answer": "Yes.",
+  "pages": []
+ },
+ {
+  "id": "how-many-single-family-properties-do-i-need-to-own-to-work-w",
+  "topic": "General",
+  "question": "How many single-family properties do I need to own to work with RL Property Management Group?",
+  "answer": "We manage any property that does not require on-site staff, typically properties with fewer than 100 units.\n\nLearn when it makes sense to hire a property management company.",
+  "pages": []
+ },
+ {
+  "id": "does-rl-property-management-have-good-reviews",
+  "topic": "General",
+  "question": "Does RL Property Management have good reviews?",
+  "answer": "Yes, our clients and tenants regularly highlight our professionalism, communication, and responsiveness. You can read verified reviews on Google.",
+  "pages": []
+ },
+ {
+  "id": "how-much-does-rl-property-management-charge",
+  "topic": "Pricing & Getting Started",
+  "question": "How much does RL Property Management charge?",
+  "answer": "Our pricing is flat-rate, transparent, and designed to align with your success. We don't charge leasing fees, and there are no hidden costs. Visit our Pricing page for full details.",
+  "pages": []
+ },
+ {
+  "id": "is-rl-property-management-the-same-as-rl-property-management",
+  "topic": "Pricing & Getting Started",
+  "question": "Is RL Property Management the same as RL Property Management Group?",
+  "answer": "Yes. RL Property Management Group, Inc. is our legal business name, but we're commonly known as RL Property Management or RLPM.",
+  "pages": []
+ },
+ {
+  "id": "what-services-are-included-in-your-property-management-agree",
+  "topic": "Pricing & Getting Started",
+  "question": "What services are included in your Property Management Agreement?",
+  "answer": "We provide full-service property management, handling everything from leasing and maintenance to rent collection and financial reporting. Our goal is to make property ownership as hands-off as possible.",
+  "pages": []
+ },
+ {
+  "id": "do-you-charge-a-startup-fee",
+  "topic": "Pricing & Getting Started",
+  "question": "Do you charge a startup fee?",
+  "answer": "No startup fee is charged for occupied units. For vacant units, fees vary based on your total unit count and service plan. Full details are available on our Pricing page.",
+  "pages": []
+ },
+ {
+  "id": "how-is-your-pricing-structured",
+  "topic": "Pricing & Getting Started",
+  "question": "How is your pricing structured?",
+  "answer": "We believe in transparency. Our flat monthly management fee and lease renewal fee cover most services, with additional fees only for out-of-the-ordinary events. Full pricing details are included in our Property Management Agreement and listed on our Pricing page.",
+  "pages": []
+ },
+ {
+  "id": "what-do-you-need-from-me-to-manage-my-property-successfully",
+  "topic": "Pricing & Getting Started",
+  "question": "What do you need from me to manage my property successfully?",
+  "answer": "We need to understand how involved you want to be and what your long-term goals are for your property.",
+  "pages": []
+ },
+ {
+  "id": "can-i-view-financial-statements-online",
+  "topic": "Pricing & Getting Started",
+  "question": "Can I view financial statements online?",
+  "answer": "Yes. Each owner gets access to a 24/7 online portal with real-time financial data, including rent payments, expenses, statements, and invoices.",
+  "pages": []
+ },
+ {
+  "id": "can-you-provide-a-rent-estimate",
+  "topic": "Pricing & Getting Started",
+  "question": "Can you provide a rent estimate?",
+  "answer": "Yes! Click here for a customized rent estimate.",
+  "pages": []
+ },
+ {
+  "id": "will-you-inspect-properties-i-m-considering-buying",
+  "topic": "Pricing & Getting Started",
+  "question": "Will you inspect properties I'm considering buying?",
+  "answer": "No, but we can advise during the due diligence process for medium or large multi-family properties. We also offer pre-inspections for properties you own for $300 (waived from your onboarding fee if you sign a PMA with us).",
+  "pages": []
+ },
+ {
+  "id": "how-often-do-you-inspect-my-property",
+  "topic": "Pricing & Getting Started",
+  "question": "How often do you inspect my property?",
+  "answer": "We conduct quarterly inspections to check smoke detectors, appliances, resident responsibilities, liabilities, and overall property condition.",
+  "pages": []
+ },
+ {
+  "id": "how-do-i-get-started-with-rl-property-management",
+  "topic": "Pricing & Getting Started",
+  "question": "How do I get started with RL Property Management?",
+  "answer": "- Schedule a consultation with our team.\n- If RL is a good fit, schedule a pre-inspection.\n- We'll draft and sign a Property Management Agreement.\n- You'll provide reserve funds and property keys.\n- If vacant, we'll list your property for rent.",
+  "pages": []
+ },
+ {
+  "id": "can-my-hoa-coa-rules-be-included-in-the-lease",
+  "topic": "Pricing & Getting Started",
+  "question": "Can my HOA/COA rules be included in the lease?",
+  "answer": "Yes, we can add property-specific rules and regulations to the lease.",
+  "pages": []
+ },
+ {
+  "id": "do-i-need-insurance-on-my-rental-property",
+  "topic": "Pricing & Getting Started",
+  "question": "Do I need insurance on my rental property?",
+  "answer": "Yes. A Rental Dwelling Policy (RDP) or Commercial Policy with at least $1,000,000 liability coverage is required. RL Property Management must be listed as an additional insured.",
+  "pages": []
+ },
+ {
+  "id": "how-long-is-the-property-management-agreement",
+  "topic": "Pricing & Getting Started",
+  "question": "How long is the Property Management Agreement?",
+  "answer": "Minimum one year, with longer terms required for larger property portfolios.",
+  "pages": []
+ },
+ {
+  "id": "is-there-an-early-termination-fee",
+  "topic": "Pricing & Getting Started",
+  "question": "Is there an early termination fee?",
+  "answer": "Yes, the amount depends on the agreement.",
+  "pages": []
+ },
+ {
+  "id": "can-you-pay-property-related-bills-for-me",
+  "topic": "Pricing & Getting Started",
+  "question": "Can you pay property-related bills for me?",
+  "answer": "Yes, except for HOA dues, mortgages, insurance, and property taxes.",
+  "pages": []
+ },
+ {
+  "id": "do-you-accept-section-8-housing-vouchers",
+  "topic": "Pricing & Getting Started",
+  "question": "Do you accept Section 8 housing vouchers?",
+  "answer": "Some jurisdictions prohibit “source of income discrimination,” meaning a landlord or property manager cannot decline an applicant simply because their source of income is a housing voucher. In those cities (currently Westerville, Reynoldsburg, Columbus, and Bexley, current as of 2026), we must accept Section 8 applicants and screen them per our normal process.\n\nOur leasing agent first inputs data such as the person's credit score, income, criminal history, and about 20 other data points into a spreadsheet. The spreadsheet is then separately evaluated by the director of property management, who grades it against our rubric of minimum criteria. The final decision is based on the data alone, since the spreadsheet contains no photos or other personally identifying information.",
+  "pages": []
+ },
+ {
+  "id": "can-i-leave-personal-belongings-at-the-property",
+  "topic": "Pricing & Getting Started",
+  "question": "Can I leave personal belongings at the property?",
+  "answer": "We do not take responsibility for personal property left on-site. If you leave anything, be aware that it could be lost or damaged.\n\nThat said, it's essential to clarify who owns what in your lease agreement.",
+  "pages": []
+ },
+ {
+  "id": "how-much-should-i-set-aside-for-property-expenses",
+  "topic": "Pricing & Getting Started",
+  "question": "How much should I set aside for property expenses?",
+  "answer": "We recommend keeping six months' rent in reserve to cover maintenance, turnovers, and capital expenses.",
+  "pages": []
+ },
+ {
+  "id": "do-you-charge-a-leasing-fee",
+  "topic": "Pricing & Getting Started",
+  "question": "Do you charge a leasing fee?",
+  "answer": "No. Unlike some property managers who prioritize filling units quickly to collect fees, our focus is on finding high-quality, long-term residents. Since we don't charge leasing fees, we're incentivized to find great residents and keep them for as long as possible.\n\nLearn the difference between a leasing agent and a property manager.",
+  "pages": []
+ },
+ {
+  "id": "how-do-you-screen-potential-residents",
+  "topic": "Leasing & Resident Screening",
+  "question": "How do you screen potential residents?",
+  "answer": "We use a custom rental application and TransUnion background check, evaluating:\n- Credit history\n- Criminal history\n- Rental history (evictions, landlord references)\n- Job history and income (verified via pay stubs or bank statements)\n\nThe goal is to place residents who pay rent on time and take care of the property.",
+  "pages": []
+ },
+ {
+  "id": "where-do-you-advertise-available-rentals",
+  "topic": "Leasing & Resident Screening",
+  "question": "Where do you advertise available rentals?",
+  "answer": "We list properties on 45+ major rental platforms including Zillow, Trulia, Apartments.com, and our own website. We do not use Craigslist.\n\nClick here to view our full marketing strategy. Click here for a more in-depth view of how we locate new tenants.",
+  "pages": []
+ },
+ {
+  "id": "how-do-you-qualify-prospective-residents",
+  "topic": "Leasing & Resident Screening",
+  "question": "How do you qualify prospective residents?",
+  "answer": "Applicants must meet these criteria:\n- Income: minimum 3x monthly rent\n- No violent criminal convictions\n- No evictions in the last 5 years\n- No serious or recurring credit issuesYou can read more about how we qualify prospective tenants here.",
+  "pages": []
+ },
+ {
+  "id": "how-long-does-it-take-to-rent-out-a-property",
+  "topic": "Leasing & Resident Screening",
+  "question": "How long does it take to rent out a property?",
+  "answer": "Once a unit is rent-ready, expect it to lease in 3 to 4 weeks on average as of August 2026. Current median days on market is published on the live KPI scorecard at /key-performance-indicators/. No lease timeline is promised; quality of placement comes before speed.",
+  "pages": []
+ },
+ {
+  "id": "do-you-guarantee-lease-signing-within-a-certain-timeframe",
+  "topic": "Leasing & Resident Screening",
+  "question": "Do you guarantee lease signing within a certain timeframe?",
+  "answer": "No. Be cautious of property managers who make guarantees, since they may lower rents or accept unqualified residents just to fill units quickly. We prioritize quality over speed.",
+  "pages": []
+ },
+ {
+  "id": "do-i-still-pay-the-monthly-management-fee-if-my-property-is-",
+  "topic": "Leasing & Resident Screening",
+  "question": "Do I still pay the monthly management fee if my property is vacant?",
+  "answer": "Yes, the management fee still applies while we're actively managing the property. If a property remains vacant longer than 60 days, we provide a management fee reimbursement.",
+  "pages": []
+ },
+ {
+  "id": "do-you-provide-a-standard-lease",
+  "topic": "Leasing & Resident Screening",
+  "question": "Do you provide a standard lease?",
+  "answer": "Yes, our custom lease is reviewed by legal counsel and can include restrictions (no smoking, pet policies, guest limits, and more). You can typically add restrictions, such as not allowing pets, or add fees to discourage certain behavior, such as a fee for hosting a large gathering.\n\nRead more on how to handle pets in a lease agreement in Franklin County here, and what tenant fees can be charged in a lease in Ohio here.",
+  "pages": []
+ },
+ {
+  "id": "are-residents-responsible-for-utility-bills",
+  "topic": "Leasing & Resident Screening",
+  "question": "Are residents responsible for utility bills?",
+  "answer": "We strive to have residents cover all utility costs whenever possible. We recommend including a table in the lease agreement listing each utility and who is responsible for paying it.",
+  "pages": []
+ },
+ {
+  "id": "can-i-require-my-property-to-remain-smoke-free",
+  "topic": "Leasing & Resident Screening",
+  "question": "Can I require my property to remain smoke-free?",
+  "answer": "Yes, we do not allow smoking in any of the units we manage. You can read more about adding restrictions to a lease agreement here.",
+  "pages": []
+ },
+ {
+  "id": "how-much-is-the-security-deposit",
+  "topic": "Leasing & Resident Screening",
+  "question": "How much is the security deposit?",
+  "answer": "An amount equal to one or two months' rent, depending on credit.",
+  "pages": []
+ },
+ {
+  "id": "do-you-leave-utilities-on-between-tenants",
+  "topic": "Leasing & Resident Screening",
+  "question": "Do you leave utilities on between tenants?",
+  "answer": "Yes, we keep utilities active while a unit is vacant. This ensures a smooth turnover, facilitates repairs, and helps protect the property, especially in winter.",
+  "pages": []
+ },
+ {
+  "id": "how-do-you-handle-evictions",
+  "topic": "Evictions & Resident Disputes",
+  "question": "How do you handle evictions?",
+  "answer": "We use professional local attorneys to complete the court eviction process. Our normal process for handling evictions is three steps and takes approximately 6 weeks, but we also look for other solutions, such as offering a pay-and-stay arrangement.\n\nOther facts to consider: what happens if you accept a partial payment of monthly rent.",
+  "pages": []
+ },
+ {
+  "id": "how-much-does-an-eviction-cost",
+  "topic": "Evictions & Resident Disputes",
+  "question": "How much does an eviction cost?",
+  "answer": "As of August 2026, the Franklin County Municipal Court filing fee is $149 for possession only or $186 for possession plus money damages (FCMC Clerk civil cost schedule effective 8/1/2026). Attorney cost is approximately $100, and RL Property Management charges a $199 fee to manage the process, so total client cost for a possession-only action is approximately $448 to $450. The client is responsible for these costs.",
+  "pages": []
+ },
+ {
+  "id": "how-often-do-rentals-escalate-to-eviction-or-legal-action",
+  "topic": "Evictions & Resident Disputes",
+  "question": "How often do rentals escalate to eviction or legal action?",
+  "answer": "Approximately 3.5% of rentals result in eviction, litigation, or another significant dispute.",
+  "pages": []
+ },
+ {
+  "id": "do-you-notify-property-owners-about-resident-complaints",
+  "topic": "Evictions & Resident Disputes",
+  "question": "Do you notify property owners about resident complaints?",
+  "answer": "Our experienced team handles most resident concerns internally. We will only involve the owner if an issue is significant or requires their input.",
+  "pages": []
+ },
+ {
+  "id": "do-you-offer-protection-against-pet-damage",
+  "topic": "Evictions & Resident Disputes",
+  "question": "Do you offer protection against pet damage?",
+  "answer": "Yes. If a resident's approved pet causes damage beyond normal wear and tear, and the cost to repair exceeds the security deposit, RL Property Management covers the difference, up to $4,000.\n\nTo fund this, residents pay a monthly pet administration fee, which RL Property Management retains. This coverage does not apply if the only animal in the unit is an approved service, assist, or companion animal, since no pet administration fee is collected in that case.",
+  "pages": []
+ },
+ {
+  "id": "what-types-of-repairs-do-you-handle-in-house-vs-outsource",
+  "topic": "Maintenance & Repairs",
+  "question": "What types of repairs do you handle in-house vs. outsource?",
+  "answer": "In-house maintenance covers general handyman tasks and minor plumbing, electrical, and other repairs. Third-party vendors handle specialized work such as roofing, HVAC, and major plumbing or electrical projects.",
+  "pages": []
+ },
+ {
+  "id": "do-you-charge-a-fee-for-repairs",
+  "topic": "Maintenance & Repairs",
+  "question": "Do you charge a fee for repairs?",
+  "answer": "In-house repairs are billed at $84 per hour plus a $15 trip charge and materials (2026 rate). Third-party repairs are billed at vendor cost plus a 15% project management fee on vendor costs up to $3,000 (max $450 per project).\n\nThis fee does not apply to work done for property turns. The vendor fee structure for vacant property turns is 15% on turns up to $15,000, 10% on turns from $15,001 to $25,000, and 7.5% on turns over $25,000.",
+  "pages": []
+ },
+ {
+  "id": "do-you-require-me-to-use-your-vendors",
+  "topic": "Maintenance & Repairs",
+  "question": "Do you require me to use your vendors?",
+  "answer": "We're happy to use your preferred vendors if you select a plan that allows it.",
+  "pages": []
+ },
+ {
+  "id": "is-a-maintenance-reserve-required",
+  "topic": "Maintenance & Repairs",
+  "question": "Is a maintenance reserve required?",
+  "answer": "Yes, a minimum reserve amount of $350 to $1,500 per unit is required for most properties, depending on the plan type (Passive, Standard, or Premium). See full 2026 pricing and reserve amounts here.",
+  "pages": []
+ },
+ {
+  "id": "will-you-complete-renovation-work-on-my-property",
+  "topic": "Maintenance & Repairs",
+  "question": "Will you complete renovation work on my property?",
+  "answer": "We only manage rent-ready (or nearly rent-ready) properties. If your property needs renovations, we can refer you to reputable local contractors and would be happy to discuss a management agreement once the work is complete.",
+  "pages": []
+ },
+ {
+  "id": "do-you-handle-common-area-maintenance",
+  "topic": "Maintenance & Repairs",
+  "question": "Do you handle common area maintenance?",
+  "answer": "Yes, we provide Common Area Maintenance (CAM) services.",
+  "pages": []
+ },
+ {
+  "id": "how-do-you-handle-maintenance-requests",
+  "topic": "Maintenance & Repairs",
+  "question": "How do you handle maintenance requests?",
+  "answer": "During business hours, residents call our office directly to report maintenance issues. Our team screens calls to confirm they are both urgent and the owner's responsibility. Once confirmed, we send out one of our in-house maintenance crews right away.",
+  "pages": []
+ },
+ {
+  "id": "what-is-your-response-time-for-urgent-maintenance-issues-e-g",
+  "topic": "Maintenance & Repairs",
+  "question": "What is your response time for urgent maintenance issues (e.g., a flooding kitchen)?",
+  "answer": "All emergencies are handled immediately.",
+  "pages": []
+ },
+ {
+  "id": "what-is-your-response-time-for-routine-maintenance-requests-",
+  "topic": "Maintenance & Repairs",
+  "question": "What is your response time for routine maintenance requests (e.g., a closet door off track)?",
+  "answer": "Routine repairs are prioritized based on urgency. On average, they're completed within one to three weeks.",
+  "pages": []
+ },
+ {
+  "id": "how-do-you-handle-maintenance-emergencies-reported-outside-b",
+  "topic": "Maintenance & Repairs",
+  "question": "How do you handle maintenance emergencies reported outside business hours?",
+  "answer": "We have a 24/7 emergency call center that handles after-hours maintenance requests, including weekends and holidays. No matter when a resident calls, we follow four key steps:\n- Stay calm and reassure the resident.\n- Assess the nature of the issue.\n- Confirm whether it's an emergency.\n- Dispatch the appropriate maintenance team if necessary.",
+  "pages": []
+ },
+ {
+  "id": "what-is-your-hourly-rate-for-repair-calls",
+  "topic": "Maintenance & Repairs",
+  "question": "What is your hourly rate for repair calls?",
+  "answer": "Our in-house maintenance team charges $84 per hour (2026 rate) plus a $15 trip charge per visit.",
+  "pages": []
+ },
+ {
+  "id": "how-often-do-you-inspect-and-replace-smoke-detectors",
+  "topic": "Maintenance & Repairs",
+  "question": "How often do you inspect and replace smoke detectors?",
+  "answer": "Smoke and carbon monoxide detectors (if gas is present) are checked quarterly during inspections and replaced as needed. Detectors must be replaced if they are 10 years old or older.",
+  "pages": []
+ },
+ {
+  "id": "what-are-typical-maintenance-and-repair-costs",
+  "topic": "Maintenance & Repairs",
+  "question": "What are typical maintenance and repair costs?",
+  "answer": "The following expenses may be incurred by the property:\n- General maintenance, performed by our in-house team at a competitive hourly rate, with materials charged at cost.\n- Specialized repairs, handled by third-party contractors at industry-standard rates, plus a 15% project management fee.\n- Capital expenses, including major replacements like roofs, windows, HVAC systems, water heaters, appliances, driveways, sidewalks, and plumbing or electrical fixtures.New rental property owners who previously handled repairs themselves may find professional repair costs higher than expected.",
+  "pages": []
+ },
+ {
+  "id": "who-keeps-the-security-deposit",
+  "topic": "Maintenance & Repairs",
+  "question": "Who keeps the security deposit?",
+  "answer": "Security deposits cover damages beyond normal wear and tear. Here's how they're used:\n- Normal wear and tear cannot be deducted from the security deposit, but must still be addressed to keep the unit rent-ready.\n- Resident damage may be covered by the security deposit. If costs exceed the deposit, the owner is responsible for the balance.\n- Pre-existing or new functionality issues, such as sticking doors, inoperable windows, or loose handles, should be fixed to maintain resident satisfaction and long-term retention. Some owners may be unaware of these issues after living with them for years, but new residents expect full functionality.",
+  "pages": []
+ },
+ {
+  "id": "what-areas-do-you-provide-property-management-services-for",
+  "topic": "Service Area",
+  "question": "What areas do you provide property management services for?",
+  "answer": "Whether you own a single-family home, multi-family units, or a large rental portfolio, we proudly serve a wide range of neighborhoods and cities within the Columbus, Ohio metro area, including:\n- Ashville\n- Bexley\n- Blacklick\n- Canal Winchester\n- Clintonville\n- Columbus\n- Delaware\n- Dublin\n- Gahanna\n- German Village\n- Grandview Heights\n- Grove City\n- Hilliard\n- Lancaster\n- London\n- Marysville\n- New Albany\n- Newark\n- Pickerington\n- Powell\n- Reynoldsburg\n- Short North\n- Upper Arlington\n- Westerville\n- Worthington",
+  "pages": []
+ },
+ {
+  "id": "what-if-my-property-isn-t-in-one-of-these-areas",
+  "topic": "Service Area",
+  "question": "What if my property isn't in one of these areas?",
+  "answer": "If your property isn't listed here but is located in Columbus, Franklin County, or the surrounding areas, we'd still love to hear from you. Feel free to reach out or schedule a call with us, and we'll work together to determine if we can provide the right property management solutions for you.",
+  "pages": []
+ }
+]

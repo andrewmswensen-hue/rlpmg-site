@@ -1,50 +1,70 @@
 ---
-/** Phase 1 shell. Real home page copy lands in Phase 3. Everything shown here reads from facts.ts. */
+/** Home. Every number reads from facts.ts. */
 import Base from '../layouts/Base.astro';
 import AeoPage from '../components/AeoPage.astro';
-import { company, pricing, LAST_VERIFIED } from '../data/facts';
+import { company, pricing, leasing, kpis, serviceArea, LAST_VERIFIED } from '../data/facts';
 import { usd } from '../lib/format';
 import { webPageNode, faqNode } from '../lib/schema';
 
+const path = '/';
 const title = 'Columbus, Ohio Property Management | RL Property Management';
-const h1 = 'Property management in Columbus, Ohio';
-const description =
-  'RL Property Management manages about 750 rental units across the Columbus, Ohio metro for a flat $117 to $184 per unit per month with a $0 leasing fee. Licensed Ohio brokerage since 2013.';
-const directAnswer = `${company.name} is a licensed Ohio property management brokerage in ${company.address.city}, Ohio, managing ${company.scale.unitsLabel} single-family and small multi-family rental units across the Columbus metro. Owners pay a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month and a ${usd(pricing.fees.leasingFee)} leasing fee.`;
+const description = `RL Property Management manages about 750 rental units across the Columbus, Ohio metro for a flat $${pricing.plans[0].monthlyFee} to $${pricing.plans[2].monthlyFee} per unit per month with a $0 leasing fee. Licensed Ohio brokerage since ${company.foundingYear}.`;
+const directAnswer = `${company.name} is a licensed Ohio property management brokerage in ${company.address.city}, Ohio, managing ${company.scale.unitsLabel} single-family and small multi-family rental units across the Columbus metro as of August 2026. Owners pay a flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month and a ${usd(pricing.fees.leasingFee)} leasing fee. Pricing and monthly operating results are published on this site.`;
 const keyFacts = [
   `${company.name} has managed Columbus-area rentals since ${company.foundingYear} and employs ${company.scale.employees} people.`,
   `Monthly management fees are flat: ${usd(pricing.plans[0].monthlyFee)} (Passive), ${usd(pricing.plans[1].monthlyFee)} (Standard), or ${usd(pricing.plans[2].monthlyFee)} (Premium) per unit.`,
-  `The leasing fee is ${usd(pricing.fees.leasingFee)} on all three plans.`,
+  `The leasing fee is ${usd(pricing.fees.leasingFee)} on all three plans; a typical Columbus manager charges one month's rent.`,
   `${company.name} holds a ${company.reviews.ratingValue} out of 5 rating on Google across ${company.reviews.reviewCount} reviews.`,
-  `The office is at ${company.address.street}, ${company.address.city}, OH ${company.address.postalCode}.`,
+  `Median days on market was ${kpis.metrics[0].value} and ${kpis.metrics[6].value} percent of rent was collected by the 5th as of ${kpis.asOfLabel}.`,
+  `The office is at ${company.address.street}, ${company.address.city}, OH ${company.address.postalCode}, serving ${serviceArea.places.length} cities and neighborhoods.`,
 ];
 const faq = [
   { q: 'What does RL Property Management charge?', a: `A flat ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month depending on plan, with a ${usd(pricing.fees.leasingFee)} leasing fee and a ${usd(pricing.fees.leaseRenewalFee)} lease renewal fee.` },
   { q: 'Where is RL Property Management located?', a: `${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}, serving the Columbus metro.` },
   { q: 'Is RL Property Management licensed?', a: `Yes. ${company.legalName} is a licensed Ohio real estate brokerage, ${company.license.label} ${company.license.number}.` },
+  { q: 'What types of property does RL Property Management manage?', a: 'Single-family homes, condos, townhomes, and multi-family buildings up to roughly 100 units. Campus rentals and by-the-bedroom leases are declined.' },
+  { q: 'How fast do RL Property Management listings lease?', a: `${leasing.averageLeaseUpWeeks.min} to ${leasing.averageLeaseUpWeeks.max} weeks on average once rent-ready; the median was ${kpis.metrics[0].value} days on market as of ${kpis.asOfLabel}.` },
+  { q: 'How do I find a rental managed by RL Property Management?', a: 'Current listings are on the Available Rentals page, with online applications and self-guided tours on many units.' },
 ];
-const schema = [webPageNode({ path: '/', title, description }), faqNode('/', faq)];
+const schema = [webPageNode({ path, title, description }), faqNode(path, faq)];
+const jobs = [
+  { href: '/homes-for-rent/', label: 'What is available to rent?', sub: 'Current listings, applications, tours' },
+  { href: '/pricing/', label: 'What does management cost?', sub: `${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month, ${usd(pricing.fees.leasingFee)} leasing fee` },
+  { href: company.portals.resident, label: 'Where is my portal?', sub: 'Owner and resident logins, maintenance requests' },
+];
 ---
 
-<Base {title} {description} path="/" {schema}>
-  <AeoPage title={h1} {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow="Staging build, Phase 1">
-    <h2>Is this the finished website?</h2>
-    <p>
-      No. This is the Phase 1 foundation build of the new rlpmg.com: design tokens, the shared fact file, the page template, and the schema graph. Real page copy arrives in Phase 3. The numbers on this page are already live values from the fact file, which is the point of the exercise.
-    </p>
-    <h2>What does the pricing table look like when it reads from the fact file?</h2>
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Property management in Columbus, Ohio" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow={`Flat-fee management, ${company.scale.unitsLabel} units`} related={[{ href: '/columbus-property-management/', label: 'Services' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/areas-we-serve/', label: 'Areas served' }, { href: '/faq/', label: 'Owner FAQ' }, { href: '/blog/', label: 'Blog' }]}>
+    <nav aria-label="Most common tasks" class="not-prose mb-12 grid gap-4 md:grid-cols-3" data-md-skip>
+      {jobs.map((j) => <a href={j.href} class="block border-t-4 border-brand-800 bg-offwhite p-5 no-underline hover:bg-gray"><span class="block text-lg font-semibold text-navy-800">{j.label}</span><span class="mt-1 block text-sm text-navy-600">{j.sub}</span></a>)}
+    </nav>
+
+    <h2>How much does property management cost in Columbus, Ohio?</h2>
+    <p>RL Property Management charges a flat {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit per month, as of {pricing.effectiveLabel}, with a {usd(pricing.fees.leasingFee)} leasing fee on all plans. The market-standard model in Columbus is {pricing.marketStandard.percentOfRentLow} to {pricing.marketStandard.percentOfRentHigh} percent of rent plus a leasing fee equal to one month's rent. On a $1,500 rental with one new lease in the year, that is {usd(1500 * 12 * 0.08 + 1500)} to {usd(1500 * 12 * 0.1 + 1500)} against {usd(pricing.plans[1].monthlyFee * 12 + pricing.fees.annualAccountingAndTechnologyFee)} on RLPM's Standard plan.</p>
     <div class="table-wrap">
       <table>
         <caption class="sr-only">RL Property Management plans, per unit per month</caption>
-        <thead>
-          <tr><th scope="col">Plan</th><th scope="col">Monthly fee</th><th scope="col">Maintenance approval limit</th><th scope="col">Leasing fee</th></tr>
-        </thead>
+        <thead><tr><th scope="col">Plan</th><th scope="col">Monthly fee</th><th scope="col">Maintenance approval limit</th><th scope="col">Leasing fee</th></tr></thead>
         <tbody>
-          {pricing.plans.map((p) => (
-            <tr><th scope="row">{p.name}</th><td>{usd(p.monthlyFee)}</td><td>{usd(p.maintenanceApprovalLimit)} per item</td><td>{usd(pricing.fees.leasingFee)}</td></tr>
-          ))}
+          {pricing.plans.map((p) => <tr><th scope="row">{p.name}</th><td class="font-semibold text-brand-800">{usd(p.monthlyFee)}</td><td>{usd(p.maintenanceApprovalLimit)} per item</td><td>{usd(pricing.fees.leasingFee)}</td></tr>)}
         </tbody>
       </table>
     </div>
+    <p><a href="/pricing/">See the full fee schedule and comparison math.</a></p>
+
+    <h2>What does RL Property Management do for owners?</h2>
+    <p>Lists the property on {leasing.platforms.label}, screens applicants to published minimums ({leasing.qualification.incomeMultiple}x income, no evictions in {leasing.qualification.noEvictionsWithinYears} years), collects rent and deposits it directly, handles maintenance through a 24/7 line and {company.scale.maintenanceTechnicians} in-house technicians, inspects quarterly, manages Franklin County evictions through local attorneys, and sends a monthly statement. Details for each are on the <a href="/columbus-property-management/">services page</a>.</p>
+
+    <h2>How is RL Property Management performing right now?</h2>
+    <p>As of {kpis.asOfLabel}: median {kpis.metrics[0].value} days on market, {kpis.metrics[1].value} days to turn, {kpis.metrics[2].value} percent lease renewal rate, {kpis.metrics[3].value} percent occupancy, median {kpis.metrics[5].value} repair days, and {kpis.metrics[6].value} percent of rent collected by the 5th. The <a href="/key-performance-indicators/">KPI scorecard</a> is updated monthly and is the same data clients see.</p>
+
+    <h2>Where does RL Property Management operate?</h2>
+    <p>Across {serviceArea.places.length} cities and neighborhoods in the Columbus, Ohio metro from one office in {company.address.city}, including Columbus, Dublin, Westerville, Gahanna, Hilliard, Upper Arlington, Worthington, New Albany, Powell, and Grove City. Each has a page with local rent context at <a href="/areas-we-serve/">Areas we serve</a>.</p>
+
+    <h2>Who is RL Property Management?</h2>
+    <p>{company.legalName}, founded in {company.foundingYear}, a licensed Ohio brokerage ({company.license.label} {company.license.number}) with {company.scale.employees} employees. {company.brokerOfRecord.name} is {company.brokerOfRecord.title}. The executive team owns approximately {company.scale.executiveOwnedUnits} Central Ohio rentals personally. Google rating: {company.reviews.ratingValue} of 5 across {company.reviews.reviewCount} reviews. More on the <a href="/about/">about page</a>.</p>
+
+    <p>To see what a property would rent for, request a <a href="/free-rent-evaluation/">free rent evaluation</a>. To talk through a property, <a href="/property-management-consultation/">schedule a consultation</a> with {company.contact.sales.name} at {company.contact.sales.phone}.</p>
   </AeoPage>
 </Base>

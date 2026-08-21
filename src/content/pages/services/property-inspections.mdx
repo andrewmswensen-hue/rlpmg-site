@@ -1,0 +1,127 @@
+---
+title: "Rental property inspections"
+seoTitle: "Rental Property Inspections | RLPM Columbus, Ohio"
+description: "RL Property Management inspects Columbus, Ohio rentals quarterly, plus a move-in ready inspection and a move-out inspection with turn scope, on all three plans."
+directAnswer: "RL Property Management inspects each managed rental quarterly, checking smoke detectors, appliances, resident responsibilities, liabilities, and overall condition. A move-in ready inspection and a move-out inspection with turn scope preparation are included on the Passive, Standard, and Premium plans. A pre-inspection before signing costs $300 and is credited against the $300 onboarding fee on a vacant unit."
+keyFacts:
+  - "RL Property Management inspects each managed rental quarterly, as of August 2026."
+  - "Quarterly inspections cover smoke detectors, appliances, resident responsibilities, liabilities, and overall condition."
+  - "Smoke and CO detectors are checked quarterly and replaced at 10 years or older."
+  - "A move-in ready inspection and a move-out inspection with turn scope preparation are included on all three plans at no separate charge."
+  - "A pre-inspection before a management agreement is signed costs $300 and is credited against the $300 onboarding fee for a vacant unit."
+  - "Median time to turn a unit between residents was 12 days as of July 2026."
+faq:
+  - q: "How often does RL Property Management inspect a rental?"
+    a: "Quarterly, four times a year, for each managed property in the Columbus, Ohio metro. Move-in and move-out inspections happen in addition to the quarterly schedule."
+  - q: "Does a quarterly inspection cost the owner extra?"
+    a: "No. Inspections are covered by the flat monthly fee of $117, $137, or $184 per unit. Repairs identified during an inspection are billed separately at $84 per hour plus a $15 trip charge and materials."
+  - q: "What does RL Property Management check during an inspection?"
+    a: "Smoke detectors, appliances, resident responsibilities under the lease, liabilities, and overall condition of the property."
+  - q: "What is the $300 pre-inspection?"
+    a: "An inspection performed before a Property Management Agreement is signed, producing a punch list of what stands between the property and a listing. The $300 is credited against the $300 onboarding fee for a vacant unit once the agreement is signed."
+  - q: "How are smoke and carbon monoxide detectors handled?"
+    a: "Smoke and CO detectors are checked at each quarterly inspection and replaced when they reach 10 years or older."
+  - q: "Does the move-out inspection determine deposit deductions?"
+    a: "The move-out inspection documents condition and prepares the turn scope. Security deposits run 1 to 2 months' rent depending on credit, and approved pet households carry $4,000 of pet damage coverage."
+related:
+  - href: "/services/maintenance/"
+    label: "Rental property maintenance in Columbus, Ohio"
+  - href: "/services/leasing-and-marketing/"
+    label: "Leasing and marketing for Columbus rentals"
+  - href: "/how-it-works/"
+    label: "See how onboarding works"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/property-inspections/"
+section: "services"
+schemaType: "Service"
+order: 40
+---
+
+import { maintenance, pricing, kpis, leasing } from '../../../data/facts';
+import { usd } from '../../../lib/format';
+
+export const turnDays = kpis.metrics.find((m) => m.id === 'time-to-turn').value;
+
+## How often does RL Property Management inspect a rental?
+
+{maintenance.inspections.frequency}, four times a year, for each managed property across the Columbus, Ohio metro. Two more inspections bracket each tenancy: a move-in ready inspection before a resident takes possession, and a move-out inspection that also prepares the turn scope. All three inspection types are included on the Passive, Standard, and Premium plans as of August 2026.
+
+Four visits a year is more than a Columbus owner gets from a manager who inspects annually, and the reason is arithmetic rather than diligence theater. A slow leak found in October costs a trap and an hour of labor; the same leak found the following August costs subfloor.
+
+## What does a quarterly inspection cover?
+
+Five areas: smoke detectors, appliances, resident responsibilities under the lease, liabilities, and overall condition of the property. The inspector walks the unit against that list rather than forming a general impression, which is what makes one quarter comparable to the next and lets a trend show up before it becomes a repair.
+
+<ul>
+  {maintenance.inspections.covers.map((item) => <li>{item}</li>)}
+</ul>
+
+How inspection findings are delivered to owners, and in what format, is [SOURCE NEEDED].
+
+## What inspections happen when a resident moves in or out?
+
+A move-in ready inspection confirms the unit is clean, safe, and functional before possession transfers, and it establishes the documented baseline condition. A move-out inspection records condition against that baseline and produces the turn scope, which is the work list that gets the unit back to rent-ready. Both are included on all three plans.
+
+Median time to turn a unit between residents was {turnDays} days as of {kpis.asOfLabel}. That figure depends directly on the move-out inspection: a scope written the day the keys come back gets technicians dispatched, while a scope written a week later adds a week of vacancy.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Inspection</th>
+        <th scope="col">When it happens</th>
+        <th scope="col">Cost to the owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pre-inspection</td>
+        <td>Before a Property Management Agreement is signed</td>
+        <td>{usd(pricing.fees.preInspection.amount)}, credited against the {usd(pricing.fees.onboardingFeeVacantUnit)} onboarding fee on signing</td>
+      </tr>
+      <tr>
+        <td>Move-in ready inspection</td>
+        <td>Before a resident takes possession</td>
+        <td>Included in the monthly fee</td>
+      </tr>
+      <tr>
+        <td>Quarterly inspection</td>
+        <td>Four times a year during the tenancy</td>
+        <td>Included in the monthly fee</td>
+      </tr>
+      <tr>
+        <td>Move-out inspection</td>
+        <td>When the resident vacates</td>
+        <td>Included in the monthly fee, with turn scope preparation</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Does an inspection cost anything beyond the monthly fee?
+
+No. Quarterly, move-in, and move-out inspections are covered by the flat monthly fee of {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit as of {pricing.effectiveLabel}. Repairs identified during an inspection are billed separately: {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge, plus materials.
+
+Whether a repair found during an inspection needs owner sign-off depends on the plan. Passive authorizes up to {usd(pricing.plans[0].maintenanceApprovalLimit)} per item, Standard up to {usd(pricing.plans[1].maintenanceApprovalLimit)}, Premium up to {usd(pricing.plans[2].maintenanceApprovalLimit)}.
+
+## What is the pre-inspection before a management agreement?
+
+A {usd(pricing.fees.preInspection.amount)} inspection performed before signing, which produces a punch list of what stands between the property and a rental listing. {pricing.fees.preInspection.note} For a vacant unit, the onboarding fee is {usd(pricing.fees.onboardingFeeVacantUnit)}, so the pre-inspection effectively costs nothing once the owner proceeds.
+
+The pre-inspection exists because RL Property Management declines renovation projects on properties that are not yet rent-ready. An owner in Columbus, Ohio gets a written answer on where the property stands before either side commits.
+
+## How do inspections protect an owner's deposit position?
+
+Documented condition is what makes a deposit deduction defensible. The move-in ready inspection sets the baseline, quarterly inspections record how the property is being kept, and the move-out inspection records the difference. Security deposits run {leasing.securityDeposit}, and approved pet households carry {usd(leasing.petDamageCoverage.amount)} of pet damage coverage funded by a monthly pet administration fee paid by the resident.
+
+## What happens with smoke and carbon monoxide detectors?
+
+{maintenance.detectors} Detector checks run at each quarterly visit rather than once a year, and age-based replacement removes the guesswork about a unit that has been quietly out of code since a prior owner installed the devices.
+
+Utilities stay active during vacancy for turnover work, repairs, and winter protection, so an inspection on an empty Columbus property in January still has heat, water, and light to work with.
+
+An owner deciding whether a property is ready for management can start with the {usd(pricing.fees.preInspection.amount)} pre-inspection and get the punch list before signing anything.

@@ -1,0 +1,128 @@
+---
+title: "Evictions in Franklin County, Ohio"
+seoTitle: "Evictions in Franklin County, Ohio | RLPM"
+description: "What a Franklin County, Ohio eviction costs and how long it takes: $149 filing, roughly $448 to $450 total, about 6 weeks, handled by local eviction attorneys."
+directAnswer: "A possession-only eviction in Franklin County, Ohio costs roughly $448 to $450 through RL Property Management as of August 2026: a $149 court filing fee, about $100 in attorney cost, and a $199 RLPM process fee. The process runs 3 steps and takes about 6 weeks in Franklin County Municipal Court. Filing for possession and damages together costs $186 instead of $149."
+keyFacts:
+  - "The Franklin County Municipal Court filing fee is $149 for possession only and $186 for possession and damages, per the cost schedule effective August 1, 2026."
+  - "A possession-only eviction through RL Property Management totals roughly $448 to $450, including about $100 in attorney cost and a $199 RLPM process fee."
+  - "A Franklin County eviction runs 3 steps and takes about 6 weeks as of August 2026."
+  - "Evictions are filed and argued by local eviction attorneys, not by RL Property Management staff."
+  - "3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute."
+  - "Applicants with an eviction filed within the past 5 years are declined at screening."
+faq:
+  - q: "How much does an eviction cost in Franklin County, Ohio?"
+    a: "Roughly $448 to $450 for possession only through RL Property Management as of August 2026: a $149 court filing fee, about $100 in attorney cost, and a $199 process fee. This is informational, not legal advice."
+  - q: "How long does an eviction take in Columbus, Ohio?"
+    a: "About 6 weeks through Franklin County Municipal Court as of August 2026. Court scheduling, service of process, and any resident response can extend that timeline."
+  - q: "What is the filing fee difference between possession and damages?"
+    a: "$149 to recover possession only, $186 to seek possession and money damages together, per the Franklin County Municipal Court Clerk civil cost schedule effective August 1, 2026."
+  - q: "Does RL Property Management handle the eviction itself?"
+    a: "Filing and courtroom work are handled by local eviction attorneys. RL Property Management coordinates the file, the documentation, and the property, and charges a $199 process fee."
+  - q: "Is there an alternative to filing?"
+    a: "Yes. Pay-and-stay arrangements and other alternatives are pursued where possible, because a resident who catches up costs an owner less than an eviction plus vacancy plus a turn."
+  - q: "How likely is an eviction on an RL Property Management rental?"
+    a: "3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute. Screening declines applicants with an eviction filed within the past 5 years."
+related:
+  - href: "/services/tenant-screening/"
+    label: "Tenant screening standards"
+  - href: "/services/rent-collection/"
+    label: "Rent collection and owner payouts"
+  - href: "/services/maintenance/"
+    label: "Rental property maintenance in Columbus, Ohio"
+  - href: "/faq/"
+    label: "Owner questions and answers"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/evictions/"
+section: "services"
+schemaType: "Service"
+order: 60
+---
+
+import { evictions, leasing, pricing, kpis } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+This page is informational and is not legal advice. Figures and procedures below are specific to Ohio and to {evictions.court}, and are current as of {monthYear(evictions.costs.asOf)}. Ohio landlord-tenant law and court cost schedules change. An owner facing a specific eviction should consult an Ohio attorney.
+
+## What does an eviction cost in Franklin County, Ohio?
+
+A possession-only eviction through RL Property Management runs about {usd(evictions.costs.totalPossessionOnlyApprox.min)} to {usd(evictions.costs.totalPossessionOnlyApprox.max)} as of {monthYear(evictions.costs.asOf)}. That total is three line items: a {usd(evictions.costs.filingFeePossessionOnly)} filing fee at {evictions.court}, roughly {usd(evictions.costs.attorneyApprox)} in attorney cost, and a {usd(evictions.costs.rlpmProcessFee)} RL Property Management process fee. Seeking money damages alongside possession raises the filing fee to {usd(evictions.costs.filingFeePossessionAndDamages)}.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Line item</th>
+        <th scope="col">Amount as of {monthYear(evictions.costs.asOf)}</th>
+        <th scope="col">Paid to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Court filing fee, possession only</td>
+        <td>{usd(evictions.costs.filingFeePossessionOnly)}</td>
+        <td>{evictions.court} Clerk</td>
+      </tr>
+      <tr>
+        <td>Court filing fee, possession and damages</td>
+        <td>{usd(evictions.costs.filingFeePossessionAndDamages)}</td>
+        <td>{evictions.court} Clerk</td>
+      </tr>
+      <tr>
+        <td>Attorney cost</td>
+        <td>About {usd(evictions.costs.attorneyApprox)}</td>
+        <td>Local eviction attorney</td>
+      </tr>
+      <tr>
+        <td>RL Property Management process fee</td>
+        <td>{usd(evictions.costs.rlpmProcessFee)}</td>
+        <td>RL Property Management</td>
+      </tr>
+      <tr>
+        <td>Typical possession-only total</td>
+        <td>{usd(evictions.costs.totalPossessionOnlyApprox.min)} to {usd(evictions.costs.totalPossessionOnlyApprox.max)}</td>
+        <td>Combined</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Court fees above come from the {evictions.costs.source}. Amounts are set by the court and change without notice from RL Property Management.
+
+## How long does a Franklin County eviction take?
+
+About {evictions.typicalDurationWeeks} weeks in {evictions.court} as of {monthYear(evictions.costs.asOf)}, measured from filing to resolution. Court calendars, service of process, and any response filed by the resident can push the timeline out. Ohio eviction procedure is set by statute and by local court rules, and no property manager controls the docket.
+
+The direct cost of the filing is the smaller number. The real cost to a Columbus, Ohio owner is the unpaid rent during those weeks, plus the vacancy and turn that follow, which is why alternatives get pursued first.
+
+## What are the steps in an Ohio eviction?
+
+The process runs {evictions.steps} steps in {evictions.county} as of {monthYear(evictions.costs.asOf)}, handled from filing forward by {evictions.handledBy.toLowerCase()}. The specific notice, hearing, and writ stages that make up those three steps under Ohio Revised Code Chapter 1923, and the deadlines attached to each, are [SOURCE NEEDED].
+
+Whether an owner is required to appear personally at a Franklin County hearing is [SOURCE NEEDED]. An owner facing a live case should ask the assigned attorney directly.
+
+## Who files the eviction?
+
+{evictions.handledBy} file and argue the case, not RL Property Management staff. Property management is a brokerage activity in Ohio, and courtroom representation is a legal one, so the two stay separate. RL Property Management assembles the ledger, the lease, the notices, and the property access, coordinates with the attorney, and charges a {usd(evictions.costs.rlpmProcessFee)} process fee for that work.
+
+Using attorneys who file in {evictions.court} regularly matters more than it sounds. A defective notice or a missing ledger entry restarts the clock, and a restart costs another {evictions.typicalDurationWeeks} weeks of unpaid occupancy.
+
+## What gets tried before a filing?
+
+{evictions.alternatives} A payment plan that brings a resident current returns more to a Columbus, Ohio owner than a judgment against someone with no assets to collect against. RL Property Management works the balance first, and the file moves to an attorney when the arrangement fails or the resident stops responding.
+
+Filing also has downstream cost beyond the {usd(evictions.costs.totalPossessionOnlyApprox.min)}: the unit sits empty during the case, the turn follows, and the lease-up follows that, averaging {leasing.averageLeaseUpWeeks.min} to {leasing.averageLeaseUpWeeks.max} weeks once the unit is rent-ready.
+
+## How often does an RL Property Management tenancy reach eviction?
+
+{leasing.escalationRate.percent} percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute. The figure is published rather than described, and it reflects the screening standards on the front end: applicants with an eviction filed within the past {leasing.qualification.noEvictionsWithinYears} years are declined, as are applicants who cannot document income of {leasing.qualification.incomeMultiple} times the monthly rent.
+
+Rent collected by the 5th of the month ran {kpis.metrics.find((m) => m.id === 'collected-by-5th').value} percent as of {kpis.asOfLabel}, which is the leading indicator behind that escalation rate.
+
+## Does the plan an owner chooses change eviction handling?
+
+No. The {usd(evictions.costs.rlpmProcessFee)} process fee and the attorney arrangement are the same on Passive at {usd(pricing.plans[0].monthlyFee)}, Standard at {usd(pricing.plans[1].monthlyFee)}, and Premium at {usd(pricing.plans[2].monthlyFee)} per unit per month. Plans differ on repair approval limits and owner involvement, not on legal process.
+
+Information on this page is informational and not legal advice, is specific to Ohio and {evictions.county}, and is current as of {monthYear(evictions.costs.asOf)}. Owners with a case in progress should take direction from their attorney; owners trying to avoid one should start with the screening standards.

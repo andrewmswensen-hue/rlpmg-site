@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LeadForm from '../../../components/LeadForm.astro';
+import { webPageNode, breadcrumbNode } from '../../../lib/schema';
+const path = '/residents/application-appeal/';
+const title = 'Application Appeal | RL Property Management';
+const description = 'Appeal a rental application decision from RL Property Management in Columbus, Ohio. Submit the address applied for, the decision date, and any documents that correct or add to the record.';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Residents', path: '/residents/' }, { name: 'Application appeal', path }];
+---
+
+<Base {title} {description} {path} schema={[webPageNode({ path, title, description, reviewedBy: false }), breadcrumbNode(crumbs)]}>
+  <article class="mx-auto max-w-3xl px-5 py-12">
+    <h1 class="text-4xl">Appeal an application decision</h1>
+    <p class="mt-4 text-lg">An applicant who believes a decision rested on incorrect or incomplete information can ask for a review. State what should be corrected and attach or describe supporting documents (for example, proof that a reported eviction was dismissed, or additional income documentation). Appeals are reviewed against the same published <a href="/residents/application-criteria/" class="underline">criteria</a> used for each applicant.</p>
+    <div class="mt-8">
+      <LeadForm id="application-appeal" fields={[
+        { name: 'name', label: 'Applicant full name', required: true, autocomplete: 'name' },
+        { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+        { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+        { name: 'address', label: 'Property address applied for', required: true },
+        { name: 'decision_date', label: 'Date of the decision', required: true },
+        { name: 'basis', label: 'What should be corrected or reconsidered, and why', type: 'textarea', required: true },
+        { name: 'documents', label: 'Documents you can provide (list them; the team will request copies)', type: 'textarea' },
+      ]} submitLabel="Submit appeal" note="Appeals are reviewed by the leasing team. A decision is sent to the email provided." />
+    </div>
+  </article>
+</Base>

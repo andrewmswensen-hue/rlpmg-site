@@ -1,0 +1,165 @@
+---
+title: "Tenant screening in Columbus, Ohio"
+seoTitle: "Tenant Screening in Columbus, Ohio | RLPM"
+description: "How RL Property Management screens Columbus, Ohio rental applicants: credit, criminal record, rental history, and income verified at 3 times the monthly rent."
+directAnswer: "RL Property Management screens rental applicants in Columbus, Ohio on four things: credit history, criminal history, rental history including landlord references, and income verified at 3 times the monthly rent. Applicants with a violent criminal conviction, or an eviction filed within the past 5 years, are declined. Screening is included in the flat monthly management fee on all three plans as of August 2026."
+keyFacts:
+  - "Applicants must show verified income of at least 3 times the monthly rent, documented by pay stub or bank statement, as of August 2026."
+  - "An eviction filed within the past 5 years or a violent criminal conviction disqualifies an applicant at RL Property Management."
+  - "Security deposits run 1 to 2 months' rent depending on the applicant's credit."
+  - "Approved pets carry $4,000 of pet damage coverage funded by a monthly pet administration fee paid by the resident, in place since 2026."
+  - "3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute."
+  - "Tenant screening is included in the flat monthly fee of $117, $137, or $184 per unit, with no separate screening charge to the owner."
+faq:
+  - q: "How long does tenant screening take at RL Property Management?"
+    a: "RL Property Management averages 3 to 4 weeks from rent-ready to signed lease, which covers marketing, showings, and screening together. A screening-only turnaround time is [SOURCE NEEDED], since it depends on how fast an applicant returns pay stubs and landlord contacts."
+  - q: "Does RL Property Management run a credit check and a criminal background check?"
+    a: "Yes. Both are standard. Credit history and criminal history are two of the four screening categories, alongside rental history with landlord references and verified income."
+  - q: "How far back does the eviction check go?"
+    a: "5 years. An eviction filed against an applicant within the past 5 years disqualifies the application, as of August 2026."
+  - q: "What income does a Columbus renter need to qualify?"
+    a: "Verified income of 3 times the monthly rent. At the RL Property Management average rent of $1,653 per month as of July 2026, that is roughly $4,959 per month in documented household income."
+  - q: "Are co-signers or guarantors accepted?"
+    a: "[SOURCE NEEDED]"
+  - q: "Does the owner approve the applicant?"
+    a: "RL Property Management applies published, consistent standards to each applicant and makes the placement decision under those standards, which keeps fair housing exposure off the owner. Owners set the rent and the pet policy."
+related:
+  - href: "/services/leasing-and-marketing/"
+    label: "Leasing and marketing for Columbus rentals"
+  - href: "/services/evictions/"
+    label: "Evictions in Franklin County, Ohio"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/faq/"
+    label: "Owner questions and answers"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/tenant-screening/"
+section: "services"
+schemaType: "Service"
+order: 10
+---
+
+import { leasing, kpis, pricing, evictions } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+## What does RL Property Management check on a rental application?
+
+Screening at RL Property Management covers four categories: credit history, criminal history, rental history including landlord references, and income verification by pay stub or bank statement. Each category carries a published standard, and the same standard is applied to each applicant on a Columbus, Ohio rental. The four checks run together, not in sequence, so one weak area gets weighed against the rest of the file.
+
+<ul>
+  {leasing.screeningCovers.map((item) => <li>{item}</li>)}
+</ul>
+
+RL Property Management operates as an Equal Housing Opportunity company and is a member of NARPM, the National Association of Residential Property Managers.
+
+## How much income does an applicant need to qualify?
+
+An applicant needs documented income of at least {leasing.qualification.incomeMultiple} times the monthly rent, shown by pay stub or bank statement. Against the RL Property Management portfolio average rent of {usd(kpis.metrics.find((m) => m.id === 'average-rent').value)} per month as of {kpis.asOfLabel}, that works out to about {usd(kpis.metrics.find((m) => m.id === 'average-rent').value * leasing.qualification.incomeMultiple)} per month in verified household income. Stated income without documentation does not satisfy the standard.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Criterion</th>
+        <th scope="col">Standard applied as of August 2026</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Income</td>
+        <td>{leasing.qualification.incomeMultiple}x the monthly rent, verified by pay stub or bank statement</td>
+      </tr>
+      <tr>
+        <td>Credit</td>
+        <td>{leasing.qualification.credit}</td>
+      </tr>
+      <tr>
+        <td>Criminal history</td>
+        <td>No violent criminal convictions</td>
+      </tr>
+      <tr>
+        <td>Eviction history</td>
+        <td>No eviction filed within the past {leasing.qualification.noEvictionsWithinYears} years</td>
+      </tr>
+      <tr>
+        <td>Rental history</td>
+        <td>Landlord references contacted and verified</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## How do criminal history and past evictions affect an application?
+
+A violent criminal conviction disqualifies an applicant. An eviction filed against the applicant within the past {leasing.qualification.noEvictionsWithinYears} years also disqualifies the application, a lookback window that reaches back to 2021 for anyone applying in August 2026. Credit is judged on pattern rather than a single score: serious or recurring credit problems fail, while an isolated old collection generally does not.
+
+The reason the standards sit in public view is that a Columbus, Ohio owner deciding between managers can compare them directly, and a resident who is declined can see the rule that applied. Consistency is also the practical defense in a fair housing complaint, since the standard, not the applicant's protected characteristics, drives the outcome.
+
+## What does it cost an applicant to apply?
+
+Applicants pay {usd(leasing.residentFees.applicationFeePerPerson)} per adult applicant to apply for an RL Property Management rental, and {usd(leasing.residentFees.applicationFeeRefundIfApproved)} of that is refunded when the applicant is approved. Approved residents pay a lease signing administration fee of {leasing.residentFees.leaseSigningAdminFeePercentOfRent} percent of one month's rent. Pet households pay a pet acceptance fee and monthly pet rent. Figures below are resident-facing and current as of {monthYear(leasing.residentFees.asOf)}.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Resident charge</th>
+        <th scope="col">Amount</th>
+        <th scope="col">When it applies</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Application fee</td>
+        <td>{usd(leasing.residentFees.applicationFeePerPerson)} per adult</td>
+        <td>At application, with {usd(leasing.residentFees.applicationFeeRefundIfApproved)} refunded on approval</td>
+      </tr>
+      <tr>
+        <td>Security deposit</td>
+        <td>{leasing.securityDeposit}</td>
+        <td>At lease signing, set by credit strength</td>
+      </tr>
+      <tr>
+        <td>Lease signing administration fee</td>
+        <td>{leasing.residentFees.leaseSigningAdminFeePercentOfRent} percent of one month's rent</td>
+        <td>At lease signing</td>
+      </tr>
+      <tr>
+        <td>Pet acceptance fee</td>
+        <td>{usd(leasing.residentFees.petAcceptanceFee)}</td>
+        <td>Once, per approved pet household</td>
+      </tr>
+      <tr>
+        <td>Pet rent</td>
+        <td>{usd(leasing.residentFees.petRentPerPetMonthly)} per pet, monthly</td>
+        <td>Monthly, for approved pets</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## How much security deposit does RL Property Management collect?
+
+Deposits run {leasing.securityDeposit}. A strong credit file lands at one month; a thinner or damaged file lands closer to two. Tying the deposit to credit lets RL Property Management approve a solid Columbus, Ohio applicant whose credit is imperfect without exposing the owner, instead of declining the applicant outright and leaving the unit vacant longer.
+
+## What protects a Columbus rental against pet damage?
+
+Approved pet households carry {usd(leasing.petDamageCoverage.amount)} of pet damage coverage, in place since {leasing.petDamageCoverage.since}. The coverage is funded by {leasing.petDamageCoverage.fundedBy.charAt(0).toLowerCase() + leasing.petDamageCoverage.fundedBy.slice(1)}, so the protection costs the owner nothing. Pets are screened alongside the applicant, and the owner sets whether the property accepts pets at all.
+
+Pet-friendly listings draw a materially larger applicant pool in the Columbus market, and the {usd(leasing.petDamageCoverage.amount)} coverage exists so an owner can open the door to that pool without carrying the downside personally.
+
+## How often does a screened placement end in eviction or a dispute?
+
+{leasing.escalationRate.percent} percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute. That figure is published rather than a screening promise: screening reduces risk and does not remove it. When a tenancy does go sideways, pay-and-stay arrangements and other alternatives are pursued before a filing in Franklin County Municipal Court.
+
+Placement quality is prioritized over placement speed. A unit that sits an extra week for a stronger applicant costs less than a resident who stops paying in month five, because an eviction in Franklin County runs about {usd(evictions.costs.totalPossessionOnlyApprox.min)} to {usd(evictions.costs.totalPossessionOnlyApprox.max)} plus the vacancy and turn behind it.
+
+## Is tenant screening billed separately to the owner?
+
+No. Tenant screening (credit and criminal) is part of the flat monthly management fee on all three RL Property Management plans: {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit per month as of {pricing.effectiveLabel}. There is no per-applicant screening charge to the owner and no leasing fee when the placement is made.
+
+A typical Columbus property manager charges {pricing.marketStandard.percentOfRentLow} to {pricing.marketStandard.percentOfRentHigh} percent of monthly rent plus a leasing fee equal to one month's rent each time a unit is leased, which means screening and placement cost more each time a resident turns over. The flat structure at RL Property Management removes that incentive to churn residents.
+
+Owners weighing a Columbus, Ohio rental against these standards can start with a free rent evaluation, which returns a rent range and the applicant pool the property would draw.

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, kpis, LAST_VERIFIED } from '../../data/facts';
+import { monthYear } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/reviews/';
+const r = company.reviews;
+/** Only reviews already published by RL Property Management on rlpmg.com. Add more from Google with the reviewer's public first name and initial. */
+const quotes = [
+  { author: 'Anne T.', role: 'Resident', text: 'The property and apartment were very well cared for. High ceilings and an amazing amount of light due to the floor to ceiling windows in most of the rooms. The wooden floors and paint color made for a beautiful space to live in. Peter was very flexible with me during a tricky time in my life, and I am very appreciative of that.' },
+  { author: 'Elie', role: 'Google review', text: 'Very professional property managers. Pleasure to work with. I highly recommend to tenants and landlords alike.' },
+];
+const title = 'RL Property Management Reviews | 4.3 Stars on Google';
+const description = `RL Property Management is rated ${r.ratingValue} out of 5 on Google across ${r.reviewCount} reviews as of ${monthYear(r.asOf)}, with a ${kpis.metrics[2].value} percent lease renewal rate and ${kpis.metrics[7].value} of 5 resident satisfaction.`;
+const directAnswer = `RL Property Management holds a ${r.ratingValue} out of 5 star rating on Google across ${r.reviewCount} reviews as of ${monthYear(r.asOf)}. Reviews come from both rental owners and residents of the approximately 750 Columbus, Ohio units the company manages. Resident satisfaction on RL Property Management's own scorecard is ${kpis.metrics[7].value} out of 5, and ${kpis.metrics[2].value} percent of residents renewed their lease as of ${kpis.asOfLabel}.`;
+const keyFacts = [
+  `RL Property Management is rated ${r.ratingValue} out of 5 on Google across ${r.reviewCount} reviews as of ${monthYear(r.asOf)}.`,
+  `Reviews come from both property owners and residents; RL Property Management manages approximately 750 units.`,
+  `The lease renewal rate was ${kpis.metrics[2].value} percent as of ${kpis.asOfLabel}, meaning most residents chose to stay.`,
+  `Resident satisfaction is ${kpis.metrics[7].value} out of 5 on the RL Property Management KPI scorecard as of ${kpis.asOfLabel}.`,
+];
+const faq = [
+  { q: 'Where can I read RL Property Management reviews?', a: `On Google, where RL Property Management has ${r.reviewCount} reviews averaging ${r.ratingValue} stars as of ${monthYear(r.asOf)}.` },
+  { q: 'Why is the rating 4.3 rather than 5?', a: 'Property managers serve two groups with opposite interests, owners and residents, and the Google rating includes both. A resident denied an application or charged for damage can leave a review; RL Property Management publishes the number as it stands.' },
+  { q: 'Does RL Property Management respond to reviews?', a: 'RL Property Management staff monitor and respond to Google reviews, and a person is available at 614.725.3059 for any concern raised in one.' },
+  { q: 'Are there reviews from owners specifically?', a: 'Yes. Owner reviews on Google describe statement accuracy, maintenance handling, and leasing speed. The KPI scorecard shows the same things as numbers.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Reviews', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, faq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="RL Property Management reviews" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow={`${r.ratingValue} of 5 on Google, ${r.reviewCount} reviews`} breadcrumbs={crumbs} related={[{ href: '/key-performance-indicators/', label: 'KPI scorecard' }, { href: '/about/', label: 'About RL Property Management' }, { href: '/pricing/', label: 'Pricing' }, { href: company.reviews.url, label: 'Read reviews on Google' }]}>
+    <h2>What is RL Property Management's Google rating?</h2>
+    <p>{r.ratingValue} out of 5 across {r.reviewCount} reviews as of {monthYear(r.asOf)}. The figure is stated here as text, updated when this page is reviewed, and mirrored in the site's structured data so that it can be cited without a widget. The live count is on <a href={r.url} rel="noopener">Google</a>.</p>
+    <h2>What do reviewers say?</h2>
+    <p>Two reviews RL Property Management has published on its own site are reproduced below, verbatim. Further reviews are read on Google directly; RL Property Management does not curate a selection of five-star quotes here.</p>
+    <ul style="list-style:none;padding-left:0" class="space-y-6">
+      {quotes.map((q) => <li class="border-l-4 border-brand-800 bg-offwhite p-5"><blockquote class="m-0"><p class="m-0 italic">"{q.text}"</p></blockquote><p class="mt-2 mb-0 text-sm font-semibold text-navy-800">{q.author}, {q.role}</p></li>)}
+    </ul>
+    <h2>How do the numbers back up the reviews?</h2>
+    <p>RL Property Management publishes a monthly <a href="/key-performance-indicators/">KPI scorecard</a>. As of {kpis.asOfLabel}, {kpis.metrics[2].value} percent of residents renewed, {kpis.metrics[6].value} percent of rent was collected by the 5th, the median repair took {kpis.metrics[5].value} days, and resident satisfaction was {kpis.metrics[7].value} of 5. Those figures describe the same experience the reviews describe, across the whole portfolio rather than a selected few.</p>
+  </AeoPage>
+</Base>

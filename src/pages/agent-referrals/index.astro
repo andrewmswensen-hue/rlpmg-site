@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, agentReferrals, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/agent-referrals/';
+const title = 'Agent Referral Program, $1,000 Per Client | RLPM';
+const description = `Licensed Ohio real estate agents earn ${usd(agentReferrals.payoutPerClosedClient)} for each referred owner who signs with RL Property Management. Paid broker to broker under ORC 4735.18(A)(11). Clients stay your clients.`;
+const directAnswer = `RL Property Management pays licensed Ohio real estate agents ${usd(agentReferrals.payoutPerClosedClient)} for each referred property owner who signs a management agreement, with ${usd(agentReferrals.annualBudget2026)} budgeted for agent payouts in 2026. Referral fees are paid broker to broker as required by Ohio Revised Code 4735.18(A)(11). RL Property Management does not sell real estate, so a referred client remains the agent's client for any future sale.`;
+const keyFacts = [
+  `The referral fee is ${usd(agentReferrals.payoutPerClosedClient)} per referred owner who signs with RL Property Management, as of August 2026.`,
+  `RL Property Management budgeted ${usd(agentReferrals.annualBudget2026)} for agent referral payouts in 2026.`,
+  'Fees are paid from RL Property Management\'s brokerage to the agent\'s brokerage under Ohio Revised Code 4735.18(A)(11).',
+  'RL Property Management manages rentals only and does not represent buyers or sellers, so referred clients are not solicited for sales.',
+];
+const faq = [
+  { q: 'How much is the referral fee?', a: `${usd(agentReferrals.payoutPerClosedClient)} per referred owner who signs a Property Management Agreement.` },
+  { q: 'How is the fee paid?', a: 'Broker to broker, as Ohio law requires for licensed agents (ORC 4735.18(A)(11)). The agent\'s brokerage receives the payment and passes it through under its own split.' },
+  { q: 'When is the fee paid?', a: '[SOURCE NEEDED]' },
+  { q: 'Will RL Property Management try to sell my client\'s property?', a: 'No. RL Property Management does not list or sell real estate. When a client decides to sell, the referring agent is the natural choice.' },
+  { q: 'Is there a limit on referrals?', a: `No per-agent limit. RL Property Management budgeted ${usd(agentReferrals.annualBudget2026)} for payouts in 2026.` },
+];
+const liveFaq = faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'));
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Agent referrals', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, liveFaq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Agent referral program" {directAnswer} {keyFacts} faq={liveFaq} lastVerified={LAST_VERIFIED} eyebrow={`${usd(agentReferrals.payoutPerClosedClient)} per closed client`} breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'What your client will pay' }, { href: '/what-we-manage/', label: 'Which properties qualify' }, { href: '/rental-verification-form/', label: 'Rental verification requests' }, { href: '/sell-your-property-management-company/', label: 'Selling a property management book' }]}>
+    <h2>How does the agent referral program work?</h2>
+    <p>An agent sends a property owner to RL Property Management using the form below or by calling {company.contact.sales.name} at {company.contact.sales.phone}. When that owner signs a Property Management Agreement, RL Property Management pays {usd(agentReferrals.payoutPerClosedClient)} to the agent's brokerage. The client keeps working with the referring agent for any purchase or sale; RL Property Management manages rentals and nothing else.</p>
+    <h2>Why is the fee paid broker to broker?</h2>
+    <p>Ohio Revised Code 4735.18(A)(11) requires that compensation for real estate activity be paid through the licensee's brokerage. RL Property Management pays the agent's broker, and the broker pays the agent under their existing agreement. Agents should confirm their brokerage's handling of referral income.</p>
+    <h2>Which clients are a fit?</h2>
+    <p>Owners of single-family homes, condos, and multi-family buildings under roughly 100 units anywhere in the Columbus, Ohio metro, who want flat-fee management. Accidental landlords, relocating sellers who decide to hold, and investors closing on a rental are common referrals. The <a href="/what-we-manage/">declined categories</a> are published so an agent can check fit before referring.</p>
+    <h2>Refer a client</h2>
+    <LeadForm id="agent-referral" fields={[
+      { name: 'agent_name', label: 'Your name', required: true, autocomplete: 'name' },
+      { name: 'agent_brokerage', label: 'Your brokerage', required: true },
+      { name: 'agent_license', label: 'Your Ohio license number', required: true },
+      { name: 'agent_email', label: 'Your email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'agent_phone', label: 'Your phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'client_name', label: 'Client name', required: true },
+      { name: 'client_phone', label: 'Client phone', type: 'tel', required: true },
+      { name: 'client_email', label: 'Client email', type: 'email' },
+      { name: 'property_address', label: 'Property address', required: true },
+      { name: 'notes', label: 'Notes', type: 'textarea' },
+    ]} submitLabel="Send referral" note="Only submit a client who has agreed to be contacted by RL Property Management." />
+  </AeoPage>
+</Base>

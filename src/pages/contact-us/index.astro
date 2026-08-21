@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/contact-us/';
+const title = 'Contact RL Property Management | Gahanna, Ohio';
+const description = `Reach RL Property Management at ${company.contact.general.phone} or ${company.contact.general.email}. New owners: ${company.contact.sales.name} at ${company.contact.sales.phone}. Office at ${company.address.street}, ${company.address.city}, OH, by appointment.`;
+const directAnswer = `RL Property Management can be reached at ${company.contact.general.phone} or ${company.contact.general.email} for general questions, and prospective owners can call or text ${company.contact.sales.name}, ${company.contact.sales.title}, at ${company.contact.sales.phone} or ${company.contact.sales.email}. The office is at ${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}; visits are by appointment. Residents report maintenance through the Property Meld portal, 24 hours a day for emergencies.`;
+const keyFacts = [
+  `General line: ${company.contact.general.phone}, ${company.contact.general.email}.`,
+  `New owner inquiries: ${company.contact.sales.name}, ${company.contact.sales.title}, ${company.contact.sales.phone}, ${company.contact.sales.email}.`,
+  `Office: ${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}, by appointment only.`,
+  `Emergency maintenance for residents is available 24/7, including weekends and holidays, through the resident maintenance portal.`,
+];
+const faq = [
+  { q: 'What is the fastest way to reach RL Property Management about managing a property?', a: `Call or text ${company.contact.sales.name} at ${company.contact.sales.phone}, or schedule a time on the consultation page.` },
+  { q: 'How do residents report a maintenance problem?', a: 'Through the Property Meld maintenance portal linked in the header under Portal Login. Emergencies are answered 24/7.' },
+  { q: 'Can I visit the office?', a: `Yes, by appointment. The office is at ${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}.` },
+  { q: 'Where do owners and residents log in?', a: 'Owner and resident portals are in the header under Portal Login on each page. Both run on Buildium.' },
+  { q: 'Does RL Property Management answer rental verification requests?', a: 'Yes. Use the rental verification form; completed verifications are returned by email within 2 business days.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact', path }];
+const schema = [webPageNode({ path, title, description, type: 'ContactPage' }), breadcrumbNode(crumbs), faqNode(path, faq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Contact RL Property Management" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/property-management-consultation/', label: 'Schedule a consultation' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }, { href: '/rental-verification-form/', label: 'Rental verification request' }, { href: '/vendor-application/', label: 'Vendor application' }, { href: '/careers/', label: 'Careers' }]}>
+    <h2>Who should I contact?</h2>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">RL Property Management contacts</caption>
+        <thead><tr><th scope="col">Reason</th><th scope="col">Contact</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Hiring RL Property Management for a rental</th><td>{company.contact.sales.name}, {company.contact.sales.title}: <a href={`tel:${company.contact.sales.phoneE164}`}>{company.contact.sales.phone}</a>, <a href={`mailto:${company.contact.sales.email}`}>{company.contact.sales.email}</a></td></tr>
+          <tr><th scope="row">General questions</th><td><a href={`tel:${company.contact.general.phoneE164}`}>{company.contact.general.phone}</a>, <a href={`mailto:${company.contact.general.email}`}>{company.contact.general.email}</a></td></tr>
+          <tr><th scope="row">Current owner</th><td><a href={company.portals.owner} rel="noopener">Owner portal</a> or the general line</td></tr>
+          <tr><th scope="row">Current resident, maintenance</th><td><a href={company.portals.maintenanceRequest} rel="noopener">Maintenance request portal</a>, 24/7 for emergencies</td></tr>
+          <tr><th scope="row">Current resident, rent or lease</th><td><a href={company.portals.resident} rel="noopener">Resident portal</a></td></tr>
+          <tr><th scope="row">Prospective resident</th><td><a href="/homes-for-rent/">Available rentals</a> and <a href={company.portals.apply} rel="noopener">online application</a></td></tr>
+          <tr><th scope="row">Landlord or lender verifying a resident</th><td><a href="/rental-verification-form/">Rental verification form</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Where is the office?</h2>
+    <address class="not-italic">{company.legalName}<br />{company.address.streetLine1}, {company.address.streetLine2}<br />{company.address.city}, {company.address.region} {company.address.postalCode}</address>
+    <p>Office visits are by appointment. {company.address.city} is on the northeast side of the Columbus metro, in {company.address.county}.</p>
+    <h2>Send a message</h2>
+    <LeadForm id="contact" fields={[
+      { name: 'role', label: 'I am', type: 'select', required: true, options: ['A property owner considering management', 'A current RL Property Management owner', 'A current resident', 'A prospective resident', 'A vendor', 'Other'] },
+      { name: 'name', label: 'Full name', required: true, autocomplete: 'name' },
+      { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'message', label: 'Message', type: 'textarea', required: true },
+    ]} submitLabel="Send message" />
+  </AeoPage>
+</Base>

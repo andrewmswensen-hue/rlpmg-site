@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, serviceArea, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode, brokerNode } from '../../lib/schema';
+
+const path = '/about/';
+const title = 'About RL Property Management | Columbus, Ohio';
+const description = `RL Property Management is a licensed Ohio brokerage founded in ${company.foundingYear}, managing approximately 750 rental units in the Columbus metro with ${company.scale.employees} employees from its Gahanna office.`;
+const directAnswer = `${company.legalName}, doing business as RL Property Management, is a residential property management company founded in ${company.foundingYear} and based at ${company.address.street}, ${company.address.city}, Ohio. As of August 2026 the company manages ${company.scale.unitsLabel} single-family and small multi-family units across the Columbus metro with ${company.scale.employees} employees, including ${company.scale.maintenanceTechnicians} in-house maintenance technicians. ${company.brokerOfRecord.name} is ${company.brokerOfRecord.title}.`;
+const keyFacts = [
+  `RL Property Management was founded in ${company.foundingYear} and is licensed as an Ohio real estate brokerage, ${company.license.label} ${company.license.number}.`,
+  `RL Property Management manages ${company.scale.unitsLabel} rental units across ${serviceArea.places.length} Central Ohio cities and neighborhoods as of August 2026.`,
+  `The company employs ${company.scale.employees} people, including ${company.scale.maintenanceTechnicians} maintenance technicians, from one office in ${company.address.city}, Ohio.`,
+  `RL Property Management's executive team personally owns approximately ${company.scale.executiveOwnedUnits} rental units in Central Ohio.`,
+  `RL Property Management holds a ${company.reviews.ratingValue} out of 5 rating on Google across ${company.reviews.reviewCount} reviews.`,
+  `RL Property Management manages rentals only; it does not list homes for sale or represent buyers.`,
+];
+const leaders = (await getCollection('team')).filter((t) => t.data.leadership).sort((a, b) => a.data.order - b.data.order);
+const faq = [
+  { q: 'When was RL Property Management founded?', a: `${company.foundingYear}. The company has operated in the Columbus, Ohio metro since then.` },
+  { q: 'Is RL Property Management a licensed brokerage?', a: `Yes. ${company.legalName} is an Ohio real estate brokerage, ${company.license.label} ${company.license.number}. ${company.brokerOfRecord.name} is ${company.brokerOfRecord.title}.` },
+  { q: 'Is RL Property Management the same as RL Property Management Group?', a: `Yes. ${company.legalName} is the legal name; RL Property Management and RLPM are the trade names.` },
+  { q: 'Does RL Property Management sell real estate?', a: 'No. RL Property Management is a property management company and does not act as a listing or buyer\'s agent.' },
+  { q: 'Where is the RL Property Management office?', a: `${company.address.street}, ${company.address.city}, Ohio ${company.address.postalCode}. Office visits are by appointment.` },
+  { q: 'Does the RL Property Management team own rentals?', a: `Yes. The executive team personally owns approximately ${company.scale.executiveOwnedUnits} single-family and multi-family units in Central Ohio.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'About', path }];
+const schema = [webPageNode({ path, title, description, type: 'AboutPage' }), breadcrumbNode(crumbs), faqNode(path, faq), brokerNode()];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="About RL Property Management" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/team/', label: 'Meet the team' }, { href: '/reviews/', label: 'Reviews' }, { href: '/key-performance-indicators/', label: 'KPI scorecard' }, { href: '/core-values/', label: 'Core values' }, { href: '/careers/', label: 'Careers' }, { href: '/ai-and-human-oversight/', label: 'AI and human oversight' }]}>
+    <h2>What does RL Property Management do?</h2>
+    <p>RL Property Management leases, maintains, and accounts for residential rental property on behalf of owners in the Columbus, Ohio metro. The service covers marketing on 45+ platforms, screening, rent collection, 24/7 maintenance coordination with in-house technicians, quarterly inspections, eviction handling through local attorneys, and monthly owner statements with direct deposit, for a flat {usd(pricing.plans[0].monthlyFee)} to {usd(pricing.plans[2].monthlyFee)} per unit per month.</p>
+
+    <h2>Who does RL Property Management work with?</h2>
+    <p>Owners of single-family homes, condos, and multi-family buildings up to roughly 100 units who want a manager that publishes its prices and its results. Many clients are investors holding several properties; the 5 to 9 unit tier carries a 10 percent discount and 10+ units get custom pricing. The stated mission is to reach approximately 2,500 units as the premier manager of class A and class B rentals in the Columbus metro.</p>
+
+    <h2>Who leads RL Property Management?</h2>
+    <p>{company.brokerOfRecord.name} is {company.brokerOfRecord.title} and is responsible for each licensed activity. The leadership team below runs operations, business development, people operations, maintenance, and marketing. Each leader is listed with a current title; the full staff appears on the <a href="/team/">team page</a>.</p>
+    <ul>
+      {leaders.map((t) => <li><strong>{t.data.name}</strong>, {t.data.title}</li>)}
+    </ul>
+
+    <h2>Why does RL Property Management publish its pricing and KPIs?</h2>
+    <p>Because owners comparing managers rarely get either. RL Property Management publishes each fee on the <a href="/pricing/">pricing page</a> and eight operating metrics on the <a href="/key-performance-indicators/">KPI scorecard</a>, updated monthly, so a prospective client can judge the company on the same numbers existing clients see.</p>
+
+    <h2>Where does RL Property Management operate?</h2>
+    <p>From a single office in {company.address.city}, Ohio, RL Property Management serves {serviceArea.places.length} cities and neighborhoods across the Columbus metro, including {serviceArea.places.slice(0, 8).join(', ')}, and more. Each place has its own page at <a href="/areas-we-serve/">Areas we serve</a>.</p>
+  </AeoPage>
+</Base>

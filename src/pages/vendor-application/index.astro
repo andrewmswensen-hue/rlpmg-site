@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, pricing, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/vendor-application/';
+const title = 'Vendor Application | RL Property Management';
+const description = 'Contractors and service companies can apply to work on the approximately 750 Columbus, Ohio rental units RL Property Management manages. Licensed, insured vendors in plumbing, HVAC, electrical, roofing, and more.';
+const directAnswer = 'RL Property Management works with licensed and insured third-party vendors across the Columbus, Ohio metro for plumbing, HVAC, electrical, roofing, flooring, painting, cleaning, landscaping, and specialty trades on approximately 750 managed units. In-house technicians handle routine work; vendors handle licensed trades and larger projects. Vendors apply below with trade, service area, license, and insurance details.';
+const keyFacts = [
+  'RL Property Management manages approximately 750 units across 25 Columbus-area cities and neighborhoods, as of August 2026.',
+  `Vendor invoices are passed through to owners at cost; RL Property Management adds a ${pricing.fees.vendorProjectManagement.percent} percent project management fee to the owner, not to the vendor.`,
+  'Vendors must carry current liability insurance and any license the trade requires in Ohio.',
+];
+const faq = [
+  { q: 'Which trades is RL Property Management looking for?', a: 'Plumbing, HVAC, electrical, roofing, flooring, painting, cleaning, landscaping and snow removal, appliance repair, and general contracting for turns.' },
+  { q: 'What does a vendor need to provide?', a: 'Proof of liability insurance, trade licenses where required, a W-9, and service area and availability, including whether after-hours emergency work is offered.' },
+  { q: 'How is work assigned?', a: 'Through RL Property Management\'s maintenance coordination team, which dispatches by trade, location, and availability.' },
+  { q: 'How are vendors paid?', a: '[SOURCE NEEDED]' },
+];
+const liveFaq = faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'));
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Vendor application', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, liveFaq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Apply to be an RL Property Management vendor" {directAnswer} {keyFacts} faq={liveFaq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/services/maintenance/', label: 'How maintenance works' }, { href: '/contact-us/', label: 'Contact' }]}>
+    <h2>What does RL Property Management expect from vendors?</h2>
+    <p>Licensed and insured work, clear written estimates, photos on completion, and response times that respect residents' schedules. Emergency-capable vendors are valued because RL Property Management runs a 24/7 emergency line. Work is dispatched by the maintenance coordination team, and invoices are paid by RL Property Management on the owner's behalf.</p>
+    <h2>Apply</h2>
+    <LeadForm id="vendor-application" fields={[
+      { name: 'company', label: 'Company name', required: true },
+      { name: 'contact_name', label: 'Contact name', required: true, autocomplete: 'name' },
+      { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'trades', label: 'Trades and services offered', type: 'textarea', required: true },
+      { name: 'service_area', label: 'Service area (cities or counties)', required: true },
+      { name: 'licensed', label: 'Do you hold the Ohio licenses your trade requires?', type: 'radio', required: true, options: ['Yes', 'Not required for my trade', 'No'] },
+      { name: 'insured', label: 'Do you carry current liability insurance?', type: 'radio', required: true, options: ['Yes', 'No'] },
+      { name: 'emergency', label: 'Do you offer after-hours emergency service?', type: 'radio', options: ['Yes', 'No'] },
+      { name: 'notes', label: 'Anything else', type: 'textarea' },
+    ]} submitLabel="Submit application" note="Insurance certificates and W-9 are requested after review." />
+    <p class="text-sm">Questions: {company.contact.general.email}.</p>
+  </AeoPage>
+</Base>

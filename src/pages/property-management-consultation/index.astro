@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, pricing, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/property-management-consultation/';
+const title = 'Free Property Management Consultation | Columbus, Ohio';
+const description = `Book a free 30-minute consultation with ${company.contact.sales.name} of RL Property Management to review a Columbus, Ohio rental, its likely rent, and which flat-fee plan fits. Call or text ${company.contact.sales.phone}.`;
+const directAnswer = `A free property management consultation with RL Property Management is a 30-minute call with ${company.contact.sales.name}, ${company.contact.sales.title}, covering the property, its likely rent, the onboarding steps, and which of the three flat-fee plans (${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month) fits. Book a time below, call or text ${company.contact.sales.phone}, or send the short form and ${company.contact.sales.name} will reach out.`;
+const keyFacts = [
+  `Consultations are free, last about 30 minutes, and are held by ${company.contact.sales.name}, ${company.contact.sales.title}.`,
+  `Call or text ${company.contact.sales.phone}, or email ${company.contact.sales.email}.`,
+  `RL Property Management's plans cost ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month with a ${usd(pricing.fees.leasingFee)} leasing fee.`,
+  'There is no obligation to sign after a consultation.',
+];
+const faq = [
+  { q: 'What happens on the consultation call?', a: 'A review of the property and its condition, an estimate of rent, a walk-through of onboarding and fees, and a frank answer on whether the property is a fit for RL Property Management.' },
+  { q: 'Is there a cost?', a: 'No. The consultation is free and there is no obligation.' },
+  { q: 'Can I just call instead of booking?', a: `Yes. Call or text ${company.contact.sales.name} at ${company.contact.sales.phone}.` },
+  { q: 'What should I have ready?', a: 'The property address, current rent if occupied, and any known repair needs. A recent mortgage or tax statement helps with a rent-vs-sell discussion but is not required.' },
+  { q: 'How soon can management start after the call?', a: '[SOURCE NEEDED]' },
+];
+const liveFaq = faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'));
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Consultation', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, liveFaq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Free property management consultation" {directAnswer} {keyFacts} faq={liveFaq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/free-rent-evaluation/', label: 'Start with a free rent evaluation' }, { href: '/pricing/', label: 'Pricing' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/what-we-manage/', label: 'What RL Property Management manages' }]}>
+    <h2>How do I book a consultation?</h2>
+    <p>Three ways: pick a time on the calendar below, call or text {company.contact.sales.name} at <a href={`tel:${company.contact.sales.phoneE164}`}>{company.contact.sales.phone}</a>, or send the short form and {company.contact.sales.name} will follow up. Calendar bookings are 30 minutes.</p>
+    <div class="not-prose my-6 border border-gray" data-md-skip>
+      <iframe title="Schedule a consultation with RL Property Management" src={`${company.portals.scheduleCall}?embed_domain=rlpmg.com&embed_type=Inline&primary_color=a60530&hide_gdpr_banner=1`} width="100%" height="700" loading="lazy" style="border:0"></iframe>
+      <p class="p-3 text-sm">If the calendar does not load, <a href={company.portals.scheduleCall} rel="noopener" class="underline">open the scheduling page directly</a>.</p>
+    </div>
+    <h2>What is covered on the call?</h2>
+    <p>The property (type, condition, occupancy), an estimate of rent, the onboarding steps and timeline, the plan that fits the owner's preferred level of involvement, and the fees on the <a href="/pricing/">pricing page</a>. RL Property Management also says plainly when a property is not a fit; the <a href="/what-we-manage/">declined categories</a> are published.</p>
+    <h2>Prefer a call back?</h2>
+    <LeadForm id="consultation" fields={[
+      { name: 'name', label: 'Full name', required: true, autocomplete: 'name' },
+      { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'address', label: 'Property address', required: true },
+      { name: 'units', label: 'How many rental units do you own?', type: 'select', required: true, options: ['1', '2 to 4', '5 to 9', '10 or more'] },
+      { name: 'goal', label: 'Goal for the property', type: 'radio', options: ['Long-term rental', 'Deciding between renting and selling', 'Switching from another manager', 'Unsure'] },
+      { name: 'concern', label: 'What is your biggest concern with the property?', type: 'textarea' },
+    ]} submitLabel="Request a call back" />
+  </AeoPage>
+</Base>

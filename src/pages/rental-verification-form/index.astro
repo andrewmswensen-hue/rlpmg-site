@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/rental-verification-form/';
+const title = 'Rental Verification Request | RL Property Management';
+const description = 'Landlords, lenders, and property managers can request a rental verification for a current or former RL Property Management resident. Completed forms are returned by email within 2 business days.';
+const directAnswer = 'A landlord, lender, or property manager verifying the rental history of a current or former RL Property Management resident can submit the request below. RL Property Management confirms residency and returns a standard rental verification form by email within 2 business days, containing the information it is legally permitted to release. A signed release from the resident speeds the process.';
+const keyFacts = [
+  'Rental verifications are returned by email within 2 business days of the request.',
+  'RL Property Management releases only the information it is legally permitted to share about a resident.',
+  'Requests apply to current and former residents of properties managed by RL Property Management in the Columbus, Ohio metro.',
+];
+const faq = [
+  { q: 'How long does a rental verification take?', a: 'Within 2 business days of a complete request, by email.' },
+  { q: 'What information is released?', a: 'Residency dates, rent amount, and payment history where the resident has authorized release; RL Property Management follows Ohio law on what can be shared.' },
+  { q: 'Do I need the resident\'s permission?', a: 'A signed release from the resident is the fastest route. Attach it or note that the resident has authorized the request.' },
+  { q: 'Is there a fee?', a: 'No.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Rental verification', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, faq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Request a rental verification" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/contact-us/', label: 'Contact' }, { href: '/resident-faqs/', label: 'Resident FAQ' }]}>
+    <h2>How do I request a verification?</h2>
+    <p>Complete the form below. RL Property Management confirms the person was a resident at a managed property and returns a completed verification form to the email provided within 2 business days. For questions, call {company.contact.general.phone}.</p>
+    <LeadForm id="rental-verification" fields={[
+      { name: 'requester_name', label: 'Your name', required: true, autocomplete: 'name' },
+      { name: 'requester_company', label: 'Your company', required: true },
+      { name: 'requester_role', label: 'Your role', type: 'select', required: true, options: ['Landlord or property manager', 'Lender', 'Employer', 'Other'] },
+      { name: 'requester_email', label: 'Your email (verification is sent here)', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'requester_phone', label: 'Your phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'resident_name', label: 'Resident full name', required: true },
+      { name: 'resident_address', label: 'Address the resident rented', required: true },
+      { name: 'resident_dates', label: 'Approximate dates of tenancy' },
+      { name: 'release', label: 'Has the resident signed a release authorizing this verification?', type: 'radio', required: true, options: ['Yes', 'No', 'Not sure'] },
+      { name: 'notes', label: 'Notes', type: 'textarea' },
+    ]} submitLabel="Request verification" />
+  </AeoPage>
+</Base>

@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { company, kpis, leasing, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/free-rent-evaluation/';
+const title = 'Free Rent Evaluation for Columbus, Ohio Rentals | RLPM';
+const description = 'Request a free rent evaluation from RL Property Management: a written estimate of what a specific Columbus, Ohio property should rent for, based on current comparable listings. No obligation.';
+const directAnswer = `A free rent evaluation from RL Property Management is a written estimate of the monthly rent a specific Columbus, Ohio property should achieve today, based on comparable listings and RL Property Management's own portfolio of approximately 750 units (average rent $${kpis.metrics[4].value.toLocaleString('en-US')} as of ${kpis.asOfLabel}). Submit the address and a few details below; ${company.contact.sales.name} responds with the estimate and the assumptions behind it.`;
+const keyFacts = [
+  'The rent evaluation is free and carries no obligation to sign a management agreement.',
+  `RL Property Management's portfolio average rent was $${kpis.metrics[4].value.toLocaleString('en-US')} per month as of ${kpis.asOfLabel}; a property-level estimate can differ widely from that figure.`,
+  `Listings marketed by RL Property Management went under lease in a median ${kpis.metrics[0].value} days as of ${kpis.asOfLabel}.`,
+  `Units typically lease within ${leasing.averageLeaseUpWeeks.min} to ${leasing.averageLeaseUpWeeks.max} weeks once rent-ready.`,
+];
+const faq = [
+  { q: 'What does the rent evaluation include?', a: 'A recommended rent range, the comparable listings used, and notes on anything about the property that would move the number up or down.' },
+  { q: 'How long does it take?', a: '[SOURCE NEEDED]' },
+  { q: 'Is the evaluation a guarantee of rent?', a: 'No. It is an estimate based on current comparables. Actual rent depends on condition, timing, and the market when the unit is listed.' },
+  { q: 'Do I have to hire RL Property Management to get one?', a: 'No. The evaluation is free and there is no obligation.' },
+  { q: 'Can I get an evaluation for a property I have not bought yet?', a: 'Yes. Owners considering a purchase request evaluations to check the numbers before closing.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Free rent evaluation', path }];
+const schema = [webPageNode({ path, title, description }), breadcrumbNode(crumbs), faqNode(path, faq.filter((f) => !f.a.includes('[SOURCE NEEDED]')))];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Free rent evaluation for your Columbus, Ohio property" {directAnswer} {keyFacts} faq={faq.filter((f) => !f.a.includes('[SOURCE NEEDED]'))} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/pricing/', label: 'Management pricing' }, { href: '/key-performance-indicators/', label: 'Days on market and other KPIs' }, { href: '/rent-vs-sell-calculator/', label: 'Rent vs. sell calculator' }, { href: '/property-management-consultation/', label: 'Schedule a consultation instead' }]}>
+    <h2>What is in a rent evaluation?</h2>
+    <p>A rent evaluation states a recommended monthly rent range for one property, lists the comparable listings behind it, and flags the property-specific factors that move the number: finishes, parking, laundry, pet policy, and the season a listing goes live. The estimate draws on current listing data and on what RL Property Management's own units in the same area have leased for.</p>
+    <h2>How is the rent estimate produced?</h2>
+    <p>{company.contact.sales.name}, RL Property Management's {company.contact.sales.title}, reviews the address against active and recently leased comparables and against RL Property Management's portfolio. Where the property is in one of the neighborhoods covered by a <a href="/guides/">rental market guide</a>, that guide's data is the starting point. The result is a range, not a single number, because the final rent depends on condition and timing.</p>
+    <h2>Request a free rent evaluation</h2>
+    <LeadForm id="rent-evaluation" fields={[
+      { name: 'name', label: 'Full name', required: true, autocomplete: 'name' },
+      { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email' },
+      { name: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel' },
+      { name: 'address', label: 'Property address (or addresses)', required: true, placeholder: 'Street, city, ZIP' },
+      { name: 'property_type', label: 'Property type', type: 'select', required: true, options: ['Single-family home', 'Condo or townhome', 'Duplex, triplex, or fourplex', 'Multi-family (5+ units)'] },
+      { name: 'condition', label: 'Current condition', type: 'radio', required: true, options: ['Excellent', 'Good', 'Needs work'] },
+      { name: 'status', label: 'Status', type: 'radio', required: true, options: ['Vacant', 'Occupied', 'Under contract to buy'] },
+      { name: 'notes', label: 'Anything else about the property', type: 'textarea' },
+    ]} submitLabel="Request my rent evaluation" note="Free, no obligation." />
+  </AeoPage>
+</Base>

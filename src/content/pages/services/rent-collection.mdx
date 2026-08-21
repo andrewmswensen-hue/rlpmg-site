@@ -1,0 +1,132 @@
+---
+title: "Rent collection and owner payouts"
+seoTitle: "Rent Collection and Owner Payouts | RLPM Columbus"
+description: "How RL Property Management collects rent in Columbus, Ohio and pays owners: online payment, 96 percent collected by the 5th, and direct deposit of net income."
+directAnswer: "RL Property Management collects rent from residents through an online resident portal, then deposits each owner's net income directly to the owner's bank account and emails a monthly statement. 96 percent of rent was collected by the 5th of the month as of July 2026. Rent collection is included in the flat monthly fee of $117, $137, or $184 per unit, with no percentage of rent taken."
+keyFacts:
+  - "96 percent of rent across the RL Property Management portfolio was collected by the 5th of the month as of July 2026."
+  - "Net income is paid by direct deposit and a statement is emailed monthly, on all three RL Property Management plans."
+  - "Rent collection is covered by the flat monthly fee of $117, $137, or $184 per unit rather than a percentage of rent."
+  - "A typical Columbus property manager charges 8 to 10 percent of monthly rent, which at the RL Property Management average rent of $1,653 is $132 to $165 per unit per month."
+  - "3.5 percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute."
+  - "Each unit carries a maintenance reserve equal to the plan's approval limit: $350, $750, or $1,500, held back from payouts."
+faq:
+  - q: "How do residents pay rent to RL Property Management?"
+    a: "Through the online resident portal at rlp.managebuilding.com. Payment happens in the portal rather than by check dropped at an office, which is part of why 96 percent of rent was collected by the 5th as of July 2026."
+  - q: "When is rent due and what is the late fee?"
+    a: "[SOURCE NEEDED]"
+  - q: "How does an owner receive rent money?"
+    a: "By direct deposit of net income to the owner's bank account, with a statement emailed the same month. Both are included on the Passive, Standard, and Premium plans."
+  - q: "Does RL Property Management take a percentage of the rent?"
+    a: "No. The fee is a flat $117, $137, or $184 per unit per month as of 2026, so a rent increase raises the owner's net income rather than the management fee."
+  - q: "What is held back from an owner payout?"
+    a: "The monthly management fee, the unit's maintenance reserve of $350, $750, or $1,500 depending on plan, any repair costs incurred that month, and any other fees listed in the Property Management Agreement."
+  - q: "What happens if a resident stops paying rent?"
+    a: "Pay-and-stay arrangements and other alternatives are pursued first. If those fail, the file goes to a local eviction attorney for filing in Franklin County Municipal Court, a 3-step process that takes about 6 weeks."
+related:
+  - href: "/services/owner-reporting/"
+    label: "Owner reporting and the owner portal"
+  - href: "/services/evictions/"
+    label: "Evictions in Franklin County, Ohio"
+  - href: "/services/tenant-screening/"
+    label: "Tenant screening standards"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/rent-collection/"
+section: "services"
+schemaType: "Service"
+order: 20
+---
+
+import { pricing, kpis, leasing } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+export const avgRent = kpis.metrics.find((m) => m.id === 'average-rent').value;
+export const onTime = kpis.metrics.find((m) => m.id === 'collected-by-5th').value;
+export const standard = pricing.plans[1];
+
+## How does RL Property Management collect rent in Columbus, Ohio?
+
+Residents pay through an online resident portal rather than by mailed check, and the payment posts against the ledger for that unit automatically. Collection, follow-up on late balances, and the ledger itself are handled by RL Property Management staff in Gahanna, Ohio. {onTime} percent of rent across the portfolio was collected by the 5th of the month as of {kpis.asOfLabel}.
+
+Owners see the same ledger from the other side, in the owner portal, so a payment that lands on the 3rd is visible without a phone call. The resident portal and the owner portal are both included on the Passive, Standard, and Premium plans.
+
+## What share of rent is collected on time?
+
+{onTime} percent, measured as rent collected by the 5th of the month, as of {kpis.asOfLabel}. Occupancy across the RL Property Management portfolio was {kpis.metrics.find((m) => m.id === 'occupancy').value} percent over the same period, and average rent was {usd(avgRent)} per month. Those three figures move together: screening quality drives on-time payment, and on-time payment drives predictable owner cash flow.
+
+RL Property Management publishes the collection figure and seven other operating metrics on a public scorecard rather than describing collection as strong. An owner comparing Columbus, Ohio managers can ask any of them for the same number.
+
+## When is rent due, and what happens when a payment is late?
+
+Rent due dates, grace periods, and late fee amounts are set in the lease. [SOURCE NEEDED]
+
+Late balances trigger follow-up from RL Property Management staff before any legal step. Pay-and-stay arrangements and other alternatives are pursued where possible, because a resident who catches up costs the owner far less than a vacancy plus a turn. {leasing.escalationRate.percent} percent of RL Property Management rentals escalate to eviction, litigation, or significant dispute.
+
+## How and when does an owner get paid?
+
+Net income is deposited directly to the owner's bank account and a statement is emailed for the same period. Direct deposit of net income, monthly statements by email, financial recordkeeping, and the online owner portal are included on all three plans, so no plan upgrade is needed to get paid electronically. The exact payout date each month is [SOURCE NEEDED].
+
+Owners holding {pricing.volumeDiscount.tiers[0].minUnits} to {pricing.volumeDiscount.tiers[0].maxUnits} units receive {pricing.volumeDiscount.tiers[0].percentOff} percent off the monthly management fee per unit, and portfolios of {pricing.volumeDiscount.tiers[1].minUnits} or more are priced custom. The discount lands on the same statement and the same deposit, so a Columbus, Ohio owner running six rentals sees one consolidated picture instead of six separate relationships.
+
+## What comes out of the rent before the owner payout?
+
+Four things come out: the flat monthly management fee, the unit's maintenance reserve, repair costs incurred that month, and any other fees named in the signed Property Management Agreement. The table below walks a single month on the Standard plan at the portfolio average rent of {usd(avgRent)}, using figures current as of {monthYear(kpis.asOf)}.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Line</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Rent collected</td>
+        <td>{usd(avgRent)}</td>
+        <td>Portfolio average rent as of {kpis.asOfLabel}</td>
+      </tr>
+      <tr>
+        <td>Management fee, {standard.name} plan</td>
+        <td>minus {usd(standard.monthlyFee)}</td>
+        <td>Flat per unit per month, not a percentage of rent</td>
+      </tr>
+      <tr>
+        <td>Maintenance reserve</td>
+        <td>Held at {usd(standard.maintenanceReserve)}</td>
+        <td>Replenished only when repairs draw the balance down</td>
+      </tr>
+      <tr>
+        <td>Repairs that month</td>
+        <td>Varies</td>
+        <td>In-house labor at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge, plus materials</td>
+      </tr>
+      <tr>
+        <td>Net deposited to the owner</td>
+        <td>Balance</td>
+        <td>Direct deposit, with a statement emailed the same month</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+An annual accounting and technology fee of {usd(pricing.fees.annualAccountingAndTechnologyFee)} per unit also applies, charged once a year rather than monthly.
+
+## Why does screening show up in the collection numbers?
+
+Because collections are decided before a resident moves in. Applicants must document income of {leasing.qualification.incomeMultiple} times the monthly rent, carry no violent criminal convictions, and have no eviction filed within the past {leasing.qualification.noEvictionsWithinYears} years. That front-end standard is what produces {onTime} percent collected by the 5th and a {leasing.escalationRate.percent} percent escalation rate as of {kpis.asOfLabel}.
+
+Retention works the same way. The RL Property Management lease renewal rate was {kpis.metrics.find((m) => m.id === 'renewal-rate').value} percent as of {kpis.asOfLabel}, and a resident who renews is a resident whose payment history is already known. Placement quality is prioritized over placement speed for exactly this reason: the cost of a weak placement shows up in the rent ledger months later, not on the day the lease is signed.
+
+## Does a flat fee change what rent collection costs an owner?
+
+Yes, and the gap widens as rent rises. A typical Columbus property manager charges {pricing.marketStandard.percentOfRentLow} to {pricing.marketStandard.percentOfRentHigh} percent of monthly rent, which at {usd(avgRent)} per month is {usd(avgRent * pricing.marketStandard.percentOfRentLow / 100)} to {usd(avgRent * pricing.marketStandard.percentOfRentHigh / 100)} per unit per month. The RL Property Management {standard.name} plan is {usd(standard.monthlyFee)} flat, so a rent increase raises owner income instead of the management bill.
+
+The same logic applies to turnover. The market-standard model adds a leasing fee equal to one month's rent each time a unit is leased. RL Property Management charges no leasing fee, and the monthly fee on a vacant unit is reimbursed if the property stays vacant longer than 60 days.
+
+Owners who want the collection number for their own property, alongside a rent range for the address, can start with a free rent evaluation.

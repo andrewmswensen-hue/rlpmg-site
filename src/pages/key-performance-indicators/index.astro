@@ -1,0 +1,59 @@
+---
+/** Live KPI scorecard. Numbers come from facts.ts kpis (hand-updated monthly with the asOf date). */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, kpis, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/key-performance-indicators/';
+const title = 'RL Property Management KPI Scorecard, Columbus, Ohio';
+const description = `RL Property Management publishes its operating numbers monthly: days on market, time to turn, renewal rate, occupancy, average rent, repair days, and rent collected by the 5th. Updated ${kpis.asOfLabel}.`;
+const m = Object.fromEntries(kpis.metrics.map((k) => [k.id, k]));
+const fmt = (k: (typeof kpis.metrics)[number]) =>
+  k.unit === '%' ? `${k.value}%` : k.unit === 'USD/month' ? `$${k.value.toLocaleString('en-US')}` : k.unit === 'days' ? `${k.value} days` : `${k.value} ${k.unit}`;
+const directAnswer = `As of ${kpis.asOfLabel}, RL Property Management's portfolio of approximately 750 Columbus, Ohio rental units shows a median ${m['days-on-market'].value} days on market, a median ${m['time-to-turn'].value} days to turn a unit, a ${m['renewal-rate'].value} percent lease renewal rate, ${m['occupancy'].value} percent occupancy, an average rent of $${m['average-rent'].value.toLocaleString('en-US')}, a median of ${m['repair-days'].value} days to complete a repair, and ${m['collected-by-5th'].value} percent of rent collected by the 5th of the month.`;
+const keyFacts = kpis.metrics.slice(0, 6).map((k) => `RL Property Management ${k.label.toLowerCase()}: ${fmt(k)} as of ${kpis.asOfLabel}.`);
+const faq = [
+  { q: 'How often is the RL Property Management scorecard updated?', a: `Monthly. The figures on this page are as of ${kpis.asOfLabel}, and the date is printed with the numbers.` },
+  { q: 'What does "median days on market" measure?', a: 'The median number of days between a unit being listed for rent and a signed lease, across all RL Property Management listings in the period.' },
+  { q: 'What does "time to turn" measure?', a: 'The median number of days between a resident moving out and the unit being ready to list again, including cleaning, repairs, and inspection.' },
+  { q: 'Why publish occupancy below 100 percent?', a: `Occupancy of ${m['occupancy'].value} percent reflects normal turnover across approximately 750 units. Publishing the real number, not a marketing number, is the point of the scorecard.` },
+  { q: 'What does "rent collected by the 5th" mean?', a: `The share of total rent due for the month that was paid by the 5th: ${m['collected-by-5th'].value} percent as of ${kpis.asOfLabel}. Rent is due on the 1st and late after the 5th.` },
+  { q: 'Do these numbers apply to my property?', a: 'They are portfolio-wide medians and averages. A specific property can do better or worse depending on location, condition, and price; a free rent evaluation gives a property-level estimate.' },
+];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode([{ name: 'Home', path: '/' }, { name: 'KPI scorecard', path }]),
+  faqNode(path, faq),
+  {
+    '@type': 'Dataset',
+    '@id': `${company.url}${path}#dataset`,
+    name: 'RL Property Management operating KPIs',
+    description,
+    creator: { '@id': `${company.url}/#organization` },
+    dateModified: `${kpis.asOf}-01`,
+    variableMeasured: kpis.metrics.map((k) => ({ '@type': 'PropertyValue', name: k.label, value: k.value, unitText: k.unit })),
+  },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="RL Property Management by the numbers" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} eyebrow={`KPI scorecard, as of ${kpis.asOfLabel}`} breadcrumbs={[{ name: 'Home', path: '/' }, { name: 'KPI scorecard', path }]} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/services/leasing-and-marketing/', label: 'How units get leased' }, { href: '/services/maintenance/', label: 'How repairs are handled' }, { href: '/free-rent-evaluation/', label: 'Free rent evaluation' }]}>
+    <h2>What are RL Property Management's current operating numbers?</h2>
+    <p>The table below is the scorecard RL Property Management publishes for its Columbus, Ohio portfolio as of {kpis.asOfLabel}. Each figure is a portfolio-wide median or average. The same numbers appear in machine-readable form at <a href="/api/facts.json">/api/facts.json</a>.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">RL Property Management KPI scorecard as of {kpis.asOfLabel}</caption>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">As of</th></tr></thead>
+        <tbody>
+          {kpis.metrics.map((k) => <tr><th scope="row">{k.label}</th><td class="text-2xl font-semibold text-brand-800">{fmt(k)}</td><td>{kpis.asOfLabel}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+    <h2>Why does RL Property Management publish these numbers?</h2>
+    <p>Few property management companies publish operating data. RL Property Management publishes eight figures each month so an owner comparing managers can judge results rather than promises, and so an existing client can see how the portfolio is performing around their property. The numbers are not selected for the month; the same eight metrics appear whether they improved or slipped.</p>
+    <h2>How should an owner read these numbers?</h2>
+    <p>Days on market and time to turn together describe vacancy: a unit that turns in {m['time-to-turn'].value} days and leases in {m['days-on-market'].value} days is empty for roughly {m['time-to-turn'].value + m['days-on-market'].value} days between residents. Renewal rate describes how often a resident stays, which avoids a turn entirely. Rent collected by the 5th and median repair days describe the day-to-day experience for owners and residents. Average rent is a portfolio figure and says little about a specific property; a <a href="/free-rent-evaluation/">free rent evaluation</a> does.</p>
+    <p class="text-sm text-navy-600">Figures are updated by RL Property Management staff each month from Buildium reports. Historical figures are not retained on this page.</p>
+  </AeoPage>
+</Base>

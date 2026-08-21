@@ -1,0 +1,56 @@
+---
+/**
+ * Available rentals. v1: RentEngine embed plus the criteria and process in static HTML so the page is useful to a
+ * crawler even though listings render inside the iframe. v2: build-time fetch of a RentEngine feed into HTML.
+ */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, leasing, serviceArea, kpis, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/homes-for-rent/';
+const rf = leasing.residentFees;
+const title = 'Homes for Rent in Columbus, Ohio | RL Property Management';
+const description = `Houses, condos, townhomes, and apartments for rent across the Columbus, Ohio metro from RL Property Management. Online applications, self-guided tours on many homes, free online rent payment.`;
+const directAnswer = `RL Property Management lists houses, condos, townhomes, and apartments for rent across ${serviceArea.places.length} Columbus, Ohio cities and neighborhoods. Current listings appear below and on ${leasing.platforms.label} including Zillow, Trulia, and Apartments.com. Applications are online (${usd(rf.applicationFeePerPerson)} per adult, ${usd(rf.applicationFeeRefundIfApproved)} refunded on approval and move-in), processed first come, first served, and many homes offer self-guided tours.`;
+const keyFacts = [
+  `RL Property Management manages approximately 750 rental units in the Columbus, Ohio metro; available homes are listed on ${leasing.platforms.label}.`,
+  `Applications are online, ${usd(rf.applicationFeePerPerson)} per adult with ${usd(rf.applicationFeeRefundIfApproved)} refunded if approved and moved in, and are processed first come, first served.`,
+  `Qualification minimums: income at least ${leasing.qualification.incomeMultiple} times rent, no evictions in ${leasing.qualification.noEvictionsWithinYears} years, no violent criminal convictions.`,
+  `Security deposit is ${leasing.securityDeposit}; pets are accepted at many homes for ${usd(rf.petRentPerPetMonthly)} per pet per month plus a ${usd(rf.petAcceptanceFee)} acceptance fee.`,
+  `${kpis.metrics[2].value} percent of RL Property Management residents renewed their lease as of ${kpis.asOfLabel}.`,
+];
+const faq = [
+  { q: 'How do I see a home?', a: 'Schedule a showing from the listing. Many homes offer self-guided tours on your schedule; a drive-by first is encouraged.' },
+  { q: 'How do I apply?', a: `Online from the listing or the Apply link. Each adult 18 or older applies; the fee is ${usd(rf.applicationFeePerPerson)} per person.` },
+  { q: 'What do I need to qualify?', a: `Income of at least ${leasing.qualification.incomeMultiple} times the monthly rent, no evictions in the past ${leasing.qualification.noEvictionsWithinYears} years, no violent criminal convictions, and no serious or recurring credit issues.` },
+  { q: 'Are pets allowed?', a: `At many homes, noted on each listing. Pet rent is ${usd(rf.petRentPerPetMonthly)} per pet per month plus a one-time ${usd(rf.petAcceptanceFee)} acceptance fee.` },
+  { q: 'Are housing vouchers accepted?', a: 'At select properties; each listing says so.' },
+  { q: 'Does RL Property Management list on Craigslist?', a: 'No. Listings appear on rlpmg.com and on 45+ platforms including Zillow, Trulia, and Apartments.com. A listing for an RL Property Management home on Craigslist is not from RL Property Management.' },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Homes for rent', path }];
+const schema = [webPageNode({ path, title, description, type: 'CollectionPage', reviewedBy: false }), breadcrumbNode(crumbs), faqNode(path, faq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Homes for rent in Columbus, Ohio" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} reviewedBy="RL Property Management leasing team" breadcrumbs={crumbs} related={[{ href: '/residents/how-to-apply/', label: 'How to apply' }, { href: '/residents/application-criteria/', label: 'Application criteria' }, { href: '/resident-faqs/', label: 'Resident FAQ' }, { href: company.portals.apply, label: 'Apply online' }, { href: company.portals.resident, label: 'Resident portal' }]}>
+    <h2>What is available right now?</h2>
+    <p>Current listings are below, updated continuously from RL Property Management's leasing system. Each listing has photos, rent, pet policy, voucher acceptance, and a button to schedule a showing or apply. If the list does not load, <a href={company.portals.listings} rel="noopener">open the listings page directly</a>.</p>
+    <div class="not-prose my-6 border border-gray" data-md-skip>
+      <iframe title="RL Property Management available rentals" src={company.portals.listings} width="100%" height="900" loading="lazy" style="border:0"></iframe>
+    </div>
+    <p><a href={company.portals.apply} rel="noopener" class="inline-block bg-brand-800 px-5 py-2.5 font-semibold text-white no-underline hover:bg-accent-600">Apply online</a></p>
+    <h2>How does renting from RL Property Management work?</h2>
+    <ol>
+      <li>Pick a home from the listings and drive by.</li>
+      <li>Schedule a showing or take a self-guided tour where offered.</li>
+      <li>Apply online. Each adult applies; the fee is {usd(rf.applicationFeePerPerson)} per person, {usd(rf.applicationFeeRefundIfApproved)} of it refunded if approved and moved in.</li>
+      <li>Screening checks credit, criminal history, rental history with landlord references, and income (pay stubs or bank statements). Applications are processed first come, first served.</li>
+      <li>On approval, sign the lease electronically and pay the deposit ({leasing.securityDeposit}), first month's rent plus proration, and the {rf.leaseSigningAdminFeePercentOfRent} percent lease-signing administrative fee.</li>
+      <li>Move-in inspection, keys, and portal setup for online rent payment (free) and maintenance requests (24/7).</li>
+    </ol>
+    <h2>Where are RL Property Management rentals located?</h2>
+    <p>Across the Columbus metro: {serviceArea.places.join(', ')}. Availability changes weekly; the listings above are current.</p>
+  </AeoPage>
+</Base>

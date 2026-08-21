@@ -1,0 +1,138 @@
+---
+/** The flagship AEO page. Every number comes from facts.ts; comparison math is computed here and shown. */
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode, pricingNodes } from '../../lib/schema';
+
+const path = '/pricing/';
+const [passive, standard, premium] = pricing.plans;
+const f = pricing.fees;
+const ms = pricing.marketStandard;
+
+const title = 'Property Management Pricing in Columbus, Ohio | RLPM';
+const description = `RL Property Management charges a flat $${passive.monthlyFee}, $${standard.monthlyFee}, or $${premium.monthlyFee} per unit per month in Columbus, Ohio, with a $0 leasing fee and a $${f.leaseRenewalFee} renewal fee. All fees listed, as of 2026.`;
+const directAnswer = `RL Property Management charges a flat monthly fee per unit in the Columbus, Ohio metro: ${usd(passive.monthlyFee)} (Passive), ${usd(standard.monthlyFee)} (Standard), or ${usd(premium.monthlyFee)} (Premium), as of ${pricing.effectiveLabel}. The leasing fee is ${usd(f.leasingFee)} on all three plans. Lease renewals cost ${usd(f.leaseRenewalFee)}, vacant-unit onboarding ${usd(f.onboardingFeeVacantUnit)}, and an annual accounting and technology fee is ${usd(f.annualAccountingAndTechnologyFee)}. A typical Columbus manager charges ${ms.percentOfRentLow} to ${ms.percentOfRentHigh} percent of rent plus one month's rent to lease.`;
+const keyFacts = [
+  `RL Property Management's monthly management fee is flat per unit: ${usd(passive.monthlyFee)} Passive, ${usd(standard.monthlyFee)} Standard, ${usd(premium.monthlyFee)} Premium, as of ${pricing.effectiveLabel}.`,
+  `The leasing fee is ${usd(f.leasingFee)} on all RL Property Management plans; the lease renewal fee is ${usd(f.leaseRenewalFee)}.`,
+  `Each plan sets a per-item maintenance approval limit: ${usd(passive.maintenanceApprovalLimit)} Passive, ${usd(standard.maintenanceApprovalLimit)} Standard, ${usd(premium.maintenanceApprovalLimit)} Premium.`,
+  `In-house maintenance is ${usd(f.inHouseMaintenance.hourlyRate)} per hour plus a ${usd(f.inHouseMaintenance.tripCharge)} trip charge plus materials; vendor work carries a ${f.vendorProjectManagement.percent} percent project management fee capped at ${usd(f.vendorProjectManagement.maxPerProject)}.`,
+  `Owners with 5 to 9 units receive 10 percent off monthly management fees; 10 or more units get custom pricing.`,
+  `The monthly fee on a vacant unit is reimbursed if the property stays vacant longer than 60 days.`,
+];
+
+// Comparison math. Market standard: X% of rent + one month's rent leasing fee in a leasing year.
+const rents = [1200, 1500, 1800, 2200, 2800];
+const rlpmAnnual = (fee: number, renewal: boolean) => fee * 12 + f.annualAccountingAndTechnologyFee + (renewal ? f.leaseRenewalFee : 0);
+const mktAnnual = (rent: number, pct: number, leasing: boolean) => rent * 12 * (pct / 100) + (leasing ? rent : 0);
+const rows = rents.map((rent) => ({
+  rent,
+  rlpmLeaseYear: rlpmAnnual(standard.monthlyFee, false),
+  rlpmRenewalYear: rlpmAnnual(standard.monthlyFee, true),
+  mkt8Lease: mktAnnual(rent, ms.percentOfRentLow, true),
+  mkt10Lease: mktAnnual(rent, ms.percentOfRentHigh, true),
+  mkt8Renew: mktAnnual(rent, ms.percentOfRentLow, false),
+  mkt10Renew: mktAnnual(rent, ms.percentOfRentHigh, false),
+}));
+const ex = rows[1]; // $1,500 worked example
+
+const faq = [
+  { q: 'Does RL Property Management charge a leasing fee?', a: `No. The leasing fee is ${usd(f.leasingFee)} on the Passive, Standard, and Premium plans. Marketing, showings, screening, and lease signing are covered by the flat monthly fee.` },
+  { q: 'What is the cheapest RL Property Management plan?', a: `Passive, at ${usd(passive.monthlyFee)} per unit per month, with a ${usd(passive.maintenanceApprovalLimit)} per-item maintenance approval limit and no HOA or pre-listing support.` },
+  { q: 'Is there a setup or onboarding fee?', a: `A one-time ${usd(f.onboardingFeeVacantUnit)} onboarding fee applies to vacant units. An optional ${usd(f.preInspection.amount)} pre-inspection is credited against the onboarding fee once a Property Management Agreement is signed.` },
+  { q: 'What does the maintenance approval limit mean?', a: `The amount RL Property Management can approve per repair item without contacting the owner: ${usd(passive.maintenanceApprovalLimit)} on Passive, ${usd(standard.maintenanceApprovalLimit)} on Standard, ${usd(premium.maintenanceApprovalLimit)} on Premium. The same amount is held as the unit's maintenance reserve.` },
+  { q: 'Is there a markup on repairs?', a: `In-house work is billed at ${usd(f.inHouseMaintenance.hourlyRate)} per hour plus a ${usd(f.inHouseMaintenance.tripCharge)} trip charge plus materials. Third-party vendor work carries a ${f.vendorProjectManagement.percent} percent project management fee on vendor costs up to ${usd(f.vendorProjectManagement.appliesToVendorCostUpTo)}, capped at ${usd(f.vendorProjectManagement.maxPerProject)} per project.` },
+  { q: 'Do I pay the management fee while the unit is vacant?', a: `Yes, with a reimbursement: if a property stays vacant longer than 60 days, the monthly management fee for the vacancy is reimbursed.` },
+  { q: 'Is there a volume discount?', a: `Yes. Owners with 5 to 9 units receive 10 percent off monthly management fees on each unit. Owners with 10 or more units receive custom pricing.` },
+  { q: 'Are there any other fees?', a: `An annual accounting and technology fee of ${usd(f.annualAccountingAndTechnologyFee)}, a ${usd(f.leaseRenewalFee)} lease renewal fee, turn project management of 15 percent on the first $15,000, and professional listing photography at vendor cost plus markup (typically ${usd(f.photography.typicalMin)} to ${usd(f.photography.typicalMax)}) effective October 1, 2026. Final terms are in the Property Management Agreement.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Pricing', path }];
+const schema = [webPageNode({ path, title, description, dateModified: pricing.asOf > LAST_VERIFIED ? pricing.asOf : LAST_VERIFIED }), breadcrumbNode(crumbs), faqNode(path, faq), ...pricingNodes(path)];
+const related = [
+  { href: '/compare/flat-fee-vs-percentage-property-management/', label: 'Flat fee vs. percentage: the full comparison' },
+  { href: '/how-it-works/', label: 'How onboarding works' },
+  { href: '/what-we-manage/', label: 'What RL Property Management manages' },
+  { href: '/services/maintenance/', label: 'How maintenance is billed' },
+  { href: '/free-rent-evaluation/', label: 'Get a free rent evaluation' },
+  { href: '/api/pricing.json', label: 'This pricing as JSON' },
+];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Property management pricing in Columbus, Ohio" {directAnswer} {keyFacts} {faq} {related} lastVerified={LAST_VERIFIED} eyebrow={`Flat-fee pricing, effective ${pricing.effectiveLabel}`} breadcrumbs={crumbs}>
+    <h2>What does RL Property Management charge per month?</h2>
+    <p>RL Property Management charges one flat fee per unit per month, set by plan: {usd(passive.monthlyFee)} for Passive, {usd(standard.monthlyFee)} for Standard, and {usd(premium.monthlyFee)} for Premium, as of {pricing.effectiveLabel}. The fee does not change with the rent amount. The plans differ in how much repair spending RL Property Management can approve without asking, and in whether association support, pre-listing support, and owner-chosen vendors are included.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">RL Property Management plans compared</caption>
+        <thead>
+          <tr><th scope="col">Plan</th>{pricing.plans.map((p) => <th scope="col">{p.name}</th>)}</tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Monthly fee per unit</th>{pricing.plans.map((p) => <td class="text-xl font-semibold text-brand-800">{usd(p.monthlyFee)}</td>)}</tr>
+          <tr><th scope="row">Leasing fee</th>{pricing.plans.map(() => <td>{usd(f.leasingFee)}</td>)}</tr>
+          <tr><th scope="row">Lease renewal fee</th>{pricing.plans.map(() => <td>{usd(f.leaseRenewalFee)}</td>)}</tr>
+          <tr><th scope="row">Maintenance approval limit per item</th>{pricing.plans.map((p) => <td>{usd(p.maintenanceApprovalLimit)}</td>)}</tr>
+          <tr><th scope="row">Required maintenance reserve per unit</th>{pricing.plans.map((p) => <td>{usd(p.maintenanceReserve)}</td>)}</tr>
+          <tr><th scope="row">HOA / COA support</th><td>Not included</td><td>Included</td><td>Included</td></tr>
+          <tr><th scope="row">Owner-handled repairs on vacant units</th><td>Not included</td><td>Included</td><td>Included</td></tr>
+          <tr><th scope="row">Pre-listing support</th><td>Not included</td><td>Not included</td><td>Included</td></tr>
+          <tr><th scope="row">Owner's preferred vendors</th><td>Not included</td><td>Not included</td><td>Included</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Each plan includes the same core service: {pricing.includedInEveryPlan.slice(0, -1).join(', ').toLowerCase()}, and {pricing.includedInEveryPlan.at(-1)!.toLowerCase()}.</p>
+
+    <h2>Which RL Property Management plan fits which owner?</h2>
+    <p>Passive fits an owner who wants the fewest interruptions: RL Property Management approves repairs up to {usd(passive.maintenanceApprovalLimit)} per item without a call. Standard fits an owner in an HOA or one who wants to handle repairs between residents, with a {usd(standard.maintenanceApprovalLimit)} limit. Premium fits an owner who wants to approve most spending (limit {usd(premium.maintenanceApprovalLimit)}), use their own vendors, and get help preparing a property before listing.</p>
+    <dl>
+      {pricing.plans.map((p) => <div class="py-2"><dt class="font-semibold text-navy-800">{p.name}, {usd(p.monthlyFee)} per unit per month</dt><dd>{p.summary}</dd></div>)}
+    </dl>
+
+    <h2>What other fees can an owner expect?</h2>
+    <p>Beyond the monthly fee, RL Property Management charges a {usd(f.leaseRenewalFee)} lease renewal fee, a {usd(f.onboardingFeeVacantUnit)} one-time onboarding fee on vacant units, and a {usd(f.annualAccountingAndTechnologyFee)} annual accounting and technology fee. Repairs are billed at cost plus the rates below. There is no leasing fee, no markup on rent, and no fee to end management at the term.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Other RL Property Management fees as of {pricing.effectiveLabel}</caption>
+        <thead><tr><th scope="col">Fee</th><th scope="col">Amount</th><th scope="col">When it applies</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Leasing fee</th><td>{usd(f.leasingFee)}</td><td>Each new lease, all plans</td></tr>
+          <tr><th scope="row">Lease renewal fee</th><td>{usd(f.leaseRenewalFee)}</td><td>Each renewal with an existing resident</td></tr>
+          <tr><th scope="row">Onboarding fee</th><td>{usd(f.onboardingFeeVacantUnit)}</td><td>One time, vacant units only</td></tr>
+          <tr><th scope="row">Pre-inspection</th><td>{usd(f.preInspection.amount)}</td><td>Optional before signing; {f.preInspection.note.toLowerCase()}</td></tr>
+          <tr><th scope="row">Annual accounting and technology fee</th><td>{usd(f.annualAccountingAndTechnologyFee)}</td><td>Once a year</td></tr>
+          <tr><th scope="row">In-house maintenance labor</th><td>{usd(f.inHouseMaintenance.hourlyRate)} per hour plus {usd(f.inHouseMaintenance.tripCharge)} trip charge</td><td>Plus materials, when RLPM technicians do the work</td></tr>
+          <tr><th scope="row">Vendor project management</th><td>{f.vendorProjectManagement.percent} percent of vendor cost up to {usd(f.vendorProjectManagement.appliesToVendorCostUpTo)}, max {usd(f.vendorProjectManagement.maxPerProject)}</td><td>Third-party vendor work; not applied to turns</td></tr>
+          <tr><th scope="row">Turn project management</th><td>15 percent to $15,000; 10 percent from $15,001 to $25,000; 7.5 percent above $25,000</td><td>Make-ready work between residents</td></tr>
+          <tr><th scope="row">Listing photography</th><td>Vendor cost plus markup, typically {usd(f.photography.typicalMin)} to {usd(f.photography.typicalMax)}</td><td>Effective October 1, 2026. {f.photography.grandfather}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How does a flat fee compare with a percentage of rent?</h2>
+    <p>A typical Columbus, Ohio property manager charges {ms.percentOfRentLow} to {ms.percentOfRentHigh} percent of monthly rent plus a leasing fee equal to one month's rent each time a unit is leased. On a $1,500 rental in a year with one new lease, that is {usd(ex.mkt8Lease)} to {usd(ex.mkt10Lease)}. RL Property Management's Standard plan costs {usd(ex.rlpmLeaseYear)} that year ({usd(standard.monthlyFee)} times 12 plus the {usd(f.annualAccountingAndTechnologyFee)} annual fee). The gap widens as rent rises, because the flat fee does not.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Annual management cost, RL Property Management Standard plan vs. the market-standard percentage model</caption>
+        <thead>
+          <tr><th scope="col" rowspan="2">Monthly rent</th><th scope="col" colspan="3">Year with one new lease</th><th scope="col" colspan="3">Year with a renewal, no new lease</th></tr>
+          <tr><th scope="col">RLPM Standard</th><th scope="col">8% + 1 month</th><th scope="col">10% + 1 month</th><th scope="col">RLPM Standard</th><th scope="col">8%</th><th scope="col">10%</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => <tr><th scope="row">{usd(r.rent)}</th><td class="font-semibold text-brand-800">{usd(r.rlpmLeaseYear)}</td><td>{usd(r.mkt8Lease)}</td><td>{usd(r.mkt10Lease)}</td><td class="font-semibold text-brand-800">{usd(r.rlpmRenewalYear)}</td><td>{usd(r.mkt8Renew)}</td><td>{usd(r.mkt10Renew)}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+    <p>Assumptions: RLPM column is the Standard plan at {usd(standard.monthlyFee)} per month for 12 months plus the {usd(f.annualAccountingAndTechnologyFee)} annual fee, and adds the {usd(f.leaseRenewalFee)} renewal fee in the renewal year. The market-standard column applies the percentage to 12 months of rent and adds one month's rent as a leasing fee in the lease year. Neither column includes repairs, which are billed at cost by either model. The Passive plan would be {usd(standard.monthlyFee - passive.monthlyFee)} per month lower and Premium {usd(premium.monthlyFee - standard.monthlyFee)} higher. No specific company is represented by the market-standard column.</p>
+
+    <h2>Is there a discount for multiple units?</h2>
+    <p>Yes. Owners with 5 to 9 units under management receive 10 percent off the monthly management fee on each unit, so the Standard plan becomes {usd(Math.round(standard.monthlyFee * 0.9))} per unit per month. Owners with 10 or more units receive custom pricing from {company.contact.sales.name}, RL Property Management's Business Development Manager, at {company.contact.sales.phone}.</p>
+
+    <h2>What reserves does RL Property Management require?</h2>
+    <p>Each unit carries a maintenance reserve equal to the plan's approval limit: {usd(passive.maintenanceReserve)} on Passive, {usd(standard.maintenanceReserve)} on Standard, {usd(premium.maintenanceReserve)} on Premium. The reserve funds repairs without waiting for an owner transfer. Separately, RL Property Management recommends each owner hold {pricing.reserves.recommendedOwnerReserve} in personal reserves per property for vacancy, turns, and capital items; that money stays in the owner's own account.</p>
+
+    <p>Pricing shown is effective {pricing.effectiveLabel} and reviewed as of August 2026. The signed Property Management Agreement governs final terms. To see what a specific property would rent for, request a <a href="/free-rent-evaluation/">free rent evaluation</a>, or <a href="/property-management-consultation/">schedule a consultation</a> with {company.contact.sales.name}.</p>
+  </AeoPage>
+</Base>

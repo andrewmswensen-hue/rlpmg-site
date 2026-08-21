@@ -1,0 +1,136 @@
+---
+title: "Property management services in Columbus, Ohio"
+seoTitle: "Property Management Services | RLPM Columbus, Ohio"
+description: "Seven services RL Property Management performs for Columbus, Ohio owners: screening, rent collection, maintenance, inspections, leasing, evictions, reporting."
+directAnswer: "RL Property Management performs seven services for rental owners in the Columbus, Ohio metro: tenant screening, rent collection and owner payouts, maintenance, quarterly inspections, leasing and marketing, evictions in Franklin County, and owner reporting. Screening, rent collection, maintenance management, marketing on 45+ platforms, inspections, and reporting are included in a flat monthly fee of $117, $137, or $184 per unit."
+keyFacts:
+  - "Seven services are covered: tenant screening, rent collection, maintenance, inspections, leasing and marketing, evictions, and owner reporting."
+  - "The monthly fee is flat at $117, $137, or $184 per unit, not a percentage of rent, and the leasing fee is $0."
+  - "RL Property Management manages approximately 750 rental units across the Columbus, Ohio metro as of August 2026."
+  - "In-house maintenance is billed at $84 per hour plus a $15 trip charge, with 8 technicians on staff."
+  - "A Franklin County possession-only eviction runs roughly $448 to $450 and about 6 weeks as of August 2026."
+  - "The monthly fee on a vacant unit is reimbursed if the property stays vacant longer than 60 days."
+faq:
+  - q: "What services are included in the RL Property Management monthly fee?"
+    a: "Tenant screening, rent collection, emergency and non-emergency maintenance management, marketing on 45+ platforms, the owner portal, financial recordkeeping, monthly statements, direct deposit, in-house maintenance service, and move-in and move-out inspections."
+  - q: "Which services cost extra?"
+    a: "Maintenance labor at $84 per hour plus a $15 trip charge, vendor and turn project management, lease renewal at $250, onboarding at $300 on a vacant unit, the $125 annual accounting and technology fee, and listing photography."
+  - q: "Does RL Property Management charge a leasing fee?"
+    a: "No. The leasing fee is $0. A typical Columbus property manager charges 8 to 10 percent of rent plus a leasing fee equal to one month's rent each time a unit is leased."
+  - q: "What is the difference between this page and the Columbus property management overview?"
+    a: "This page breaks down each service in detail. The Columbus property management page is the broader overview of what owning a managed rental with RL Property Management looks like."
+  - q: "Do services change between the Passive, Standard, and Premium plans?"
+    a: "The services are the same. What changes is the repair approval limit of $1,500, $750, or $350, plus HOA support, owner-handled repairs on vacant units, pre-listing support, and use of the owner's preferred vendors."
+related:
+  - href: "/columbus-property-management/"
+    label: "Columbus property management overview for owners"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/how-it-works/"
+    label: "See how onboarding works"
+  - href: "/what-we-manage/"
+    label: "What RL Property Management manages"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/"
+section: "services"
+schemaType: "CollectionPage"
+order: 1
+---
+
+import { pricing, leasing, maintenance, evictions, company, kpis, serviceArea } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+## What does RL Property Management actually do for a Columbus rental owner?
+
+Seven jobs, listed below, performed across approximately {company.scale.unitsUnderManagement} units in the Columbus, Ohio metro as of {monthYear(company.scale.asOf)}. Most of the work is covered by the flat monthly fee of {usd(pricing.plans[0].monthlyFee)}, {usd(pricing.plans[1].monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit. The costs that fall outside the monthly fee are published rather than quoted on request.
+
+The service area covers {serviceArea.places.length} cities and neighborhoods across {serviceArea.counties.length} Ohio counties, run from an office at {company.address.street}, {company.address.city}, Ohio {company.address.postalCode}. Property types accepted, and the categories declined, are listed on [what RL Property Management manages](/what-we-manage/). The full place list sits at [areas we serve](/areas-we-serve/).
+
+For the broader picture of what owning a managed rental looks like, start with [Columbus property management for owners](/columbus-property-management/). The pages below go one level deeper into each service.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Service</th>
+        <th scope="col">What it covers</th>
+        <th scope="col">Cost as of {pricing.effectiveLabel}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="/services/tenant-screening/">Tenant screening</a></td>
+        <td>Credit, criminal, rental history, and income at {leasing.qualification.incomeMultiple}x rent</td>
+        <td>Included in the monthly fee</td>
+      </tr>
+      <tr>
+        <td><a href="/services/rent-collection/">Rent collection</a></td>
+        <td>Online resident payment, ledgers, direct deposit of net income</td>
+        <td>Included in the monthly fee</td>
+      </tr>
+      <tr>
+        <td><a href="/services/maintenance/">Maintenance</a></td>
+        <td>{company.scale.maintenanceTechnicians} in-house technicians and 24/7 emergency coverage</td>
+        <td>{usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge</td>
+      </tr>
+      <tr>
+        <td><a href="/services/property-inspections/">Inspections</a></td>
+        <td>Quarterly, plus move-in ready and move-out with turn scope</td>
+        <td>Included in the monthly fee</td>
+      </tr>
+      <tr>
+        <td><a href="/services/leasing-and-marketing/">Leasing and marketing</a></td>
+        <td>{leasing.platforms.label}, showings, applications</td>
+        <td>{usd(pricing.fees.leasingFee)} leasing fee</td>
+      </tr>
+      <tr>
+        <td><a href="/services/evictions/">Evictions</a></td>
+        <td>Coordination with local eviction attorneys in {evictions.county}</td>
+        <td>{usd(evictions.costs.rlpmProcessFee)} process fee plus court and attorney cost</td>
+      </tr>
+      <tr>
+        <td><a href="/services/owner-reporting/">Owner reporting</a></td>
+        <td>Monthly statements, owner portal, financial recordkeeping</td>
+        <td>{usd(pricing.fees.annualAccountingAndTechnologyFee)} per unit per year</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Who gets approved to live in the property?
+
+Applicants who document income of {leasing.qualification.incomeMultiple} times the monthly rent, carry no violent criminal convictions, have no eviction filed within the past {leasing.qualification.noEvictionsWithinYears} years, and show no serious or recurring credit issues. Deposits run {leasing.securityDeposit}, and approved pet households carry {usd(leasing.petDamageCoverage.amount)} of pet damage coverage funded by the resident. Details are on [tenant screening in Columbus, Ohio](/services/tenant-screening/).
+
+## How does the rent get collected and reach the owner?
+
+Residents pay through an online portal, and {kpis.metrics.find((m) => m.id === 'collected-by-5th').value} percent of rent was collected by the 5th of the month as of {kpis.asOfLabel}. Net income is deposited directly to the owner's bank account with a statement emailed the same period. The full breakdown of what comes out before the deposit is on [rent collection and owner payouts](/services/rent-collection/).
+
+## Who fixes things when they break?
+
+An in-house team of {company.scale.maintenanceTechnicians} technicians, billed at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge and materials. Repairs at or under the plan approval limit of {usd(pricing.plans[0].maintenanceApprovalLimit)}, {usd(pricing.plans[1].maintenanceApprovalLimit)}, or {usd(pricing.plans[2].maintenanceApprovalLimit)} proceed without an owner call. Routine work completes in {maintenance.routineCompletionWeeks.min} to {maintenance.routineCompletionWeeks.max} weeks. See [rental property maintenance](/services/maintenance/).
+
+## How often does anyone look at the property?
+
+Quarterly, checking smoke detectors, appliances, resident responsibilities, liabilities, and overall condition, plus a move-in ready inspection and a move-out inspection that prepares the turn scope. Smoke and CO detectors are replaced at 10 years or older. Inspection detail, including the {usd(pricing.fees.preInspection.amount)} pre-inspection before signing, is on [rental property inspections](/services/property-inspections/).
+
+## How does a vacant unit get leased?
+
+Listings go out to {leasing.platforms.label} including {leasing.platforms.examples.slice(0, 3).join(', ')}, and average lease-up runs {leasing.averageLeaseUpWeeks.min} to {leasing.averageLeaseUpWeeks.max} weeks once the unit is rent-ready. Median days on market was {kpis.metrics.find((m) => m.id === 'days-on-market').value} as of {kpis.asOfLabel}. {pricing.vacancyGuarantee} See [leasing and marketing for Columbus rentals](/services/leasing-and-marketing/).
+
+## What happens when a tenancy fails?
+
+Pay-and-stay arrangements come first. When those fail, local eviction attorneys file in {evictions.court}: about {usd(evictions.costs.totalPossessionOnlyApprox.min)} to {usd(evictions.costs.totalPossessionOnlyApprox.max)} for possession only and roughly {evictions.typicalDurationWeeks} weeks as of {monthYear(evictions.costs.asOf)}. {leasing.escalationRate.percent} percent of rentals reach that point. Cost and process detail sits on [evictions in Franklin County, Ohio](/services/evictions/), which is informational and not legal advice.
+
+## What does an owner see month to month?
+
+A statement by email, a direct deposit, and an online owner portal with the ledger for each unit, identical on all three plans. RL Property Management also publishes {kpis.metrics.length} operating metrics as of {kpis.asOfLabel}. The reporting stack, the {usd(pricing.fees.annualAccountingAndTechnologyFee)} annual fee, and the machine-readable data feeds are covered on [owner reporting and the owner portal](/services/owner-reporting/).
+
+## What is included in the monthly fee, item by item?
+
+<ul>
+  {pricing.includedInEveryPlan.map((item) => <li>{item}</li>)}
+</ul>
+
+An owner comparing these seven services against a current manager can start with a free rent evaluation, or go straight to the published [fee schedule](/pricing/).

@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, LAST_VERIFIED } from '../../data/facts';
+import { webPageNode, breadcrumbNode, faqNode, BROKER_ID, ORG_ID } from '../../lib/schema';
+
+const path = '/team/';
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const leaders = team.filter((t) => t.data.leadership);
+const staff = team.filter((t) => !t.data.leadership);
+const techs = staff.filter((t) => /Technician/.test(t.data.title));
+const title = 'RL Property Management Team | Columbus, Ohio';
+const description = `The ${company.scale.employees}-person RL Property Management team in Gahanna, Ohio: leadership, leasing, client services, and ${company.scale.maintenanceTechnicians} in-house maintenance technicians serving Columbus rental owners.`;
+const directAnswer = `RL Property Management employs ${company.scale.employees} people at its ${company.address.city}, Ohio office as of August 2026, led by ${company.brokerOfRecord.name}, ${company.brokerOfRecord.title}. The team includes dedicated leasing, client service, vacant-unit, and maintenance coordination roles plus ${company.scale.maintenanceTechnicians} in-house maintenance technicians. Listed below are ${team.length} team members by name and title.`;
+const keyFacts = [
+  `RL Property Management has ${company.scale.employees} employees as of August 2026, all based in Central Ohio.`,
+  `${company.brokerOfRecord.name} is ${company.brokerOfRecord.title} of RL Property Management.`,
+  `${company.scale.maintenanceTechnicians} maintenance technicians are RL Property Management employees, not subcontractors.`,
+  `${company.contact.sales.name}, ${company.contact.sales.title}, is the first contact for new owners at ${company.contact.sales.phone}.`,
+];
+const faq = [
+  { q: 'Who is the broker of record at RL Property Management?', a: `${company.brokerOfRecord.name}, ${company.brokerOfRecord.title}, under ${company.license.label} ${company.license.number}.` },
+  { q: 'Who should a new owner contact?', a: `${company.contact.sales.name}, ${company.contact.sales.title}, at ${company.contact.sales.phone} or ${company.contact.sales.email}.` },
+  { q: 'Are maintenance technicians employees or contractors?', a: `Employees. RL Property Management has ${company.scale.maintenanceTechnicians} in-house technicians, billed at $84 per hour plus a $15 trip charge plus materials.` },
+  { q: 'Is the team local?', a: `Yes. The team works from ${company.address.street}, ${company.address.city}, Ohio, and the executive team personally owns approximately ${company.scale.executiveOwnedUnits} Central Ohio rentals.` },
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path }];
+const schema = [
+  webPageNode({ path, title, description }),
+  breadcrumbNode(crumbs),
+  faqNode(path, faq),
+  ...team.map((t) => ({
+    '@type': 'Person',
+    '@id': t.data.id === 'peter-lohmann' ? BROKER_ID : `${company.url}${path}#${t.data.id}`,
+    name: t.data.name,
+    jobTitle: t.data.title,
+    worksFor: { '@id': ORG_ID },
+  })),
+];
+const Group = ({ heading, people }: { heading: string; people: typeof team }) => null;
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="The RL Property Management team" {directAnswer} {keyFacts} {faq} lastVerified={LAST_VERIFIED} breadcrumbs={crumbs} related={[{ href: '/about/', label: 'About RL Property Management' }, { href: '/careers/', label: 'Open positions' }, { href: '/contact-us/', label: 'Contact' }]}>
+    <h2>Who leads RL Property Management?</h2>
+    <p>Six people lead RL Property Management: the principal broker, operations, business development, people operations, maintenance, and marketing. Each is listed with a current title as of August 2026.</p>
+    <ul class="grid gap-3 sm:grid-cols-2" style="list-style:none;padding-left:0">
+      {leaders.map((t) => <li id={t.data.id} class="border-l-4 border-brand-800 bg-offwhite p-4"><strong class="block text-navy-800">{t.data.name}</strong><span>{t.data.title}</span></li>)}
+    </ul>
+    <h2>Who handles leasing, clients, and maintenance coordination?</h2>
+    <p>Day-to-day work is split into leasing, client service, vacant-unit turns, and maintenance coordination, so an owner or resident reaches a person whose job matches the question. Names and titles as of August 2026:</p>
+    <ul class="grid gap-2 sm:grid-cols-2" style="list-style:none;padding-left:0">
+      {staff.filter((t) => !techs.includes(t)).map((t) => <li id={t.data.id}><strong>{t.data.name}</strong>, {t.data.title}</li>)}
+    </ul>
+    <h2>Who does the repairs?</h2>
+    <p>RL Property Management employs its own maintenance technicians rather than relying only on outside vendors. In-house labor is billed at $84 per hour plus a $15 trip charge plus materials. Larger or specialized jobs go to licensed third-party vendors under a 15 percent project management fee capped at $450.</p>
+    <ul class="grid gap-2 sm:grid-cols-2" style="list-style:none;padding-left:0">
+      {techs.map((t) => <li id={t.data.id}><strong>{t.data.name}</strong>, {t.data.title}</li>)}
+    </ul>
+    <p class="text-sm text-navy-600">Team photos will be added from RL Property Management's own photography; no stock images are used on this page.</p>
+  </AeoPage>
+</Base>

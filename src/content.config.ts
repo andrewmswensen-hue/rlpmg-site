@@ -100,7 +100,7 @@ const faqs = defineCollection({
     id: z.string(),
     topic: z.string(),
     question: z.string(),
-    answer: z.string().max(600),
+    answer: z.string().max(1200),
     pages: z.array(z.string()).default([]),
   }),
 });

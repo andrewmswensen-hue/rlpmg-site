@@ -1,0 +1,160 @@
+---
+title: "Rental property maintenance in Columbus, Ohio"
+seoTitle: "Rental Maintenance in Columbus, Ohio | RLPM"
+description: "RL Property Management runs in-house maintenance in Columbus, Ohio at $84 per hour plus a $15 trip charge, with 24/7 emergency coverage and set approval limits."
+directAnswer: "RL Property Management handles rental maintenance in Columbus, Ohio with 8 in-house technicians billed at $84 per hour plus a $15 trip charge and materials. Repairs under the plan approval limit of $1,500, $750, or $350 proceed without contacting the owner. Routine work completes in 1 to 3 weeks, median 6 days as of July 2026, and an emergency line runs 24/7."
+keyFacts:
+  - "In-house maintenance labor is billed at $84 per hour plus a $15 trip charge, plus materials, as of 2026."
+  - "RL Property Management employs 8 maintenance technicians out of 33 total employees as of August 2026."
+  - "Repair approval limits are $1,500 on Passive, $750 on Standard, and $350 on Premium; work above the limit goes to the owner first."
+  - "Routine repairs complete in 1 to 3 weeks, with a median of 6 days across the portfolio as of July 2026."
+  - "A 24/7 emergency call center covers nights, weekends, and holidays for all managed properties."
+  - "Third-party vendor work carries a 15 percent project management fee on vendor cost up to $3,000, capped at $450 per project."
+faq:
+  - q: "How much does RL Property Management charge for maintenance labor?"
+    a: "$84 per hour plus a $15 trip charge, plus materials, as of 2026. Labor is performed by in-house technicians rather than marked-up subcontractors."
+  - q: "What repairs can RL Property Management approve without calling the owner?"
+    a: "Anything at or under the plan's approval limit: $1,500 on Passive, $750 on Standard, $350 on Premium. Work above the limit is sent to the owner for a decision first."
+  - q: "Is there emergency maintenance at night and on weekends?"
+    a: "Yes. A 24/7 emergency call center covers nights, weekends, and holidays for RL Property Management properties in the Columbus, Ohio metro."
+  - q: "How long does a routine repair take?"
+    a: "1 to 3 weeks for routine work, with a median repair time of 6 days across the RL Property Management portfolio as of July 2026. Emergencies are dispatched immediately."
+  - q: "Can an owner use their own contractor?"
+    a: "On the Premium plan, yes. Owner-handled repairs on vacant units are available on the Standard and Premium plans. No plan allows owner-handled repairs on an occupied unit."
+  - q: "Does RL Property Management work with home warranty companies?"
+    a: "No. Home warranty claim approval slows repairs for residents, so properties covered by a home warranty are not accepted."
+  - q: "What is the project management fee on a turn?"
+    a: "15 percent on the first $15,000 of turn cost, 10 percent from $15,001 to $25,000, and 7.5 percent above $25,001. The 15 percent vendor fee and its $450 cap do not apply to turns."
+related:
+  - href: "/services/property-inspections/"
+    label: "Rental property inspections"
+  - href: "/services/rent-collection/"
+    label: "Rent collection and owner payouts"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/how-it-works/"
+    label: "See how onboarding works"
+  - href: "/faq/"
+    label: "Owner questions and answers"
+lastVerified: 2026-08-21
+path: "/services/maintenance/"
+section: "services"
+schemaType: "Service"
+order: 30
+---
+
+import { pricing, maintenance, kpis, company } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+export const repairDays = kpis.metrics.find((m) => m.id === 'repair-days').value;
+export const turnDays = kpis.metrics.find((m) => m.id === 'time-to-turn').value;
+export const vpm = pricing.fees.vendorProjectManagement;
+
+## Who does the repair work on an RL Property Management rental?
+
+Repairs are handled by an in-house maintenance team: {company.scale.maintenanceTechnicians} technicians out of {company.scale.employees} RL Property Management employees as of {monthYear(company.scale.asOf)}. In-house labor is billed at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge, plus materials. Third-party vendors are brought in for licensed trades and specialty work.
+
+Running the work in-house is what keeps the median repair at {repairDays} days as of {kpis.asOfLabel}. Scheduling a subcontractor for a leaking valve in the Columbus, Ohio market means waiting on someone else's calendar; scheduling a staff technician does not.
+
+## What does maintenance cost an owner?
+
+Labor runs {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge and materials at cost. When a third-party vendor is required, RL Property Management adds a {vpm.percent} percent project management fee on vendor cost up to {usd(vpm.appliesToVendorCostUpTo)}, capped at {usd(vpm.maxPerProject)} per project. Turns are priced on a separate sliding scale. Figures are current as of {pricing.effectiveLabel}.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Maintenance charge</th>
+        <th scope="col">Rate as of {pricing.effectiveLabel}</th>
+        <th scope="col">Applies to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>In-house labor</td>
+        <td>{usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour</td>
+        <td>Work performed by RL Property Management technicians</td>
+      </tr>
+      <tr>
+        <td>Trip charge</td>
+        <td>{usd(pricing.fees.inHouseMaintenance.tripCharge)} per visit</td>
+        <td>Each dispatch, in addition to labor and materials</td>
+      </tr>
+      <tr>
+        <td>Vendor project management</td>
+        <td>{vpm.percent} percent, capped at {usd(vpm.maxPerProject)}</td>
+        <td>Third-party vendor cost up to {usd(vpm.appliesToVendorCostUpTo)}. Turns are excluded</td>
+      </tr>
+      <tr>
+        <td>Turn project management</td>
+        <td>{pricing.fees.turnProjectManagement[0].percent} percent</td>
+        <td>First {usd(pricing.fees.turnProjectManagement[0].upTo)} of turn cost</td>
+      </tr>
+      <tr>
+        <td>Turn project management</td>
+        <td>{pricing.fees.turnProjectManagement[1].percent} percent</td>
+        <td>{usd(pricing.fees.turnProjectManagement[1].from)} to {usd(pricing.fees.turnProjectManagement[1].upTo)} of turn cost</td>
+      </tr>
+      <tr>
+        <td>Turn project management</td>
+        <td>{pricing.fees.turnProjectManagement[2].percent} percent</td>
+        <td>{usd(pricing.fees.turnProjectManagement[2].from)} of turn cost and above</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## When does a repair need owner approval?
+
+When the cost passes the plan's approval limit. Below the limit, RL Property Management authorizes the repair and the resident gets a fix without waiting on a phone call. Above it, the owner decides. The limit is the main lever separating the three plans, and it moves in the opposite direction from the monthly fee: the lowest fee carries the highest approval authority.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Plan</th>
+        <th scope="col">Monthly fee per unit</th>
+        <th scope="col">Repair approved without contacting the owner</th>
+        <th scope="col">Maintenance reserve held per unit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {pricing.plans.map((p) => (
+        <tr>
+          <td>{p.name}</td>
+          <td>{usd(p.monthlyFee)}</td>
+          <td>Up to {usd(p.maintenanceApprovalLimit)} per item</td>
+          <td>{usd(p.maintenanceReserve)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+An owner who wants a call before a {usd(400)} repair picks Premium. An owner who wants the water heater replaced while they are on a plane picks Passive.
+
+## How fast does a repair get done?
+
+Routine repairs complete in {maintenance.routineCompletionWeeks.min} to {maintenance.routineCompletionWeeks.max} weeks, and the median repair across the RL Property Management portfolio ran {repairDays} days as of {kpis.asOfLabel}. Emergencies are dispatched on receipt rather than scheduled. Median time to turn a unit between residents was {turnDays} days over the same period.
+
+Requests come in through a dedicated maintenance request system rather than by voicemail, so the clock starts when the resident submits rather than when someone returns a call. The same record follows the job through dispatch, completion, and the charge that lands on the owner statement.
+
+Speed depends on parts, trade availability, and resident access to the unit. A furnace part on backorder in a Columbus, Ohio winter is outside anyone's control, and RL Property Management publishes the median rather than promising a ceiling.
+
+## What happens at 2 a.m. or on a holiday?
+
+A {maintenance.emergencyLine} answers, triages, and dispatches. Emergency coverage is included on all three plans at no separate charge. The call center exists so a burst supply line in Gahanna at midnight becomes a dispatched technician rather than a voicemail an owner finds on Monday.
+
+Utilities stay active during vacancy for turnover work, repairs, and winter protection, which is what keeps an empty Columbus property from freezing between residents.
+
+## Can an owner use their own contractor?
+
+On the Premium plan, an owner's preferred vendors can be used. Owner-handled repairs on vacant units are available on the Standard and Premium plans. No RL Property Management plan permits owner-handled repairs on an occupied unit, because the resident relationship, the liability, and the response clock sit with the manager once a lease is signed.
+
+Home warranties are also declined across all three plans. Warranty claim approval inserts a third party between the resident and the repair, and the delay lands on the resident.
+
+## Why is a maintenance reserve held on each unit?
+
+Each unit carries a reserve equal to the plan's approval limit: {usd(pricing.plans[2].maintenanceReserve)}, {usd(pricing.plans[1].maintenanceReserve)}, or {usd(pricing.plans[0].maintenanceReserve)}. The reserve funds an approved repair the day it is authorized instead of waiting on a transfer from the owner. Beyond that, RL Property Management recommends owners hold {pricing.reserves.recommendedOwnerReserve} in their own reserve for larger capital items.
+
+Owners comparing plan approval limits against their own tolerance for repair calls can see the full fee schedule on the pricing page.

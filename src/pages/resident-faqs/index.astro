@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, leasing, LAST_VERIFIED } from '../../data/facts';
+import { usd } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const path = '/resident-faqs/';
+const rf = leasing.residentFees;
+const faq = [
+  { q: 'Do RL Property Management rentals allow pets?', a: 'Generally yes, depending on the property. The listing states whether pets are accepted.' },
+  { q: 'Is there a pet deposit or pet fee?', a: `There is no pet deposit. Pet rent is ${usd(rf.petRentPerPetMonthly)} per pet per month, plus a one-time ${usd(rf.petAcceptanceFee)} pet acceptance fee (flat, not per pet). The pet fee funds pet damage coverage up to ${usd(leasing.petDamageCoverage.amount)} for the owner.` },
+  { q: 'How much is the security deposit?', a: `Equal to ${leasing.securityDeposit}.` },
+  { q: 'Does RL Property Management accept Section 8 or housing vouchers?', a: 'Vouchers are accepted at select properties. Check the listing description for the specific property.' },
+  { q: 'How much do I need to move in?', a: `The security deposit, the first full month's rent plus any prorated rent, and a lease-signing administrative fee equal to ${rf.leaseSigningAdminFeePercentOfRent} percent of one month's rent.` },
+  { q: 'Can I drive by a property before scheduling a showing?', a: 'Yes. RL Property Management encourages a drive-by first. Many units also offer self-guided tours.' },
+  { q: 'Is rent prorated if I move in mid-month?', a: 'Yes.' },
+  { q: 'Which utilities does the resident pay?', a: 'The resident is responsible for electric, water, and gas unless the lease or listing states otherwise.' },
+  { q: 'What is the application fee?', a: `${usd(rf.applicationFeePerPerson)} per person, with ${usd(rf.applicationFeeRefundIfApproved)} refunded if the applicant is approved and moves in. Each adult 18 or older must apply.` },
+  { q: 'What are the qualification requirements?', a: `Household income of at least ${leasing.qualification.incomeMultiple} times the monthly rent, no evictions in the past ${leasing.qualification.noEvictionsWithinYears} years, no violent criminal convictions, and no serious or recurring credit issues. Screening covers credit, criminal, rental history with landlord references, and income verified by pay stub or bank statement.` },
+  { q: 'Can I apply online?', a: 'Yes. Applications are submitted online through the link on each listing and on the Available Rentals page.' },
+  { q: 'Can I pay rent online?', a: 'Yes, for free, through the resident portal. Rent is due on the 1st and late after the 5th.' },
+  { q: 'How do I report a maintenance problem?', a: 'Through the maintenance request portal, available 24 hours a day. Emergencies are answered around the clock, including weekends and holidays.' },
+];
+const title = 'Resident FAQ | RL Property Management, Columbus, Ohio';
+const description = `Answers for renters of RL Property Management homes in Columbus, Ohio: pets and pet rent, deposits, application fee and criteria, move-in costs, utilities, online rent payment, and maintenance requests.`;
+const directAnswer = `Renters of homes managed by RL Property Management in the Columbus, Ohio metro apply online for ${usd(rf.applicationFeePerPerson)} per adult (${usd(rf.applicationFeeRefundIfApproved)} refunded on approval and move-in), qualify with income of at least ${leasing.qualification.incomeMultiple} times rent and no evictions in ${leasing.qualification.noEvictionsWithinYears} years, and pay a deposit of ${leasing.securityDeposit}. Pets are accepted at many properties for ${usd(rf.petRentPerPetMonthly)} per pet monthly plus a ${usd(rf.petAcceptanceFee)} acceptance fee. Rent is paid online at no charge, and maintenance is requested through a 24/7 portal.`;
+const keyFacts = [
+  `Application fee: ${usd(rf.applicationFeePerPerson)} per adult, ${usd(rf.applicationFeeRefundIfApproved)} refunded if approved and moved in. Each adult 18+ applies.`,
+  `Qualification: income at least ${leasing.qualification.incomeMultiple}x rent, no evictions in ${leasing.qualification.noEvictionsWithinYears} years, no violent criminal convictions, no serious or recurring credit issues.`,
+  `Security deposit: ${leasing.securityDeposit}. Move-in also includes first month's rent, proration, and a ${rf.leaseSigningAdminFeePercentOfRent} percent lease-signing administrative fee.`,
+  `Pets: ${usd(rf.petRentPerPetMonthly)} per pet per month plus a one-time ${usd(rf.petAcceptanceFee)} acceptance fee; no pet deposit.`,
+  'Rent is paid online for free through the resident portal; maintenance requests go through a 24/7 portal.',
+];
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Residents', path: '/residents/' }, { name: 'Resident FAQ', path }];
+const schema = [webPageNode({ path, title, description, type: 'FAQPage', reviewedBy: false }), breadcrumbNode(crumbs), faqNode(path, faq)];
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Resident FAQ" {directAnswer} {keyFacts} lastVerified={LAST_VERIFIED} reviewedBy="RL Property Management leasing team" breadcrumbs={crumbs} related={[{ href: '/homes-for-rent/', label: 'Available rentals' }, { href: '/residents/', label: 'Resident resources' }, { href: company.portals.apply, label: 'Apply online' }, { href: company.portals.resident, label: 'Resident portal' }, { href: company.portals.maintenanceRequest, label: 'Maintenance request' }]}>
+    <h2>Questions renters ask RL Property Management</h2>
+    <dl>
+      {faq.map((f) => <div class="border-b border-gray py-4"><dt class="font-semibold text-navy-800">{f.q}</dt><dd class="mt-1">{f.a}</dd></div>)}
+    </dl>
+    <p class="mt-6">Figures reflect RL Property Management policy as of August 2026 and can differ by property; the listing and the lease control. Questions not answered here: {company.contact.general.phone}.</p>
+  </AeoPage>
+</Base>

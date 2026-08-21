@@ -1,0 +1,51 @@
+---
+/** Master FAQ. Every entry comes from src/content/faq.json; the whole page is FAQPage schema. */
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import AeoPage from '../../components/AeoPage.astro';
+import { company, pricing, LAST_VERIFIED } from '../../data/facts';
+import { usd, slugify } from '../../lib/format';
+import { webPageNode, breadcrumbNode, faqNode } from '../../lib/schema';
+
+const faqs = await getCollection('faqs');
+const topics = [...new Set(faqs.map((f) => f.data.topic))];
+const path = '/faq/';
+const title = 'Property Management FAQ for Columbus, Ohio Owners | RLPM';
+const description = `Answers to ${faqs.length} questions Columbus, Ohio rental owners ask RL Property Management about pricing, leasing, screening, maintenance, evictions, and service area. Updated August 2026.`;
+const directAnswer = `This page answers ${faqs.length} questions rental owners ask RL Property Management, a licensed Ohio brokerage in Gahanna managing approximately 750 units across the Columbus metro. Topics cover pricing (flat ${usd(pricing.plans[0].monthlyFee)} to ${usd(pricing.plans[2].monthlyFee)} per unit per month, ${usd(pricing.fees.leasingFee)} leasing fee), leasing and screening, evictions in Franklin County, maintenance, and service area. Each answer reflects policy as of August 2026.`;
+const keyFacts = [
+  `RL Property Management charges a flat ${usd(pricing.plans[0].monthlyFee)}, ${usd(pricing.plans[1].monthlyFee)}, or ${usd(pricing.plans[2].monthlyFee)} per unit per month with no leasing fee.`,
+  `Applicants need income of at least 3 times the monthly rent and no evictions in the past 5 years.`,
+  `A possession-only eviction in Franklin County costs an owner approximately $448 to $450 in hard costs as of August 2026.`,
+  `In-house maintenance is billed at ${usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a ${usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge plus materials.`,
+  `RL Property Management serves 25 cities and neighborhoods in the Columbus, Ohio metro from ${company.address.city}, Ohio.`,
+];
+const schema = [
+  webPageNode({ path, title, description, type: 'FAQPage' }),
+  breadcrumbNode([{ name: 'Home', path: '/' }, { name: 'FAQ', path }]),
+  faqNode(path, faqs.map((f) => ({ q: f.data.question, a: f.data.answer }))),
+];
+const paras = (s: string) => s.split(/\n\n+/);
+---
+
+<Base {title} {description} {path} {schema}>
+  <AeoPage title="Property management FAQ for Columbus, Ohio owners" {directAnswer} {keyFacts} lastVerified={LAST_VERIFIED} breadcrumbs={[{ name: 'Home', path: '/' }, { name: 'FAQ', path }]} related={[{ href: '/pricing/', label: 'Pricing' }, { href: '/how-it-works/', label: 'How onboarding works' }, { href: '/what-we-manage/', label: 'What RL Property Management manages' }, { href: '/resident-faqs/', label: 'Resident FAQ' }, { href: '/property-management-consultation/', label: 'Schedule a consultation' }]}>
+    <nav aria-label="FAQ topics" class="mb-10 flex flex-wrap gap-2" data-md-skip>
+      {topics.map((t) => <a href={`#${slugify(t)}`} class="border border-gray px-3 py-1 text-sm no-underline hover:border-brand-800">{t}</a>)}
+    </nav>
+    {topics.map((t) => (
+      <section aria-labelledby={slugify(t)}>
+        <h2 id={slugify(t)}>{t}</h2>
+        <dl>
+          {faqs.filter((f) => f.data.topic === t).map((f) => (
+            <div id={f.data.id} class="border-b border-gray py-5">
+              <dt class="text-lg font-semibold text-navy-800">{f.data.question}</dt>
+              <dd class="mt-2">{paras(f.data.answer).map((p) => <p>{p}</p>)}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))}
+    <p class="mt-8">Have a question that is not answered here? Call {company.contact.sales.name} at <a href={`tel:${company.contact.sales.phoneE164}`}>{company.contact.sales.phone}</a> or <a href="/property-management-consultation/">schedule a consultation</a>.</p>
+  </AeoPage>
+</Base>

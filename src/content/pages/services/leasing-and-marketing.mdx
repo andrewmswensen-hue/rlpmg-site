@@ -1,0 +1,131 @@
+---
+title: "Leasing and marketing for Columbus rentals"
+seoTitle: "Leasing and Marketing, Columbus Rentals | RLPM"
+description: "RL Property Management markets Columbus, Ohio rentals on 45+ platforms with no leasing fee, averaging 3 to 4 weeks from rent-ready to signed lease."
+directAnswer: "RL Property Management advertises each Columbus, Ohio rental on 45+ platforms including Zillow, Trulia, Apartments.com, and rlpmg.com, and charges no leasing fee when the unit is leased. Average lease-up runs 3 to 4 weeks once a unit is rent-ready, with median days on market of 11 as of July 2026. The monthly fee on a vacant unit is reimbursed past 60 days."
+keyFacts:
+  - "RL Property Management advertises rentals on 45+ platforms, including Zillow, Trulia, Apartments.com, and rlpmg.com. Craigslist is excluded."
+  - "The leasing fee is $0. A typical Columbus property manager charges a leasing fee equal to one month's rent each time a unit is leased."
+  - "Average lease-up runs 3 to 4 weeks once the unit is rent-ready, with median days on market of 11 as of July 2026."
+  - "The monthly management fee on a vacant unit is reimbursed if the property stays vacant longer than 60 days."
+  - "Lease renewal rate was 72 percent and occupancy was 91 percent across the RL Property Management portfolio as of July 2026."
+  - "Lease renewal costs $250. Listing photography is billed at vendor cost plus markup, typically $250 to $450, effective October 1, 2026."
+faq:
+  - q: "Does RL Property Management charge a leasing fee?"
+    a: "No. The leasing fee is $0 on the Passive, Standard, and Premium plans. A typical Columbus property manager charges one month's rent each time a unit is leased."
+  - q: "Where will my Columbus rental be advertised?"
+    a: "On 45+ rental platforms, including Zillow, Trulia, Apartments.com, and rlpmg.com. Craigslist is excluded."
+  - q: "How long does it take to lease a rental in Columbus, Ohio?"
+    a: "3 to 4 weeks on average once the unit is rent-ready. Median days on market across the portfolio was 11 as of July 2026. No lease timeline is promised for an individual property."
+  - q: "What happens if the property sits vacant?"
+    a: "The monthly management fee on a vacant unit is reimbursed if the property stays vacant longer than 60 days, so the manager carries part of the cost of a slow lease-up."
+  - q: "Who pays for listing photography?"
+    a: "The owner, at vendor cost plus the standard project management markup, typically $250 to $450, effective October 1, 2026. Existing professional photos on file are used at no charge."
+  - q: "What does a lease renewal cost?"
+    a: "$250 per renewal as of 2026. The RL Property Management lease renewal rate was 72 percent as of July 2026."
+  - q: "Does RL Property Management prioritize speed or applicant quality?"
+    a: "Quality of placement is prioritized over speed of placement. An extra week of vacancy costs less than a resident who stops paying in month five."
+related:
+  - href: "/services/tenant-screening/"
+    label: "Tenant screening standards"
+  - href: "/services/property-inspections/"
+    label: "Rental property inspections"
+  - href: "/services/rent-collection/"
+    label: "Rent collection and owner payouts"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/free-rent-evaluation/"
+    label: "Get a free rent evaluation"
+lastVerified: 2026-08-21
+path: "/services/leasing-and-marketing/"
+section: "services"
+schemaType: "Service"
+order: 50
+---
+
+import { leasing, pricing, kpis } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+export const avgRent = kpis.metrics.find((m) => m.id === 'average-rent').value;
+export const dom = kpis.metrics.find((m) => m.id === 'days-on-market').value;
+export const renewal = kpis.metrics.find((m) => m.id === 'renewal-rate').value;
+export const standard = pricing.plans[1];
+export const photo = pricing.fees.photography;
+
+## Where does RL Property Management advertise a Columbus rental?
+
+Each listing syndicates to {leasing.platforms.label}, including {leasing.platforms.examples.join(', ')}. Craigslist is excluded, because the applicant quality that comes back from it does not justify the volume. Listings carry photos, a written description, and self-scheduled showing availability, and applications are taken online rather than on paper.
+
+Available homes are published on a single RL Property Management listings feed, and applications are submitted online from the listing itself. Cutting the gap between a renter finding the listing and starting an application is what protects the {dom}-day median: a prospect who has to email for an application form is a prospect who keeps scrolling.
+
+Breadth matters less than where renter traffic actually starts in the Columbus, Ohio market, which is why the major portals carry the listing on day one rather than after a week on the company site alone.
+
+## How long does it take to lease a rent-ready unit?
+
+Average lease-up runs {leasing.averageLeaseUpWeeks.min} to {leasing.averageLeaseUpWeeks.max} weeks once the unit is rent-ready, and median days on market across the RL Property Management portfolio was {dom} days as of {kpis.asOfLabel}. {leasing.averageLeaseUpWeeks.note} Occupancy sat at {kpis.metrics.find((m) => m.id === 'occupancy').value} percent over the same period.
+
+Two variables move that number more than marketing does: the asking rent and the condition of the unit. A Columbus property priced at market with a finished turn leases inside the range; a property priced above market collects showings and no applications.
+
+## What does leasing cost the owner?
+
+Nothing at placement. The leasing fee is {usd(pricing.fees.leasingFee)} on all three plans. Advertising and marketing on {leasing.platforms.label} is included in the flat monthly fee of {usd(pricing.plans[0].monthlyFee)}, {usd(standard.monthlyFee)}, or {usd(pricing.plans[2].monthlyFee)} per unit, along with screening. The costs that do appear are photography, the {usd(pricing.fees.leaseRenewalFee)} renewal fee, and the {usd(pricing.fees.onboardingFeeVacantUnit)} onboarding fee on a vacant unit.
+
+The table below runs one year at the portfolio average rent of {usd(avgRent)} per month with a single turnover, using the market-standard model as the comparison. No competitor is named; the {pricing.marketStandard.percentOfRentLow} to {pricing.marketStandard.percentOfRentHigh} percent plus one month's rent structure is simply what the Columbus market charges.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Cost over 12 months, one turnover</th>
+        <th scope="col">RL Property Management, {standard.name} plan</th>
+        <th scope="col">Market-standard model</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Management fee</td>
+        <td>{usd(standard.monthlyFee * 12)}</td>
+        <td>{usd(avgRent * pricing.marketStandard.percentOfRentLow / 100 * 12)} to {usd(avgRent * pricing.marketStandard.percentOfRentHigh / 100 * 12)}</td>
+      </tr>
+      <tr>
+        <td>Leasing fee on the new lease</td>
+        <td>{usd(pricing.fees.leasingFee)}</td>
+        <td>{usd(avgRent)}, one month's rent</td>
+      </tr>
+      <tr>
+        <td>Annual accounting and technology fee</td>
+        <td>{usd(pricing.fees.annualAccountingAndTechnologyFee)}</td>
+        <td>Varies by manager</td>
+      </tr>
+      <tr>
+        <td>Illustrative 12-month total</td>
+        <td>{usd(standard.monthlyFee * 12 + pricing.fees.annualAccountingAndTechnologyFee)}</td>
+        <td>{usd(avgRent * pricing.marketStandard.percentOfRentLow / 100 * 12 + avgRent)} to {usd(avgRent * pricing.marketStandard.percentOfRentHigh / 100 * 12 + avgRent)}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Figures above are an illustration at the {kpis.asOfLabel} portfolio average rent, not a quote. Actual cost depends on the property, the plan, and repairs.
+
+## What happens if the property sits vacant?
+
+{pricing.vacancyGuarantee} The reimbursement is what puts RL Property Management on the same side of the table as the owner during a lease-up: a vacant unit costs the manager money too, starting on day 61.
+
+Utilities stay active during vacancy for turnover work, repairs, and winter protection. Median time to turn a unit between residents was {kpis.metrics.find((m) => m.id === 'time-to-turn').value} days as of {kpis.asOfLabel}, and the turn happens before the listing goes live rather than during showings.
+
+## Who pays for listing photography?
+
+The owner. {photo.policy} The policy takes effect {monthYear(photo.effectiveDate)}. {photo.grandfather}
+
+Professional photos are the single highest-leverage line in a listing budget. A renter scrolling Zillow in the Columbus market decides in about a second, and phone photos of a dim living room lose that second to the listing above.
+
+## How does RL Property Management pick between applicants?
+
+{leasing.placementPhilosophy} Applicants are measured against published standards: income of {leasing.qualification.incomeMultiple} times the monthly rent, no violent criminal convictions, no eviction filed within the past {leasing.qualification.noEvictionsWithinYears} years, and no serious or recurring credit issues. The full screening process is on the tenant screening page.
+
+## What happens at lease renewal?
+
+A renewal costs {usd(pricing.fees.leaseRenewalFee)}. The RL Property Management renewal rate was {renewal} percent as of {kpis.asOfLabel}, which means roughly {100 - renewal} percent of units turn in a given cycle. Renewal is the cheapest occupancy available to a Columbus, Ohio owner: {usd(pricing.fees.leaseRenewalFee)} against a turn that costs vacancy, make-ready labor at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour, and a fresh lease-up.
+
+Owners weighing a listing rent for a specific Columbus address can start with a free rent evaluation and see the range before the property goes on market.

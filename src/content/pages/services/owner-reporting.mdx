@@ -1,0 +1,115 @@
+---
+title: "Owner reporting, statements, and the owner portal"
+seoTitle: "Owner Reporting and Statements | RLPM Columbus"
+description: "RL Property Management emails monthly owner statements, deposits net income directly, and runs an online owner portal, on all three plans in Columbus, Ohio."
+directAnswer: "RL Property Management gives each owner a monthly statement by email, direct deposit of net income, financial recordkeeping, and an online owner portal. All four are included on the Passive, Standard, and Premium plans, with an annual accounting and technology fee of $125 per unit. RL Property Management also publishes 8 operating metrics on a public scorecard, updated as of July 2026."
+keyFacts:
+  - "Monthly statements by email, direct deposit of net income, financial recordkeeping, and an online owner portal are included on all three plans."
+  - "An annual accounting and technology fee of $125 per unit applies, charged once a year rather than monthly."
+  - "RL Property Management publishes 8 operating metrics on a public scorecard, current as of July 2026."
+  - "Published figures include 91 percent occupancy, 96 percent of rent collected by the 5th, and a median 6 days to complete a repair."
+  - "Reporting does not change by plan. Passive at $117, Standard at $137, and Premium at $184 per unit receive the same statements and portal access."
+  - "RL Property Management holds Ohio brokerage file number REC.2015003677, with Peter Lohmann as Principal Broker and CEO."
+faq:
+  - q: "How often does an owner get a statement from RL Property Management?"
+    a: "Monthly, by email, on all three plans. Net income for the same period is deposited directly to the owner's bank account."
+  - q: "Is there an online owner portal?"
+    a: "Yes, at rlp.managebuilding.com. The portal is included on the Passive, Standard, and Premium plans and shows the ledger for each managed unit."
+  - q: "What is the $125 annual accounting and technology fee?"
+    a: "A once-a-year fee of $125 per unit as of 2026 covering accounting and the technology stack behind statements, the portal, and recordkeeping. It is charged annually rather than added to the monthly fee."
+  - q: "What tax documents does an owner receive at year end?"
+    a: "[SOURCE NEEDED]"
+  - q: "Does a higher plan include better reporting?"
+    a: "No. Statements, direct deposit, recordkeeping, and portal access are identical across Passive, Standard, and Premium. Plans differ on repair approval limits and owner involvement."
+  - q: "Does RL Property Management publish its own performance numbers?"
+    a: "Yes. 8 operating metrics are published on a public scorecard, including occupancy, days on market, renewal rate, and rent collected by the 5th, current as of July 2026."
+related:
+  - href: "/services/rent-collection/"
+    label: "Rent collection and owner payouts"
+  - href: "/services/maintenance/"
+    label: "Rental property maintenance in Columbus, Ohio"
+  - href: "/pricing/"
+    label: "View pricing for all three plans"
+  - href: "/how-it-works/"
+    label: "See how onboarding works"
+  - href: "/faq/"
+    label: "Owner questions and answers"
+lastVerified: 2026-08-21
+path: "/services/owner-reporting/"
+section: "services"
+schemaType: "Service"
+order: 70
+---
+
+import { pricing, kpis, company } from '../../../data/facts';
+import { usd, monthYear } from '../../../lib/format';
+
+export const fmtMetric = (m) =>
+  m.unit === 'USD/month' ? `${usd(m.value)} per month` : m.unit === '%' ? `${m.value} percent` : `${m.value} ${m.unit}`;
+
+## What reporting does an RL Property Management owner receive?
+
+Four things, on all three plans: a monthly statement by email, direct deposit of net income to the owner's bank account, financial recordkeeping held on the owner's behalf, and access to an online owner portal. No plan upgrade unlocks better reporting. An owner on Passive at {usd(pricing.plans[0].monthlyFee)} per unit sees the same ledger as an owner on Premium at {usd(pricing.plans[2].monthlyFee)}.
+
+Reporting is the part of property management an owner touches most, and it is where a manager either earns trust or loses it. RL Property Management publishes the fee schedule, the operating metrics, and the ledger rather than summarizing them.
+
+## When does the statement arrive and when does the money land?
+
+The statement is emailed monthly and net income is deposited directly for the same period. The specific calendar day each month that statements go out and deposits initiate is [SOURCE NEEDED].
+
+What comes out before the deposit is published: the flat monthly management fee, the unit's maintenance reserve, repairs incurred that month, and any other fees named in the signed Property Management Agreement. Reserves are held at {usd(pricing.plans[2].maintenanceReserve)}, {usd(pricing.plans[1].maintenanceReserve)}, or {usd(pricing.plans[0].maintenanceReserve)} per unit depending on plan.
+
+## What does the owner portal do?
+
+The owner portal runs at rlp.managebuilding.com and shows the ledger for each managed unit: rent posted, repairs charged, fees applied, and deposits made. Portal access is included on the Passive, Standard, and Premium plans at no separate charge. Residents use a separate portal for rent payment and maintenance requests, which keeps the two ledgers in sync without manual entry.
+
+An owner checking whether the 3rd-of-the-month rent payment posted does not need to call the office in Gahanna, Ohio to find out.
+
+## What is the annual accounting and technology fee?
+
+{usd(pricing.fees.annualAccountingAndTechnologyFee)} per unit, charged once a year as of {pricing.effectiveLabel}. The fee covers accounting work and the technology behind statements, the portal, and recordkeeping. Keeping it annual rather than folding it into the monthly fee is deliberate: the monthly number an owner compares against other Columbus, Ohio managers stays the number actually charged each month.
+
+Full fee disclosure is the point. Onboarding on a vacant unit is {usd(pricing.fees.onboardingFeeVacantUnit)}, lease renewal is {usd(pricing.fees.leaseRenewalFee)}, and the leasing fee is {usd(pricing.fees.leasingFee)}.
+
+## How does a repair show up on the statement?
+
+As a line item against the unit, with labor billed at {usd(pricing.fees.inHouseMaintenance.hourlyRate)} per hour plus a {usd(pricing.fees.inHouseMaintenance.tripCharge)} trip charge and materials at cost. Third-party vendor work carries a {pricing.fees.vendorProjectManagement.percent} percent project management fee on vendor cost up to {usd(pricing.fees.vendorProjectManagement.appliesToVendorCostUpTo)}, capped at {usd(pricing.fees.vendorProjectManagement.maxPerProject)} per project. Turn work is charged on a separate sliding scale starting at {pricing.fees.turnProjectManagement[0].percent} percent.
+
+Whether a repair reaches the statement without a prior phone call depends on the plan approval limit: {usd(pricing.plans[0].maintenanceApprovalLimit)} on Passive, {usd(pricing.plans[1].maintenanceApprovalLimit)} on Standard, {usd(pricing.plans[2].maintenanceApprovalLimit)} on Premium. An owner who wants fewer surprises on the statement picks the lower limit and accepts the higher monthly fee.
+
+## What operating numbers does RL Property Management publish?
+
+{kpis.metrics.length} metrics, updated as of {kpis.asOfLabel}, covering leasing speed, turn speed, retention, occupancy, rent level, repair speed, collections, and resident satisfaction. Few property management companies in the Columbus market publish operating data at all, which makes the scorecard the fastest way for an owner to compare RL Property Management against a manager who offers adjectives.
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Metric</th>
+        <th scope="col">Value as of {kpis.asOfLabel}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kpis.metrics.map((m) => (
+        <tr>
+          <td>{m.label}</td>
+          <td>{fmtMetric(m)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+The scorecard is maintained at [key performance indicators](/key-performance-indicators/) and updated by hand, with the reporting period stamped on the page.
+
+## Who is accountable for the numbers?
+
+{company.brokerOfRecord.name}, {company.brokerOfRecord.title}, under Ohio brokerage file number {company.license.number} issued by the {company.license.issuer}. RL Property Management is a member of NARPM and operates as an Equal Housing Opportunity company. Google reviews stand at {company.reviews.ratingValue} out of {company.reviews.bestRating} across {company.reviews.reviewCount} reviews as of {monthYear(company.reviews.asOf)}.
+
+Accountability for reporting has a name and a license number attached to it, which is the standard an Ohio owner should hold any brokerage to.
+
+## Can a spreadsheet or an AI assistant read this data directly?
+
+Yes. RL Property Management publishes machine-readable company facts at [/api/facts.json](/api/facts.json) and the fee schedule at [/api/pricing.json](/api/pricing.json), plus a plain-text site index at [/llms.txt](/llms.txt). Each page on rlpmg.com also has a Markdown twin at the same path with a .md extension.
+
+Publishing the numbers in a format a machine can read is the same commitment as publishing them in a format an owner can read. Owners who want to see a live statement and portal before signing can request a walkthrough on a call.

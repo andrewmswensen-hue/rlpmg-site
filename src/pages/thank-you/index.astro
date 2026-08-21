@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { company } from '../../data/facts';
+const path = '/thank-you/';
+---
+
+<Base title="Thank you | RL Property Management" description="Your message reached RL Property Management. A team member will follow up by phone or email, usually within one business day. Call 614.725.3059 if it is urgent." {path} noindex markdownTwin={false}>
+  <section class="mx-auto max-w-3xl px-5 py-20">
+    <h1 class="text-4xl">Thank you. Your message is in.</h1>
+    <p class="mt-4 text-lg">A member of the RL Property Management team will follow up by phone or email. If the matter is urgent, call <a href={`tel:${company.contact.general.phoneE164}`} class="underline">{company.contact.general.phone}</a>.</p>
+    <p class="mt-6"><a href="/" class="underline">Back to the home page</a></p>
+  </section>
+</Base>
