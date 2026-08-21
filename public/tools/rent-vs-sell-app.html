@@ -335,7 +335,7 @@
             <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">How many years of payments remain. A 30-year loan taken out 8 years ago has 22 left.</span></button>
           </span></label>
           <div class="rvs-affix post"><span>yrs</span><input type="text" inputmode="decimal" id="remainingTermYears"></div>
-          <p class="rvs-hint">Your principal &amp; interest payment: <strong id="pmtHint">&mdash;</strong>
+          <p class="rvs-hint">Your principal &amp; interest payment: <strong id="pmtHint">, </strong>
             <br>Taxes and insurance are counted separately below, so leave escrow out of this.</p>
         </div>
 
@@ -357,7 +357,7 @@
             <div class="rvs-affix pre" id="taxDolWrap" style="display:none"><span>$</span><input type="text" inputmode="numeric" id="propertyTaxMonthly"></div>
             <button type="button" class="rvs-unit-toggle" id="taxToggle" title="Switch between percent and dollars">$</button>
           </div>
-          <p class="rvs-hint" id="taxHint">&mdash;</p>
+          <p class="rvs-hint" id="taxHint">, </p>
         </div>
 
         <div class="rvs-field">
@@ -365,7 +365,7 @@
             <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Your current homeowners premium. A landlord (DP-3) policy usually costs more, so we add a markup you can adjust under Assumptions.</span></button>
           </span></label>
           <div class="rvs-affix pre"><span>$</span><input type="text" inputmode="numeric" id="insuranceMonthly"></div>
-          <p class="rvs-hint" id="insHint">&mdash;</p>
+          <p class="rvs-hint" id="insHint">, </p>
         </div>
 
         <div class="rvs-field">
@@ -379,7 +379,7 @@
             <input type="checkbox" id="isPrimaryResidence">
             <span class="rvs-check-body">
               <b>This is my primary residence</b>
-              <em>Lived in 2 of the last 5 years. Unlocks the capital gains exclusion &mdash; but only if you sell within 3 years of moving out.</em>
+              <em>Lived in 2 of the last 5 years. Unlocks the capital gains exclusion ,  but only if you sell within 3 years of moving out.</em>
             </span>
           </label>
         </div>
@@ -427,14 +427,14 @@
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="pmRate"><span class="rvs-label-text">Property management fee
-              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of collected rent. Set this to 0 if you plan to manage the house yourself &mdash; but budget your own time.</span></button>
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of collected rent. Set this to 0 if you plan to manage the house yourself ,  but budget your own time.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="pmRate"></div>
-            <p class="rvs-hint" id="pmHint">&mdash;</p>
+            <p class="rvs-hint" id="pmHint">, </p>
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="leasingRate"><span class="rvs-label-text">Leasing &amp; turnover allowance
-              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of annual rent set aside for placing each new tenant and turning the unit. 4% is roughly one month's rent every two years.</span></button>
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Share of annual rent set aside for placing each new tenant and turning the unit. 4% is roughly one month's rent each two years.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="leasingRate"></div>
           </div>
@@ -443,14 +443,14 @@
               <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Percent of home value per year for routine repairs. 1% is the common rule of thumb; older houses run higher.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="maintenanceRate"></div>
-            <p class="rvs-hint" id="maintHint">&mdash;</p>
+            <p class="rvs-hint" id="maintHint">, </p>
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="capexRate"><span class="rvs-label-text">Capital reserve, per year
-              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Roof, furnace, water heater, and other big-ticket replacements, averaged per year. These are capital improvements, so they are not deducted as expenses &mdash; they add to your cost basis and lower the gain when you sell.</span></button>
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Roof, furnace, water heater, and other big-ticket replacements, averaged per year. These are capital improvements, so they are not deducted as expenses ,  they add to your cost basis and lower the gain when you sell.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="capexRate"></div>
-            <p class="rvs-hint" id="capexHint">&mdash;</p>
+            <p class="rvs-hint" id="capexHint">, </p>
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="landlordInsBump"><span class="rvs-label-text">Landlord insurance markup</span></label>
@@ -500,7 +500,7 @@
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="recaptureRate"><span class="rvs-label-text">Depreciation recapture rate
-              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Every dollar of depreciation you claim gets taxed back when you sell, capped at 25% federally. This is not optional &mdash; the IRS assumes you took it.</span></button>
+              <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Each dollar of depreciation you claim gets taxed back when you sell, capped at 25% federally. This is not optional ,  the IRS assumes you took it.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="recaptureRate"></div>
           </div>
@@ -509,7 +509,7 @@
               <button type="button" class="rvs-info" aria-label="More info">i<span class="rvs-tip">Land cannot be depreciated, only the building. Your county auditor's land-to-improvement split is the usual source. 20% is a common default.</span></button>
             </span></label>
             <div class="rvs-affix post"><span>%</span><input type="text" inputmode="decimal" id="landPct"></div>
-            <p class="rvs-hint" id="depHint">&mdash;</p>
+            <p class="rvs-hint" id="depHint">, </p>
           </div>
           <div class="rvs-field">
             <label class="rvs-label" for="yearsLivedIn"><span class="rvs-label-text">Years you've lived here</span></label>
@@ -531,30 +531,30 @@
       <section class="rvs-verdict">
         <div class="rvs-eyebrow">The bottom line</div>
         <hr class="rvs-rule">
-        <h2 id="verdictText">&mdash;</h2>
+        <h2 id="verdictText">, </h2>
         <p class="rvs-verdict-note" id="verdictNote"></p>
       </section>
 
       <div class="rvs-stats">
         <div class="rvs-stat">
           <div class="rvs-stat-label">Cash flow, month 1</div>
-          <div class="rvs-stat-val" id="statCF">&mdash;</div>
+          <div class="rvs-stat-val" id="statCF">, </div>
           <div class="rvs-stat-sub">after the mortgage &amp; all expenses</div>
         </div>
         <div class="rvs-stat">
           <div class="rvs-stat-label">Cash in your pocket if you sell today</div>
-          <div class="rvs-stat-val" id="statSellNow">&mdash;</div>
-          <div class="rvs-stat-sub" id="statSellNowSub">&mdash;</div>
+          <div class="rvs-stat-val" id="statSellNow">, </div>
+          <div class="rvs-stat-sub" id="statSellNowSub">, </div>
         </div>
         <div class="rvs-stat">
           <div class="rvs-stat-label">Out of pocket to start renting</div>
-          <div class="rvs-stat-val" id="statUpfront">&mdash;</div>
+          <div class="rvs-stat-val" id="statUpfront">, </div>
           <div class="rvs-stat-sub">make-ready &amp; improvements</div>
         </div>
         <div class="rvs-stat">
           <div class="rvs-stat-label">Renting pulls ahead in</div>
-          <div class="rvs-stat-val" id="statBreakEven">&mdash;</div>
-          <div class="rvs-stat-sub" id="statBreakEvenSub">&mdash;</div>
+          <div class="rvs-stat-val" id="statBreakEven">, </div>
+          <div class="rvs-stat-sub" id="statBreakEvenSub">, </div>
         </div>
       </div>
 
@@ -598,12 +598,12 @@
             <summary>How to read this table</summary>
             <div class="rvs-note" style="margin-top:0">
               <ul>
-                <li><b>Rent collected</b> &mdash; gross rent less vacancy.</li>
-                <li><b>Mortgage</b> &mdash; principal and interest only. It stops the year the loan is paid off.</li>
-                <li><b>Operating costs</b> &mdash; taxes, insurance, HOA, management, leasing, maintenance, and the capital reserve.</li>
-                <li><b>Cash flow</b> &mdash; what actually lands in your account that year, after income tax on the rental profit.</li>
-                <li><b>Wealth if you rent</b> &mdash; what you'd walk away with if you rented through that year and <em>then</em> sold: sale price, less selling costs, less the loan payoff, less capital gains and depreciation recapture tax, plus every dollar of cash flow you banked along the way.</li>
-                <li><b>Wealth if you sell now</b> &mdash; today's net proceeds invested at your assumed return through that year.</li>
+                <li><b>Rent collected</b> ,  gross rent less vacancy.</li>
+                <li><b>Mortgage</b> ,  principal and interest only. It stops the year the loan is paid off.</li>
+                <li><b>Operating costs</b> ,  taxes, insurance, HOA, management, leasing, maintenance, and the capital reserve.</li>
+                <li><b>Cash flow</b> ,  what actually lands in your account that year, after income tax on the rental profit.</li>
+                <li><b>Wealth if you rent</b> ,  what you'd walk away with if you rented through that year and <em>then</em> sold: sale price, less selling costs, less the loan payoff, less capital gains and depreciation recapture tax, plus each dollar of cash flow you banked along the way.</li>
+                <li><b>Wealth if you sell now</b> ,  today's net proceeds invested at your assumed return through that year.</li>
               </ul>
               <p style="margin-top:10px">Both columns are measured the same way: cash in hand, after tax, after the cost of selling. That makes them directly comparable in any year, not just the last one.</p>
             </div>
@@ -650,7 +650,7 @@
 <script>
 /* ===================== ENGINE-START =====================
    Rent vs. Sell: calculation engine.
-   Pure functions, no DOM. Every number the page shows comes from here.
+   Pure functions, no DOM. Each number the page shows comes from here.
    ======================================================== */
 var RVS = (function () {
   'use strict';
@@ -1106,7 +1106,7 @@ var RVS = (function () {
 
     var note = favorsRent
       ? 'That is the projected difference in your net worth after ' + s.years + ' years, ' +
-        'assuming you sell the house at the end and pay every tax and closing cost along the way.'
+        'assuming you sell the house at the end and pay each tax and closing cost along the way.'
       : 'Selling today and investing the proceeds at ' + state.reinvestmentRate + '% projects ahead of ' +
         'renting for ' + s.years + ' years and then selling.';
     if (favorsRent && s.monthlyCashFlowY1 < 0) {
