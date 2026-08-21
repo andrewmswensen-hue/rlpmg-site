@@ -73,6 +73,25 @@ for (const file of walk(DIST)) {
 }
 
 core.sort((a, b) => a.rank - b.rank || a.urlPath.localeCompare(b.urlPath));
+
+// City pages repeat the same pricing and operations sections by design, so that each page stands alone
+// when an assistant extracts it. In the concatenated file that repetition is pure bulk, so those sections
+// are dropped here and replaced with a pointer. The per-page .md twins keep the full text.
+const SHARED_CITY_HEADINGS = [
+  'What does property management cost in',
+  'How does RL Property Management handle a',
+];
+for (const c of core) {
+  if (!c.urlPath.startsWith('/property-management-')) continue;
+  const before = c.body.length;
+  for (const h of SHARED_CITY_HEADINGS) {
+    // Drop from the heading up to (not including) the next H2.
+    c.body = c.body.replace(new RegExp(`\\n## ${h}[^\\n]*\\n[\\s\\S]*?(?=\\n## |$)`, 'g'), '\n');
+  }
+  if (c.body.length < before) {
+    c.body += '\n\nPricing and the standard leasing, maintenance, and reporting process are identical in each area served. See https://rlpmg.com/pricing/ and https://rlpmg.com/columbus-property-management/.';
+  }
+}
 const header = `# RL Property Management: full text of core pages\n\nSource: ${SITE}. Index: ${SITE}/llms.txt. Facts: ${SITE}/api/facts.json. Generated at build on ${new Date().toISOString().slice(0, 10)} from the same HTML served to visitors.\n\n`;
 writeFileSync(
   join(DIST, 'llms-full.txt'),
